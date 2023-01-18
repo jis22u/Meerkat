@@ -2,6 +2,12 @@
 노션 https://www.notion.so/ebcf2a62066a481080734f7ed929fe87  
 기능명세서 https://www.notion.so/936183033cf8421ebf567aa7d7204932
 
+# 2023.01.18
+- 와이어프레임 99% 완성
+  - 피그마 https://www.figma.com/file/ywgTAkO13oveEFtmKCT3Og/%EA%B1%B0%EA%B8%B0%EC%96%B4%EB%95%8C-DESIGN?node-id=104%3A2&t=uWdrG0aV64gbPQJ8-0
+- 아이디어 구체화, 아침/오후 회의
+  - 회의록 https://www.notion.so/ebcf2a62066a481080734f7ed929fe87?p=6f775f0f2a094c7b87eb69d040721ca1&pm=c
+
 # 2023.01.17
 - 와이어프레임 완성하였으나, 로직변경....
   - 피그마 https://www.figma.com/file/ywgTAkO13oveEFtmKCT3Og/%EA%B1%B0%EA%B8%B0%EC%96%B4%EB%95%8C-DESIGN?node-id=104%3A2&t=uWdrG0aV64gbPQJ8-0
