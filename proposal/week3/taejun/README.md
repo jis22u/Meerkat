@@ -13,12 +13,17 @@ https://www.notion.so/Live-20230125-22493d70207a4915bca5ede18626f072
 
 - DB 테이블 명세화 및 ERD 작성
 
-### 2023.01.26 (화)
+### 2023.01.26 (목)
 
 - ERD 완성
 
-- 아키텍쳐 구체화
+- 아키텍쳐 구체화 및 CloudCraft 를 통해 설계
+https://app.cloudcraft.co/view/6bfa0128-3a3e-4533-91b5-dff096213662?key=1d3faed6-3161-43e2-9209-0861c74ec157
 
 - 중간 발표 PPT 작성 및 발표준비
+https://www.canva.com/design/DAFYvRnfjVY/e4ZcSt3eoWu-a_Dx4l5xtw/edit
 
-- 
+  - 디자인 폰트, 메인 컬러 지정
+  - 발표자료 수정 및 추가
+  - 와이어프레임 수정
+ 
