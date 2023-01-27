@@ -26,4 +26,13 @@ https://www.canva.com/design/DAFYvRnfjVY/e4ZcSt3eoWu-a_Dx4l5xtw/edit
   - 디자인 폰트, 메인 컬러 지정
   - 발표자료 수정 및 추가
   - 와이어프레임 수정
- 
+
+
+### 2023.01.27 (금)
+
+- Youtube Live ( 모던 Java with Python )
+https://www.notion.so/Live-Java-with-Python-2645c8c8d8984a3fb2922c71b6a6c19e
+
+- 중간 발표 준비 마무리 및 발표 수행
+
+- 싸피데이
