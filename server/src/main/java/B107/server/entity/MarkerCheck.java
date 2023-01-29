@@ -1,4 +1,4 @@
-package B107.vision.entity;
+package B107.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,33 +15,33 @@ import java.util.Objects;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "call_check")
+@Table(name = "marker_check")
 @EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CallCheck implements Serializable {
+public class MarkerCheck implements Serializable {
 
-    // 요청자 Idx
+    // 미어캣의 사용자 Idx
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "cc_check")
-    private Boolean ccCheck; // 요청가능여부
+    @Column(name = "mc_check")
+    private Boolean mcCheck; // 사용자의 마커 등록 가능 여부 체크
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        CallCheck callCheck = (CallCheck) o;
-        return member.equals(callCheck.member) && ccCheck.equals(callCheck.ccCheck);
+        MarkerCheck that = (MarkerCheck) o;
+        return member.equals(that.member) && Objects.equals(mcCheck, that.mcCheck);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(member, ccCheck);
+        return Objects.hash(member, mcCheck);
     }
 }

@@ -1,4 +1,4 @@
-package B107.vision.entity;
+package B107.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

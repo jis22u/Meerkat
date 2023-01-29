@@ -1,6 +1,6 @@
-//package B107.vision.repository;
+//package B107.server.repository;
 //
-//import B107.vision.entity.Token;
+//import B107.server.entity.Token;
 //import org.springframework.data.jpa.repository.JpaRepository;
 //import org.springframework.data.jpa.repository.Modifying;
 //import org.springframework.data.jpa.repository.Query;
