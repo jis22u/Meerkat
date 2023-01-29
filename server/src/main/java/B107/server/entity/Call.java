@@ -1,4 +1,4 @@
-package B107.vision.entity;
+package B107.server.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,49 +10,49 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "deposit")
+@Table(name = "call")
 @EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Deposit implements Serializable {
+public class Call implements Serializable {
 
+    // 시야 요청건의 Idx
     @Id
     @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    // 거래당사자 Idx
+    // 요청자 Idx
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    @Column(name = "reg_date")
-    private LocalDateTime regDate; // 거래 일시
+    private String location; // 위치 정보
+    private Float lat; // 위도
+    private Float lng; // 경도
+    private Integer coin; // 주고받은 코인량
+    private String content; // 요청사항 String
 
-    private Integer coin; // 거래 유동량
-    private Integer balance; // 잔액
-
-    @Column(name = "deal_code")
-    private Integer dealCode; // 거래코드
+    @Column(name = "room_id")
+    private String roomId; // 대화방 id
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Deposit deposit = (Deposit) o;
-        return idx.equals(deposit.idx) && member.equals(deposit.member) && regDate.equals(deposit.regDate) && coin.equals(deposit.coin) && balance.equals(deposit.balance) && dealCode.equals(deposit.dealCode);
+        Call call = (Call) o;
+        return idx.equals(call.idx) && member.equals(call.member) && location.equals(call.location) && lat.equals(call.lat) && lng.equals(call.lng) && coin.equals(call.coin) && content.equals(call.content) && Objects.equals(roomId, call.roomId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idx, member, regDate, coin, balance, dealCode);
+        return Objects.hash(idx, member, location, lat, lng, coin, content, roomId);
     }
 }
