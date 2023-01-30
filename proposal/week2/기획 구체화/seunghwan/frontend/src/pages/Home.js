@@ -1,12 +1,5 @@
-// const Home = () => {
-//     return (
-//         <div>
-//             <h1>Home</h1>
-//         </div>
-//     );
-// };
 
-// export default Home; 
+
 
 import { useState, useEffect } from "react";
 
@@ -61,3 +54,5 @@ const Home = () => {
         </Map>
     );
   }
+
+  export default Home; 
