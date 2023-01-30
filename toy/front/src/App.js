@@ -44,10 +44,10 @@ function App() {
         {
           urls: [
             "stun:stun.l.google.com:19302",
-            "stun:stun1.l.google.com:19302",
-            "stun:stun2.l.google.com:19302",
-            "stun:stun3.l.google.com:19302",
-            "stun:stun4.l.google.com:19302",
+            // "stun:stun1.l.google.com:19302",
+            // "stun:stun2.l.google.com:19302",
+            // "stun:stun3.l.google.com:19302",
+            // "stun:stun4.l.google.com:19302",
           ],
         },
       ],
@@ -56,10 +56,10 @@ function App() {
       socketRef.current.emit("ice", e.candidate, roomName);
     }
     peerRef.current.ontrack= (e) => {
-      console.log('상대방')
-      console.log(e)
       remoteVideoRef.current.srcObject = e.streams[0];
+      // 상대방이 getTracks으로 audio, video를 peerRef에 담을 때마다 실행된다.
     }
+
     myStream
       .getTracks()
       .forEach((track) => {
@@ -68,38 +68,38 @@ function App() {
   }
 
 
-useEffect(() => {
-  socketRef.current = io("192.168.31.154:5000");
-  initCall();
+  useEffect(() => {
+    socketRef.current = io("http://192.168.35.156:5000");
+    initCall();
 
-  socketRef.current.on("welcome", async () => {
-    // myDataChannel = myPeerConnection.createDataChannel("chat");
-    // myDataChannel.addEventListener("message", (event) => console.log(event.data));
-    // console.log("made data channel");
-    const offer = await peerRef.current.createOffer();
-    peerRef.current.setLocalDescription(offer);
-    console.log("sent the offer");
-    socketRef.current.emit("offer", offer, roomName);
-  });
-  
-  socketRef.current.on("offer", async (offer) => {
-    // myPeerConnection.addEventListener("datachannel", (event) => {
-    //   myDataChannel = event.channel;
-    //   myDataChannel.addEventListener("message", (event) =>
-    //     console.log(event.data)
-    //   );
-    // });
-    console.log("received the offer");
-    peerRef.current.setRemoteDescription(offer);
-    const answer = await peerRef.current.createAnswer();
-    peerRef.current.setLocalDescription(answer);
-    socketRef.current.emit("answer", answer, roomName);
-    console.log("sent the answer");
-  });
-  
-  socketRef.current.on("answer", (answer) => {
-    console.log("received the answer");
-    peerRef.current.setRemoteDescription(answer);
+    socketRef.current.on("welcome", async () => {
+      // myDataChannel = myPeerConnection.createDataChannel("chat");
+      // myDataChannel.addEventListener("message", (event) => console.log(event.data));
+      // console.log("made data channel");
+      const offer = await peerRef.current.createOffer();
+      peerRef.current.setLocalDescription(offer);
+      console.log("sent the offer");
+      socketRef.current.emit("offer", offer, roomName);
+    });
+
+    socketRef.current.on("offer", async (offer) => {
+      // myPeerConnection.addEventListener("datachannel", (event) => {
+      //   myDataChannel = event.channel;
+      //   myDataChannel.addEventListener("message", (event) =>
+      //     console.log(event.data)
+      //   );
+      // });
+      console.log("received the offer");
+      peerRef.current.setRemoteDescription(offer);
+      const answer = await peerRef.current.createAnswer();
+      peerRef.current.setLocalDescription(answer);
+      socketRef.current.emit("answer", answer, roomName);
+      console.log("sent the answer");
+    });
+
+    socketRef.current.on("answer", (answer) => {
+      console.log("received the answer");
+      peerRef.current.setRemoteDescription(answer);
   });
   
   socketRef.current.on("ice", (ice) => {
