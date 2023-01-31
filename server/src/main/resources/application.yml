@@ -16,7 +16,7 @@ spring:
       hibernate:
         globally_quoted_identifiers: 'true'
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       use-new-id-generator-mappings: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -29,6 +29,9 @@ spring:
     property-naming-strategy: LOWER_CAMEL_CASE
   main:
     allow-circular-references: true
+  web:
+    resources:
+     add-mappings: false
 
 jwt:
   header:
@@ -45,7 +48,7 @@ jwt:
 
 logging:
   level:
-    B107.vision: debug
+    B107.server.meerkat: debug
     org:
       hibernate:
         SQL: DEBUG

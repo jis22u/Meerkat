@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -8,11 +8,11 @@
 		<version>2.7.8</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>B107</groupId>
-	<artifactId>vision</artifactId>
+	<groupId>B107.server</groupId>
+	<artifactId>meerkat</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>vision</name>
-	<description>vision-backspring</description>
+	<name>meerkat</name>
+	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -20,10 +20,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -44,10 +40,6 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-websocket</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.thymeleaf.extras</groupId>
-			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
 		</dependency>
 
 		<dependency>
@@ -78,16 +70,11 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
+			<groupId>com.softwaremill.akka-http-session</groupId>
+			<artifactId>jwt_2.12</artifactId>
+			<version>0.7.0</version>
+			<scope>compile</scope>
 		</dependency>
-        <dependency>
-            <groupId>com.softwaremill.akka-http-session</groupId>
-            <artifactId>jwt_2.12</artifactId>
-            <version>0.7.0</version>
-            <scope>compile</scope>
-        </dependency>
 		<dependency>
 			<groupId>io.github.gonguasp</groupId>
 			<artifactId>jwt</artifactId>
@@ -100,18 +87,18 @@
 			<version>0.0.4</version>
 			<scope>compile</scope>
 		</dependency>
-<!--		<dependency>-->
-<!--			<groupId>com.github.wpyuan</groupId>-->
-<!--			<artifactId>default-auth-jwt</artifactId>-->
-<!--			<version>0.3.0</version>-->
-<!--			<scope>compile</scope>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>com.github.wpyuan</groupId>-->
+		<!--			<artifactId>default-auth-jwt</artifactId>-->
+		<!--			<version>0.3.0</version>-->
+		<!--			<scope>compile</scope>-->
+		<!--		</dependency>-->
 		<dependency>
 			<groupId>io.toolsplus</groupId>
 			<artifactId>atlassian-jwt-generators_2.13</artifactId>
 			<version>0.2.0</version>
 			<scope>compile</scope>
-		</dependency>
+		</dependency>e
 		<dependency>
 			<groupId>io.toolsplus</groupId>
 			<artifactId>atlassian-jwt-core_2.13</artifactId>
@@ -125,14 +112,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<exclude>
-							<groupId>org.projectlombok</groupId>
-							<artifactId>lombok</artifactId>
-						</exclude>
-					</excludes>
-				</configuration>
 			</plugin>
 		</plugins>
 	</build>
