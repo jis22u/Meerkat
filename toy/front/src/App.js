@@ -10,9 +10,10 @@ function App() {
   const remoteVideoRef = useRef(null);
   const inputRef = useRef('');
   const roomName = "123";
+  const camDirection = useRef(true);
   let myStream;
 
-  // const GetOptions = () => {
+  // const getOptions = () => {
   //   const devices = async () => { await navigator.mediaDevices.enumerateDevices() }
   //   console.log(devices)
   //   return (
@@ -35,6 +36,37 @@ function App() {
     myStream.getVideoTracks()[0].enabled = !myStream.getVideoTracks()[0].enabled
   }
   // [0]으로 해도 오류가 안 나는지 확인
+  
+  const handleCamDirection = async () => {
+    camDirection.current = !camDirection.current
+    console.log(camDirection.current)
+
+    const user = {
+      audio: true,
+      video: { facingMode: "user" },
+    };
+
+    const enviroment = {
+      audio: true,
+      video: { facingMode: "enviroment"},
+    }
+
+    myStream = await navigator.mediaDevices.getUserMedia(
+      camDirection.current ? user : enviroment
+    )
+    console.log(myStream)
+    localVideoRef.current.srcObject = myStream
+
+    // if (peerRef.current) {
+    //   const videoTrack = myStream.getVideoTracks()[0];
+    //   const videoSender = peerRef.current
+    //     .getSenders()
+    //     .find((sender) => sender.track.kind === "video");
+    //   videoSender.replaceTrack(videoTrack);
+    //   상대방에게 보내는 Stream을 바꾼다.
+    // }
+
+  }
 
 
   const initCall = async () => {
@@ -47,7 +79,7 @@ function App() {
     try {
       myStream = await navigator.mediaDevices.getUserMedia(
         {
-          video: true,
+          video: { facingMode: "enviroment" },
           audio: true,
         }
       )
@@ -88,6 +120,7 @@ function App() {
 
 
   useEffect(() => {
+    console.log('Render')
     socketRef.current = io("http://192.168.35.156:5000");
     initCall();
     socketRef.current.on("welcome", async () => {
@@ -167,6 +200,7 @@ function App() {
       </form>
       <button onClick={handleCameraOff}>Camera Off</button>
       <button onClick={handleMicOff}>Mic Off</button>
+      <button onClick={handleCamDirection}>Camera Change</button>
     </div>
   );
 }
