@@ -2,6 +2,10 @@
 노션 https://www.notion.so/ebcf2a62066a481080734f7ed929fe87  
 기능명세서 https://www.notion.so/936183033cf8421ebf567aa7d7204932
 
+# 2023.01.31
+- react 이론 공부
+- 카카오맵 api이용해서 지도 띄우기
+
 # 2023.01.30
 - 역할분담
 - webRTC 구현 
