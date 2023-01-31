@@ -98,7 +98,7 @@
 			<artifactId>atlassian-jwt-generators_2.13</artifactId>
 			<version>0.2.0</version>
 			<scope>compile</scope>
-		</dependency>e
+		</dependency>
 		<dependency>
 			<groupId>io.toolsplus</groupId>
 			<artifactId>atlassian-jwt-core_2.13</artifactId>
