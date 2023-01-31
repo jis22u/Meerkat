@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
 
 
@@ -10,6 +10,8 @@ function App() {
   const remoteVideoRef = useRef(null);
   const inputRef = useRef('');
   const roomName = "123";
+  const [device, setdevice ] = useState('');
+
   let myStream;
 
   const initCall = async () => {
@@ -32,6 +34,13 @@ function App() {
           audio: true,
         }
       )
+      const deviceRef = await navigator.mediaDevices.enumerateDevices()
+      console.log(deviceRef)
+      setdevice(deviceRef.filter((device) => {
+        if (device.kind === "videoinput") {
+          return device.label
+        }
+      }))
       localVideoRef.current.srcObject = myStream;
     } catch (e) {
       console.error(e);
@@ -44,10 +53,10 @@ function App() {
         {
           urls: [
             "stun:stun.l.google.com:19302",
-            "stun:stun1.l.google.com:19302",
-            "stun:stun2.l.google.com:19302",
-            "stun:stun3.l.google.com:19302",
-            "stun:stun4.l.google.com:19302",
+            // "stun:stun1.l.google.com:19302",
+            // "stun:stun2.l.google.com:19302",
+            // "stun:stun3.l.google.com:19302",
+            // "stun:stun4.l.google.com:19302",
           ],
         },
       ],
@@ -69,6 +78,7 @@ function App() {
 
 
 useEffect(() => {
+  console.log('useEffect 실행')
   socketRef.current = io("192.168.31.154:5000");
   initCall();
 
@@ -77,6 +87,9 @@ useEffect(() => {
     // myDataChannel.addEventListener("message", (event) => console.log(event.data));
     // console.log("made data channel");
     const offer = await peerRef.current.createOffer();
+    console.log(typeof(offer))
+    console.log(typeof offer);
+    // console.log(offer)
     peerRef.current.setLocalDescription(offer);
     console.log("sent the offer");
     socketRef.current.emit("offer", offer, roomName);
@@ -90,6 +103,8 @@ useEffect(() => {
     //   );
     // });
     console.log("received the offer");
+    console.log(typeof(offer));
+    console.log(typeof offer);
     peerRef.current.setRemoteDescription(offer);
     const answer = await peerRef.current.createAnswer();
     peerRef.current.setLocalDescription(answer);
@@ -112,7 +127,7 @@ useEffect(() => {
   })
 })
 
-// dependency array는 필요한가? 
+// dependency array는 필요한가? componenetDidmout + componentDidupdate , every rerender마다 재실행 중
 
 
 
@@ -144,6 +159,7 @@ useEffect(() => {
         <input ref={inputRef}></input>
         <button type="submit">Submit</button>
       </form>
+      <h1>{device}</h1>
     </div>
   );
 }
