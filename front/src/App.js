@@ -15,6 +15,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/cash" element={<Cash />} />
         </Route>
+        
         <Route path="/map" element={<Map />} />
       </Routes>
   );
