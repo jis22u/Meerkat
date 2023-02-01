@@ -1,0 +1,12 @@
+.pin {
+    text-align: center;
+    width: rem;
+    z-index: 10;
+    position: fixed;
+    top: 20rem;
+    left: calc(50% - 5rem);
+}
+
+.pinImg {
+    width: 13rem;
+}

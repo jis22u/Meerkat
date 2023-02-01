@@ -16,7 +16,7 @@ function App() {
           <Route path="/cash" element={<Cash />} />
         </Route>
         
-        <Route path="/map" element={<Map />} />
+        `<Route path="/map" element={<Map />} />`
       </Routes>
   );
 }
