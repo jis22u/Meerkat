@@ -1,27 +1,25 @@
 package B107.server.meerkat.entity;
 
+import B107.server.meerkat.config.utils.BaseAtTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @DynamicInsert
 @DynamicUpdate
 @Entity
 @Table(name = "member")
-@EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member implements Serializable {
+public class Member extends BaseAtTime implements Serializable {
 
     // 사용자 Idx
     @Id
@@ -32,22 +30,14 @@ public class Member implements Serializable {
     @Column(name = "member_id")
     private String memberId; // 사용자 ID
 
-    private String pwd; // 사용자 pwd
-    private String nickname; // 사용자 nickname
+    private String password; // 사용자 pwd
+    private String name; // 사용자 name
     private String email; // 사용자 email
-
-    @Column(name = "phone_no")
-    private String phoneNo; // 사용자 전화번호
-
-    @Column(name = "reg_date")
-    private LocalDateTime regDate; // 사용자 가입일
-
+    private String tel; // 사용자 전화번호
     private Integer warn; // 사용자가 신고받은 횟수
 //    @Convert(converter = BooleanToYNConverter.class)
     private Boolean ban; // 사용자 제재 여부
-
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
     @Column(name = "fcm_token")
     private String fcmToken; // fcm 알림을 받을 token

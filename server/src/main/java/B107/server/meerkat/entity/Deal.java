@@ -1,12 +1,12 @@
 package B107.server.meerkat.entity;
 
+import B107.server.meerkat.config.utils.BaseAtTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,12 +17,11 @@ import java.util.Objects;
 @DynamicUpdate
 @Entity
 @Table(name = "deal")
-@EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Deal implements Serializable {
+public class Deal extends BaseAtTime implements Serializable {
 
     // 거래 table Idx
     @Id

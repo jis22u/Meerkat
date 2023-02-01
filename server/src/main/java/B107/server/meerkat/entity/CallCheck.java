@@ -1,12 +1,12 @@
 package B107.server.meerkat.entity;
 
+import B107.server.meerkat.config.utils.BaseAtTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,15 +16,17 @@ import java.util.Objects;
 @DynamicUpdate
 @Entity
 @Table(name = "call_check")
-@EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CallCheck implements Serializable {
+public class CallCheck extends BaseAtTime implements Serializable {
 
-    // 요청자 Idx
     @Id
+    @Column(name = "idx")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idx;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
