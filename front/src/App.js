@@ -1,4 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
+import Login from 'pages/Login'
+import Register from 'pages/Register'
+
 
 import 'App.css';
 import Layout from 'pages/Layout';
@@ -17,6 +20,8 @@ function App() {
         </Route>
         
         <Route path="/map" element={<Map />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
   );
 }

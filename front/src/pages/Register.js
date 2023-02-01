@@ -72,7 +72,8 @@ const Register = () => {
         />
       </div>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? <Spinner /> : 'Register'}
+        {loading ? '대기중' : 'Register'}
+        <Spinner />
       </button>
     </form>
   )

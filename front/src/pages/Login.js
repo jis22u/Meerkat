@@ -44,7 +44,8 @@ const LoginScreen = () => {
         />
       </div>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? <Spinner /> : 'Login'}
+        {loading ? '대기중' : 'Login'}
+        {/* <Spinner /> */}
       </button>
     </form>
   )

@@ -106,11 +106,12 @@ function App() {
 
   useEffect(() => {
     console.log('Render')
-    socketRef.current = io("192.168.31.154:5000");
+    socketRef.current = io("192.168.35.156:5000");
     initCall();
     socketRef.current.on("welcome", async () => {
+      console.log('welcome 들어왔어요ㅋㅋ')
       ChannelRef.current = peerRef.current.createDataChannel("chat");
-      // console.log(ChannelRef.current)
+      console.log(ChannelRef.current)
       // ChannelRef.current.onmessage((event) => console.log(event.data));
 
       const offer = await peerRef.current.createOffer();
@@ -120,11 +121,12 @@ function App() {
     });
 
     socketRef.current.on("offer", async (offer) => {
-      // peerRef.current.ondatachannel((event) => {
-      //   console.log('찾았다!')
-      //   ChannelRef.current = event.channel;
-      //   // ChannelRef.current.onmessage((event) => console.log(event.data))
-      // });
+      console.log(peerRef.current)
+      peerRef.current.ondatachannel((event) => {
+        console.log('찾았다!')
+        ChannelRef.current = event.channel;
+        // ChannelRef.current.onmessage((event) => console.log(event.data))
+      });
 
       console.log("received the offer");
       peerRef.current.setRemoteDescription(offer);

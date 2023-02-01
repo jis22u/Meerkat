@@ -48,6 +48,7 @@ export const registerUser = createAsyncThunk(
         { firstName, email, password },
         config
       )
+      
     } catch (error) {
 
       if (error.response && error.response.data.message) {
