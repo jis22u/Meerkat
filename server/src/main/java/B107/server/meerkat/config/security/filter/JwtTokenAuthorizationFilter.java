@@ -1,7 +1,7 @@
 package B107.server.meerkat.config.security.filter;
 
 import B107.server.meerkat.config.jwt.JwtTokenProvider;
-import B107.server.meerkat.config.security.PrincipalDetailService;
+import B107.server.meerkat.config.auth.PrincipalDetailService;
 import B107.server.meerkat.config.security.handler.ResponseHandler;
 import B107.server.meerkat.dto.token.TokenResDTO;
 import lombok.Setter;

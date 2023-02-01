@@ -23,11 +23,11 @@ public class DecodeEncodeHandler {
 		return passwordEncoder.encode(password);
 	}
 
-	public String roleValid(String email) {
+	public String roleValid(String memberId) {
 		log.info(METHOD_NAME + "- roleValid() ...");
-		if (memberRepository.existsByMemberId(email)) {
+		if (memberRepository.existsByMemberId(memberId)) {
 			log.info("Member memberId Validate - Success");
-			Member member = memberRepository.findByMemberId(email);
+			Member member = memberRepository.findByMemberId(memberId);
 			return member.getRole();
 		}
 		log.warn("Memeber memberId Validate - Fail");

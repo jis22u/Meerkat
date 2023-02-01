@@ -28,7 +28,9 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(globalFilter.getPermitAll()).permitAll();
+//                .antMatchers("**/test/**").permitAll()
+                .antMatchers("/test" + globalFilter.getPermitAll()).permitAll();
+//                .anyRequest().hasRole("USER");
         return http.build();
     }
 }

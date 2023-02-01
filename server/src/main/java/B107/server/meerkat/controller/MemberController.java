@@ -17,8 +17,8 @@ public class MemberController {
 
 
     @GetMapping(value ="/")
-    public String test() {
-        return "test";
+    public int test() {
+        return 222222222;
     }
 
 }
