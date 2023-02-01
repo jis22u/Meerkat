@@ -6,10 +6,6 @@ app.use(cors());
 const httpServer = require('http').createServer(app)
 const wsServer = require('socket.io')(httpServer, { cors: {origin: "*", methods: ["GET", "POST"]}})
 
-app.get("/", (req, res) => {
-    res.json({"users":"hi"})
-})
-
 
 wsServer.on("connection", (socket) => {
   console.log('입장')
@@ -27,10 +23,6 @@ wsServer.on("connection", (socket) => {
       console.log('ice')
       socket.to(roomName).emit("ice", ice);
     });
-    socket.on('message', (message, roomName) => {
-      console.log('메시지', message)
-      socket.to(roomName).emit("message", message);
-    })
   });
 
 

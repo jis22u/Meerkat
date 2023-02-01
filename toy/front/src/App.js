@@ -8,25 +8,12 @@ function App() {
   const peerRef = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
-  const inputRef = useRef('');
-  const roomName = "123";
-  const camDirection = useRef(true);
+  const ChannelRef = useRef(null);
+
   let myStream;
+  let cameraOptions
 
-  // const getOptions = () => {
-  //   const devices = async () => { await navigator.mediaDevices.enumerateDevices() }
-  //   console.log(devices)
-  //   return (
-  //     <select>
-  //       {devices.map((device) => (<option>{device.deviceId}</option>))}
-  //     </select>
-  //   )
-  // }
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    socketRef.current.emit("message", inputRef.current.value, roomName)
-  }
+  const roomName = "123";
 
   const handleMicOff = () => {
     myStream.getAudioTracks()[0].enabled = !myStream.getAudioTracks()[0].enabled
@@ -38,55 +25,53 @@ function App() {
   // [0]으로 해도 오류가 안 나는지 확인
   
   const handleCamDirection = async () => {
-    camDirection.current = !camDirection.current
-    console.log(camDirection.current)
+    const currentCamera = myStream.getVideoTracks()[0];
 
-    const user = {
-      audio: true,
-      video: { facingMode: "user" },
-    };
-
-    const enviroment = {
-      audio: true,
-      video: { facingMode: "enviroment"},
+    cameraOptions.forEach((camera) => {
+      if (camera.label !== currentCamera.label) {
+        getMedia(camera.deviceId)
+        return false
+      }
+    })
+    
+    if (peerRef.current) {
+      const videoTrack = myStream.getVideoTracks()[0];
+      const videoSender = peerRef.current
+        .getSenders()
+        .find((sender) => sender.track.kind === "video");
+      videoSender.replaceTrack(videoTrack);
     }
-
-    myStream = await navigator.mediaDevices.getUserMedia(
-      camDirection.current ? user : enviroment
-    )
-    console.log(myStream)
-    localVideoRef.current.srcObject = myStream
-
-    // if (peerRef.current) {
-    //   const videoTrack = myStream.getVideoTracks()[0];
-    //   const videoSender = peerRef.current
-    //     .getSenders()
-    //     .find((sender) => sender.track.kind === "video");
-    //   videoSender.replaceTrack(videoTrack);
-    //   상대방에게 보내는 Stream을 바꾼다.
-    // }
-
   }
 
 
   const initCall = async () => {
     await getMedia();
     makeConnection();
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    cameraOptions = devices.filter((device) => device.kind === "videoinput");
     socketRef.current.emit("join_room", roomName )
   }
 
-  const getMedia = async () => {
+  const getMedia = async (deviceId) => {
+    const initialConstrains = {
+      audio: true,
+      video: { facingMode: "user" },
+    };
+
+    const cameraConstraints = {
+      audio: true,
+      video: { deviceId: { exact: deviceId } },
+    };
+
     try {
       myStream = await navigator.mediaDevices.getUserMedia(
-        {
-          video: { facingMode: "enviroment" },
-          audio: true,
-        }
+        deviceId ? cameraConstraints : initialConstrains
       )
       localVideoRef.current.srcObject = myStream;
     } catch (e) {
       console.error(e);
     }
+
   }
 
   const makeConnection = async () => {
@@ -116,17 +101,18 @@ function App() {
       .forEach((track) => {
         peerRef.current.addTrack(track, myStream)
       })
-  }
+    }
 
 
   useEffect(() => {
     console.log('Render')
-    socketRef.current = io("http://192.168.35.156:5000");
+    socketRef.current = io("192.168.31.154:5000");
     initCall();
     socketRef.current.on("welcome", async () => {
-      // myDataChannel = myPeerConnection.createDataChannel("chat");
-      // myDataChannel.addEventListener("message", (event) => console.log(event.data));
-      // console.log("made data channel");
+      ChannelRef.current = peerRef.current.createDataChannel("chat");
+      // console.log(ChannelRef.current)
+      // ChannelRef.current.onmessage((event) => console.log(event.data));
+
       const offer = await peerRef.current.createOffer();
       peerRef.current.setLocalDescription(offer);
       console.log("sent the offer");
@@ -134,12 +120,12 @@ function App() {
     });
 
     socketRef.current.on("offer", async (offer) => {
-      // myPeerConnection.addEventListener("datachannel", (event) => {
-      //   myDataChannel = event.channel;
-      //   myDataChannel.addEventListener("message", (event) =>
-      //     console.log(event.data)
-      //   );
+      // peerRef.current.ondatachannel((event) => {
+      //   console.log('찾았다!')
+      //   ChannelRef.current = event.channel;
+      //   // ChannelRef.current.onmessage((event) => console.log(event.data))
       // });
+
       console.log("received the offer");
       peerRef.current.setRemoteDescription(offer);
       const answer = await peerRef.current.createAnswer();
@@ -151,21 +137,15 @@ function App() {
     socketRef.current.on("answer", (answer) => {
       console.log("received the answer");
       peerRef.current.setRemoteDescription(answer);
-  });
-  
-  socketRef.current.on("ice", (ice) => {
-    peerRef.current.addIceCandidate(ice);
-    console.log("received candidate");
-  });
+    });
 
-  socketRef.current.on("message", (message) => {
-    console.log(message)
+    socketRef.current.on("ice", (ice) => {
+      peerRef.current.addIceCandidate(ice);
+      console.log("received candidate");
+    });
   })
-})
 
 // dependency array는 필요한가? 
-
-
 
   return (
     <div>
@@ -194,10 +174,6 @@ function App() {
         playsInline
         autoPlay
       />
-      <form onSubmit={handleSubmit}>
-        <input ref={inputRef}></input>
-        <button type="submit">Submit</button>
-      </form>
       <button onClick={handleCameraOff}>Camera Off</button>
       <button onClick={handleMicOff}>Mic Off</button>
       <button onClick={handleCamDirection}>Camera Change</button>
