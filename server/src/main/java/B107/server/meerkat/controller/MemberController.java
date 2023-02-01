@@ -2,6 +2,7 @@ package B107.server.meerkat.controller;
 
 import B107.server.meerkat.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,5 +16,9 @@ public class MemberController {
     private final MemberService memberService;
 
 
+    @GetMapping(value ="/")
+    public String test() {
+        return "test";
+    }
 
 }

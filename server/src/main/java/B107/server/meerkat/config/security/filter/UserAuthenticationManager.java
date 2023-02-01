@@ -31,10 +31,10 @@ public class UserAuthenticationManager implements AuthenticationManager {
 			String password = String.valueOf(authentication.getCredentials());
 
 			if (memberId == null || memberId.equals("")) {
-				log.warn("Employee EmpNo validate - Empty or null");
+				log.warn("Member memberId validate - Empty or null");
 				throw new NullPointerException();
 			} else if (password == null || password.equals("")) {
-				log.warn("Employee password validate - Empty or null");
+				log.warn("Member password validate - Empty or null");
 				throw new NullPointerException();
 			} else {
 				if (decodeEncodeHandler.memberIdValid(memberId)) {

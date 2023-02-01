@@ -10,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @DynamicInsert
 @DynamicUpdate
@@ -41,17 +40,4 @@ public class Call extends BaseAtTime implements Serializable {
 
     @Column(name = "room_id")
     private String roomId; // 대화방 id
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Call call = (Call) o;
-        return idx.equals(call.idx) && member.equals(call.member) && location.equals(call.location) && lat.equals(call.lat) && lng.equals(call.lng) && coin.equals(call.coin) && content.equals(call.content) && Objects.equals(roomId, call.roomId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idx, member, location, lat, lng, coin, content, roomId);
-    }
 }

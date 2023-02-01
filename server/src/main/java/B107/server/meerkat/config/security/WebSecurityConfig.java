@@ -11,24 +11,24 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
-	private final GlobalFilter globalFilter;
+    private final GlobalFilter globalFilter;
 
-	@Bean
-	public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
-		http.httpBasic().disable().csrf().disable().formLogin().disable()
-				.logout()
-				.logoutUrl(globalFilter.getLogoutURL())
-				.deleteCookies(globalFilter.getSessionId())
-				.addLogoutHandler(globalFilter.logoutHandler())
-				.logoutSuccessHandler(globalFilter.logoutSuccessHandler())
-				.and()
-				.addFilter(globalFilter.corsFilter())
-				.addFilter(globalFilter.authenticationFilter())
-				.addFilter(globalFilter.authorizationFilter())
-				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and()
-				.authorizeRequests()
-				.antMatchers(globalFilter.getPermitAll()).permitAll();
-		return http.build();
-	}
+    @Bean
+    public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
+        http.httpBasic().disable().csrf().disable().formLogin().disable()
+                .logout()
+                .logoutUrl(globalFilter.getLogoutURL())
+                .deleteCookies(globalFilter.getSessionId())
+                .addLogoutHandler(globalFilter.logoutHandler())
+                .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
+                .and()
+                .addFilter(globalFilter.corsFilter())
+                .addFilter(globalFilter.authenticationFilter())
+                .addFilter(globalFilter.authorizationFilter())
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(globalFilter.getPermitAll()).permitAll();
+        return http.build();
+    }
 }
