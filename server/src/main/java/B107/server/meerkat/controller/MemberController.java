@@ -1,32 +1,49 @@
 package B107.server.meerkat.controller;
 
+import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
+import B107.server.meerkat.config.utils.ResponseDTO;
+import B107.server.meerkat.repository.MemberRepository;
 import B107.server.meerkat.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
+@Slf4j
 @RestController
-@RequestMapping("/member")
+@RequestMapping(value = "/member")
 @RequiredArgsConstructor
 public class MemberController {
 
-//    private static final String METHOD_NAME = MemberController.class.getName();
+    private static final String METHOD_NAME = MemberController.class.getName();
 
-    @Autowired
     private final MemberService memberService;
 
-    // 로그인
-    @PostMapping("/login")
-    public String login(@RequestBody Map<String, String> user) {
-        String token = memberService.findByMemberId(user);
-        System.out.println(token);
-        return token;
+    private final MemberRepository memberRepository;
+    private final DecodeEncodeHandler decodeEncodeHandler;
+
+//    @PostMapping("/signup")
+//    public void sign(@RequestBody Model model) {
+//        log.info("MemberController join method ...");
+//
+//        Member member = join(model);
+//        System.out.println("asdfasf");
+//        System.out.println(member);
+//    }
+//
+//    public Member join(Model model) {
+//        log.info("MemberService join() ...");
+//        return memberRepository.save(model.toEntity(decodeEncodeHandler.passwordEncode(model.getPassword())));
+//    }
+
+    @PostMapping("/member/check")
+    public ResponseDTO check(@RequestBody Model model) {
+        return new ResponseDTO().of(HttpStatus.OK, "hi", model);
     }
 
+    @GetMapping(value ="/")
+    public String test() {
+        return "test";
+    }
 
 }

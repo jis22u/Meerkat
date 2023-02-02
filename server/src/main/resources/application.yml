@@ -46,6 +46,28 @@ jwt:
   secret:
     key: ${jwt-secret-key}
 
+user:
+  url:
+    client: http://localhost:3000
+    logout: /logout
+    admin: /admin
+    member: /member
+  role:
+    admin: ROLE_ADMIN
+    member: ROLE_MEMBER
+  permit:
+    all: '/**'
+  session:
+    id: 'JSESSIONID'
+  cors:
+    method: 'POST, GET, PUT, PATCH, DELETE'
+    header: '*'
+    pattern: '*'
+    source:
+      pattern: '/**'
+  cookie:
+    credential: true
+
 logging:
   level:
     B107.server.meerkat: debug

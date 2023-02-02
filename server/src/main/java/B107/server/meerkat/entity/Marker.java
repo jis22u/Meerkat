@@ -1,12 +1,12 @@
 package B107.server.meerkat.entity;
 
+import B107.server.meerkat.config.utils.BaseAtTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,12 +16,11 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @Entity
 @Table(name = "marker")
-@EntityScan
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Marker implements Serializable {
+public class Marker extends BaseAtTime implements Serializable {
 
     @Id
     @Column(name = "idx")
