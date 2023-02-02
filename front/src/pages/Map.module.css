@@ -1,0 +1,13 @@
+.map {
+    position: fixed;
+    width: 100%;
+    height: 800px;
+    left: auto;
+    right: auto;
+  }
+
+  .mapBox {
+    position : fixed;
+    width: 100%;
+    height: 1000px;
+  }
