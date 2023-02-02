@@ -6,12 +6,17 @@ const userToken = localStorage.getItem('userToken')
   ? localStorage.getItem('userToken')
   : null
 
+const refreshToken = localStorage.getItem('refreshToken')
+  ? localStorage.getItem('refreshToken')
+  : null
+
 const initialState = {
   loading: false,
-  userInfo: null,
   userToken,
+  refreshToken,
   error: null,
   success: false,
+  isLogin: false,
 }
 
 const authSlice = createSlice({
@@ -20,30 +25,40 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
         localStorage.removeItem('userToken')
-        state.loading = false
-        state.userInfo = null
+        localStorage.removeItem('refreshToken')
         state.userToken = null
-        state.error = null
+        state.refreshToken = null
+        state.isLogin = false
       },
   },
   extraReducers: {
     [userLogin.pending]: (state) => {
-      state.loading = true
-      state.error = null
+      state.loading = true;
     },
     [userLogin.fulfilled]: (state, { payload }) => {
-      state.loading = false
-      state.userInfo = payload
-      state.userToken = payload.userToken
-      // 백엔드에서 정한 Token 이름에 따라 변경하기
+      state.loading = false;
+      state.userToken = payload.userToken;
+      state.refreshToken = payload.refreshToken;
     },
     [userLogin.rejected]: (state, { payload }) => {
-      state.loading = false
+      state.loading = false;
       state.error = payload
     },
-
-    // registerUser 결과값 사용하기
+    
+    [registerUser.pending]: (state) => {
+      state.loading = true;
+      state.error = null;
+    },
+    [registerUser.fulfilled]: (state) => {
+      state.loading = false;
+    },
+    [registerUser.rejected]: (state, { payload }) => {
+      state.loading = false;
+      state.error = payload
+    },
   },
+
+  // https://cloudnweb.dev/2021/02/modern-react-redux-tutotials-redux-toolkit-login-user-registration/
 })
 
 export default authSlice.reducer

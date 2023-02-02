@@ -3,19 +3,40 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from 'api/auth'
-import Error from 'components/Error'
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+import Error from 'components/layout/Error'
+
+const schema = yup
+  .object({
+    memberId: yup
+      .string()
+      .required("비밀번호를 입력해 주세요 😦"),
+      password: yup
+      .string()
+      .required("비밀번호를 입력해 주세요 😦")
+  })
+  .required();
 
 const LoginScreen = () => {
-  const { loading, userInfo, error } = useSelector((state) => state.user)
+  const { loading, userInfo, error } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  const { register, handleSubmit } = useForm()
   const navigate = useNavigate()
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  
 
   useEffect(() => {
     if (userInfo) {
       navigate('/home')
     }
-    // 이미 로그인 했다면 Home으로 보내기
   }, [navigate, userInfo])
 
   const submitForm = (data) => {
@@ -24,25 +45,25 @@ const LoginScreen = () => {
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
-      {error && <Error>{error}</Error>}
+      {/* {error && <Error>{error}</Error>} */}
       <div className='form-group'>
-        <label htmlFor='email'>Email</label>
+        <label htmlFor='memberId'>아이디</label>
         <input
-          type='email'
+          type='text'
           className='form-input'
-          {...register('email')}
-          required
+          {...register('memberId')}
         />
+        <p>{errors.memberId?.message}</p>
       </div>
       <div className='form-group'>
-        <label htmlFor='password'>Password</label>
+        <label htmlFor='password'>비밀번호</label>
         <input
           type='password'
           className='form-input'
           {...register('password')}
-          required
         />
       </div>
+      <p>{errors.password?.message}</p>
       <button type='submit' className='button' disabled={loading}>
         {loading ? '대기중' : 'Login'}
         {/* <Spinner /> */}
