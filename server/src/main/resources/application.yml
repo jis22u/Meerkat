@@ -54,7 +54,7 @@ user:
     member: /member
   role:
     admin: ROLE_ADMIN
-    member: ROLE_USER
+    member: ROLE_MEMBER
   permit:
     all: '/**'
   session:

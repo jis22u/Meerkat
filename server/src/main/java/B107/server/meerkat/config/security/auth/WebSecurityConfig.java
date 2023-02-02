@@ -1,4 +1,4 @@
-package B107.server.meerkat.config.security;
+package B107.server.meerkat.config.security.auth;
 
 import B107.server.meerkat.config.security.filter.GlobalFilter;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("**/test/**").permitAll()
-                .antMatchers("/test" + globalFilter.getPermitAll()).permitAll();
-//                .anyRequest().hasRole("USER");
+                .antMatchers(globalFilter.getPermitAll()).permitAll();
         return http.build();
     }
 }

@@ -1,4 +1,4 @@
-package B107.server.meerkat.config.auth;
+package B107.server.meerkat.config.security.auth;
 
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.repository.MemberRepository;

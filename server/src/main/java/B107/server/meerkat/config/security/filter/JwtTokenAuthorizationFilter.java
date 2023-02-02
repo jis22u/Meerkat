@@ -1,7 +1,7 @@
 package B107.server.meerkat.config.security.filter;
 
 import B107.server.meerkat.config.jwt.JwtTokenProvider;
-import B107.server.meerkat.config.auth.PrincipalDetailService;
+import B107.server.meerkat.config.security.auth.PrincipalDetailService;
 import B107.server.meerkat.config.security.handler.ResponseHandler;
 import B107.server.meerkat.dto.token.TokenResDTO;
 import lombok.Setter;
@@ -21,7 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static B107.server.meerkat.config.utils.Msg.*;
+import static B107.server.meerkat.config.utils.Msg.FAIL_ACCESS;
+import static B107.server.meerkat.config.utils.Msg.FAIL_TOKEN_VALIDATE;
 
 /**
  * 제외 지정한 URL 이 아닌 모든 URL 이 인가된 Token 을 보유하고 있는지 검증하는 클래스

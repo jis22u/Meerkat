@@ -1,4 +1,4 @@
-package B107.server.meerkat.config.auth;
+package B107.server.meerkat.config.security.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

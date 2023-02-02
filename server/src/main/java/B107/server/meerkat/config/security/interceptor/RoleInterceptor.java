@@ -77,12 +77,12 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(memberURL)) {
-							log.info("USER role validate ...");
+							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
-								log.info("USER role validate - Success");
+								log.info("MEMBER role validate - Success");
 								result = true;
 							} else {
-								log.warn("USER role validate - Fail");
+								log.warn("MEMBER role validate - Fail");
 								response.setContentType("text/html; charset=UTF-8");
 								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_USER_ROLE));
 							}

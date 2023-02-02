@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * attemptAuthentication() 에서 검증을 보낼 경우
- * 여기서 사번과 비밀번호의 값이 비어 있는지 잘못된 값을 들고 있는지 DB 값과 비교해서
+ * 여기서 ID와 비밀번호의 값이 비어 있는지 잘못된 값을 들고 있는지 DB 값과 비교해서
  * 올바른 값을 가진 경우만 리턴
  * 나머지 경우는 에러에 맞게 Exception 처리를 해줌
  */

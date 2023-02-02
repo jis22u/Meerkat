@@ -1,7 +1,7 @@
 package B107.server.meerkat.config.security.filter;
 
 import B107.server.meerkat.config.jwt.JwtTokenProvider;
-import B107.server.meerkat.config.auth.PrincipalDetailService;
+import B107.server.meerkat.config.security.auth.PrincipalDetailService;
 import B107.server.meerkat.config.security.handler.UserLogoutHandler;
 import B107.server.meerkat.config.security.handler.UserLogoutSuccessHandler;
 import B107.server.meerkat.repository.TokenRepository;
@@ -60,7 +60,7 @@ public class GlobalFilter {
 		CorsConfiguration config = new CorsConfiguration();
 		config.setAllowCredentials(true);
 		config.addAllowedOriginPattern(corsPattern);
-//		config.addAllowedOrigin(clientURL);
+		config.addAllowedOrigin(clientURL);
 		config.addAllowedHeader(corsHeader);
 		config.addAllowedMethod(corsMethod);
 		config.addExposedHeader(headerAccess);
