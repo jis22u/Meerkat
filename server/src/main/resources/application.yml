@@ -1,0 +1,87 @@
+socket-server:
+  port: 8085
+  host: 192.168.0.5
+
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${datasource}/test_donghun?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: ${dbUser}
+    password: ${dbPwd}
+    hikari:
+      connection-timeout: 10000000
+      validation-timeout: 10000000
+      max-lifetime: 580000000
+  jpa:
+    properties:
+      hibernate:
+        globally_quoted_identifiers: 'true'
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: true
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: true
+    generate-ddl: true
+  devtools:
+    restart:
+      enabled: false
+  jackson:
+    property-naming-strategy: LOWER_CAMEL_CASE
+  main:
+    allow-circular-references: true
+  web:
+    resources:
+     add-mappings: false
+
+jwt:
+  header:
+    access: Authorization
+    refresh: RefreshToken
+  type:
+    access: "Bearer "
+    refresh: "refresh-"
+  time:
+    access: 18000000
+    refresh: 6048000000
+  secret:
+    key: ${jwt-secret-key}
+
+user:
+  url:
+    client: http://localhost:3000
+    logout: /logout
+    admin: /admin
+    member: /member
+  role:
+    admin: ROLE_ADMIN
+    member: ROLE_MEMBER
+  permit:
+    all: '/**'
+  session:
+    id: 'JSESSIONID'
+  cors:
+    method: 'POST, GET, PUT, PATCH, DELETE'
+    header: '*'
+    pattern: '*'
+    source:
+      pattern: '/**'
+  cookie:
+    credential: true
+
+logging:
+  level:
+    B107.server.meerkat: debug
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+
+year:
+  current: 23
