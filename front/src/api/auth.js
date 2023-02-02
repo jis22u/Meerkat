@@ -1,30 +1,31 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const backendURL = 'http://127.0.0.1:????'
+const backendURL = 'http://192.168.1.208:8081'
 // api intercept로 refresh token 만들기
 
 export const userLogin = createAsyncThunk(
   'auth/login',
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ id, password }, { rejectWithValue }) => {
     try {
-
       const config = {
         headers: {
           'Content-Type': 'application/json',
         },
       }
       const { data } = await axios.post(
-        `${backendURL}/api/user/login`,
-        { email, password },
+        `${backendURL}/login`,
+        { id, password },
         config
       )
-
+      console.log(data)
       localStorage.setItem('userToken', data.userToken)
-      // localStorage에 토큰 저장
+      localStorage.setItem('refreshToken', data.refreshToken)
       return data
-      // authSlice로 Data를 넘겨준다.
+      // authSlice로 Data를 넘긴다.
+      
     } catch (error) {
+      console.log('여기야!')
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)
       } else {
@@ -36,7 +37,7 @@ export const userLogin = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'auth/register',
-  async ({ firstName, email, password }, { rejectWithValue }) => {
+  async ( form, { rejectWithValue }) => {
     try {
       const config = {
         headers: {
@@ -45,7 +46,7 @@ export const registerUser = createAsyncThunk(
       }
       await axios.post(
         `${backendURL}/api/user/register`,
-        { firstName, email, password },
+        form,
         config
       )
       
