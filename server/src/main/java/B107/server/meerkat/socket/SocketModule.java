@@ -1,7 +1,7 @@
 package B107.server.meerkat.socket;
 
 
-import B107.server.meerkat.model.Message;
+import B107.server.meerkat.dto.socket.Message;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
@@ -39,6 +39,7 @@ public class SocketModule {
 //        Message.class >>>> JSON string 으로 들어올거임
 		server.addEventListener("offer", Message.class, getOffer());
 		server.addEventListener("answer", Message.class, getAnswer());
+		server.addEventListener("ice", Message.class, getIce());
 	}
 
 
@@ -54,12 +55,9 @@ public class SocketModule {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
 			client.joinRoom(roomName);
 
-			for (
-					SocketIOClient temp : client.getNamespace().getRoomOperations(roomName).getClients()) {
-				if (!temp.getSessionId().equals(client.getSessionId())) {
-					temp.sendEvent("welcome");
-					System.out.println("temp" + temp.getSessionId());
-					System.out.println("client"+ client.getSessionId());
+			for (SocketIOClient first : client.getNamespace().getRoomOperations(roomName).getClients()) {
+				if (!first.getSessionId().equals(client.getSessionId())) {
+					first.sendEvent("welcome");
 				}
 			}
 
@@ -67,7 +65,6 @@ public class SocketModule {
 //			if(size == 2) {
 //				client.sendEvent("welcome");
 //			}
-			System.out.println(size);
 
 			log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
 		};
@@ -75,9 +72,8 @@ public class SocketModule {
 
 
 
-	//    ---------------- offer & answer ------------------------
+	//    ---------------- offer & answer & ice ------------------------
 	private DataListener<Message> getOffer() {
-
 		System.out.println("SocketModule - getOffer()");
 
 		return (senderClient, data, ackSender) -> {
@@ -87,7 +83,6 @@ public class SocketModule {
 	}
 
 	private DataListener<Message> getAnswer() {
-
 		System.out.println("SocketModule - getAnswer()");
 
 		return (senderClient, data, ackSender) -> {
@@ -96,7 +91,16 @@ public class SocketModule {
 		};
 	}
 
-    //  ---------------- offer & answer ------------------------
+	private DataListener<Message> getIce() {
+		System.out.println("SocketModule - getIce()");
+
+		return (senderClient, data, ackSender) -> {
+			log.info(data.toString());
+			socketService.sendSocketIce(senderClient, data);
+		};
+	}
+
+    //  ---------------- offer & answer & ice ------------------------
 
 
 
@@ -108,7 +112,6 @@ public class SocketModule {
 
 		return client -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
-
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}
