@@ -6,14 +6,12 @@ import B107.server.meerkat.config.security.handler.ResponseHandler;
 import B107.server.meerkat.dto.token.TokenResDTO;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -33,16 +31,14 @@ import static B107.server.meerkat.config.utils.Msg.FAIL_TOKEN_VALIDATE;
 
 @Slf4j
 @Setter
-@Component
 public class JwtTokenAuthorizationFilter extends BasicAuthenticationFilter {
 
 	private static final String METHOD_NAME = JwtTokenAuthorizationFilter.class.getName();
-	private final JwtTokenProvider jwtTokenProvider;
-	private final PrincipalDetailService principalDetailService;
+	private JwtTokenProvider jwtTokenProvider;
+	private PrincipalDetailService principalDetailService;
 	private String headerKeyAccess;
 	private String typeAccess;
 
-	@Autowired
 	public JwtTokenAuthorizationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, PrincipalDetailService principalDetailService) {
 		super(userAuthenticationManager);
 		this.jwtTokenProvider = jwtTokenProvider;

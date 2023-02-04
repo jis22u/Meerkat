@@ -11,14 +11,12 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,7 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static B107.server.meerkat.config.utils.Msg.*;
+import static B107.server.meerkat.config.utils.Msg.FAIL_SIGN_IN;
+import static B107.server.meerkat.config.utils.Msg.SUCCESS_SIGN_IN;
 
 /**
  * URL 이 /login 으로 넘어올 경우 spring security 에서 자동으로 attemptAuthentication() 으로 보내줌
@@ -36,7 +35,6 @@ import static B107.server.meerkat.config.utils.Msg.*;
 
 @Slf4j
 @Setter
-@Component
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private static final String METHOD_NAME = UserAuthenticationFilter.class.getName();
 	private UserAuthenticationManager userAuthenticationManager;
@@ -45,7 +43,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 	private String headerKeyAccess;
 	private String typeAccess;
 
-	@Autowired
 	public UserAuthenticationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, TokenRepository tokenRepository) {
 		super(userAuthenticationManager);
 		this.userAuthenticationManager = userAuthenticationManager;
