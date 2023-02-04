@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 @Slf4j
 public class SocketService {
 
-	private final SocketIOServer server;
 
 	/*
 	 서버에서 브라우저로 보내
@@ -49,6 +48,10 @@ public class SocketService {
 		}
 	}
 
+	/*
+	서버에서 브라우저로 보내
+	sendSocketIce()
+	*/
 	public void sendSocketIce(SocketIOClient senderClient, Message message) {
 		System.out.println("SocketService - sendSocketIce()");
 

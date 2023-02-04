@@ -36,7 +36,6 @@ public class SocketModule {
 		// 3. NodeJS에서 socket.on(“send_message”)
 		//    즉, 주어진 이벤트 이름과 객체 클래스로 이벤트를 처리할 수 있음
 		//     브라우저에서 서버로 보낸 데이터 받기
-//        Message.class >>>> JSON string 으로 들어올거임
 		server.addEventListener("offer", Message.class, getOffer());
 		server.addEventListener("answer", Message.class, getAnswer());
 		server.addEventListener("ice", Message.class, getIce());
