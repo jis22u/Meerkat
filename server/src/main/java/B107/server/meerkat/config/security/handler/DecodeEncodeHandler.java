@@ -30,7 +30,7 @@ public class DecodeEncodeHandler {
 			Member member = memberRepository.findByMemberId(memberId);
 			return member.getRole();
 		}
-		log.warn("Memeber memberId Validate - Fail");
+		log.warn("Member memberId Validate - Fail");
 		return null;
 	}
 

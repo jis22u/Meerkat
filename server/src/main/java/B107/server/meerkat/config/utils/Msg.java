@@ -12,21 +12,21 @@ public interface Msg {
 	String SUCCESS_SIGN_IN = "로그인에 성공하였습니다.";
 	String SUCCESS_SIGN_OUT = "로그아웃에 성공하였습니다.";
 	String SUCCESS_TOKEN_VALIDATE = "토큰 검증에 성공하였습니다.";
-	String SUCCESS_USER_ROLE = "유저 역할 확인에 성공하였습니다.";
+	String SUCCESS_MEMBER_ROLE = "유저 역할 확인에 성공하였습니다.";
 	String SUCCESS_ACCESS = "서버 접근에 성공하였습니다.";
 
 	String FAIL_SIGN_IN = "로그인에 실패하였습니다.";
 	String FAIL_SIGN_OUT = "로그아웃에 실패하였습니다.";
 	String FAIL_TOKEN_VALIDATE = "토큰 검증에 실패하였습니다.";
-	String FAIL_USER_ROLE = "유저 역할 확인에 실패하였습니다.";
+	String FAIL_MEMBER_ROLE = "유저 역할 확인에 실패하였습니다.";
 	String FAIL_ACCESS = "서버 접근에 실패하였습니다.";
 	String FAIL_UNVERIFIED_SERVER_ADDRESS = "잘못된 주소로 접근하였습니다.";
 
 	// admin
-	String SUCCESS_ADMIN_REGISTER = "관리자가 사원 등록에 성공하였습니다.";
-	String SUCCESS_ADMIN_MOD = "관리자가 사원 수정에 성공하였습니다.";
-	String SUCCESS_ADMIN_MODPW = "관리자가 사원 비밀번호 수정에 성공하였습니다.";
-	String SUCCESS_ADMIN_FIND_ALL = "사원 전체 예약 현황 조회에 성공하였습니다.";
+	String SUCCESS_MEMBER_REGISTER = "회원 등록에 성공하였습니다.";
+	String SUCCESS_MEMBER_MOD = "회원 정보 수정에 성공하였습니다.";
+	String SUCCESS_MEMBER_MODPW = "회원 비밀번호 수정에 성공하였습니다.";
+//	String SUCCESS_MEMBER_FIND_ALL = "사원 전체 예약 현황 조회에 성공하였습니다.";
 
 
 	String FAIL_ADMIN_REGISTER = "관리자가 사원 등록에 실패하였습니다.";
@@ -58,7 +58,7 @@ public interface Msg {
 	String SUCCESS_ROOM_RESERVATION_DELETE = "회의실 예약 삭제에 성공하였습니다.";
 	String SUCCESS_ROOM_DELETE_MARK = "회의실 즐겨찾기 삭제에 성공하였습니다.";
 	String SUCCESS_ROOM_BOOKMARK = "회의실 즐겨찾기 등록에 성공하였습니다.";
-	String SUCCESS_ROOM_RESERVE_USER = "사원의 팀별/부서별/직급별/사원번호별/이름별 조회 성공하였습니다.";
+	String SUCCESS_ROOM_RESERVE_MEMBER = "사원의 팀별/부서별/직급별/사원번호별/이름별 조회 성공하였습니다.";
 
 
 	String FAIL_ROOM_RESERVE = "회의실 예약에 실패하였습니다.";
