@@ -28,20 +28,6 @@ public class AdminController {
     private final MemberRepository memberRepository;
     private final DecodeEncodeHandler decodeEncodeHandler;
 
-    @PostMapping("/sign")
-    public void sign(@RequestBody Model model) {
-        log.info("MemberController join method ...");
-
-        Member member = join(model);
-        System.out.println("asdfasf");
-        System.out.println(member);
-    }
-
-    public Member join(Model model) {
-        log.info("MemberService join() ...");
-        return memberRepository.save(model.toEntity(decodeEncodeHandler.passwordEncode(model.getPassword())));
-    }
-
     @PostMapping("/member/check")
     public ResponseDTO check(@RequestBody Model model) {
         return new ResponseDTO().of(HttpStatus.OK, "hi", model);

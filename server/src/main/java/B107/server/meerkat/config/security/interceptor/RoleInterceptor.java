@@ -72,7 +72,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 							} else {
 								log.warn("ADMIN role validate - Fail");
 								response.setContentType("text/html; charset=UTF-8");
-								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_USER_ROLE));
+								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
 							}
 							break Outer;
 						}
@@ -84,7 +84,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 							} else {
 								log.warn("MEMBER role validate - Fail");
 								response.setContentType("text/html; charset=UTF-8");
-								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_USER_ROLE));
+								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
 							}
 							break Outer;
 						}
@@ -94,7 +94,7 @@ public class RoleInterceptor implements HandlerInterceptor {
 					} else {
 						log.warn("Request User is not exist " + METHOD_NAME);
 						response.setContentType("text/html; charset=UTF-8");
-						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_USER_ROLE));
+						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
 					}
 				} else {
 					log.warn("Token validate - Fail");
