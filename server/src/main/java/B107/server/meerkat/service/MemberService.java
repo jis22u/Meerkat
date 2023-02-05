@@ -40,9 +40,11 @@ public class MemberService {
     private final DecodeEncodeHandler decodeEncodeHandler;
     private final MemberRepository memberRepository;
 
-    // 회원 정보 수정
+    /**
+     * 회원 정보 수정
+     */
     @Transactional
-    public long update(SignModReqDTO signModReqDTO, long idx) throws RuntimeException {
+    public String update(SignModReqDTO signModReqDTO, long idx) throws RuntimeException {
 
         Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
 
@@ -53,10 +55,12 @@ public class MemberService {
         member.update(signModReqDTO);
         memberRepository.updateMember(name, email, tel, idx);
 
-        return member.getIdx();
+        return member.getMemberId();
     }
 
-    // 회원 비밀번호 수정
+    /**
+     * 회원 비밀번호 수정
+     */
     @Transactional
     public String updatePw(SignModReqDTO signModReqDTO, long idx) throws RuntimeException {
 
@@ -74,6 +78,9 @@ public class MemberService {
         return member.getMemberId();
     }
 
+    /**
+     * 회원 프로필 조회
+     */
     @Transactional
     public ProfileRes readProfile(long idx) {
 
