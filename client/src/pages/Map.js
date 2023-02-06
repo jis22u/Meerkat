@@ -5,11 +5,12 @@ import MeerkatPin from "components/map/MeerkatPin";
 import RegistButton from "components/map/RegistButton";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
+import Backdrop from "components/map/Backdrop";
 
 const Map = () => {
   const { kakao } = window;
   const map = useRef();
-  const [address,setAddress] = useState("...");
+  const [address, setAddress] = useState("...");
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   //스크립트 파일 읽어오기
@@ -236,16 +237,16 @@ const Map = () => {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
-            place.place_name +
-            "</div>"
+          place.place_name +
+          "</div>"
         );
         infowindow.open(map.current, marker);
       });
     }
   };
-  const modalHandler = () =>{
-    if(modalIsOpen === false) setModalIsOpen(true);
-    if(modalIsOpen === true) setModalIsOpen(false)
+  const modalHandler = () => {
+    if (modalIsOpen === false) setModalIsOpen(true);
+    if (modalIsOpen === true) setModalIsOpen(false)
   }
 
   return (
@@ -259,6 +260,9 @@ const Map = () => {
         modalHandler={modalHandler}
       ></RegistButton>
       <SearchInput search={search}></SearchInput>
+      {modalIsOpen && (
+        <Backdrop modalHandler={modalHandler} />
+      )}
       {modalIsOpen && (
         <RegistModal address={address} modalHandler={modalHandler} />
       )}
