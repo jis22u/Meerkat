@@ -48,6 +48,6 @@ public class MemberController {
      */
     @GetMapping("/profile/read")
     public ResponseEntity<ResponseDTO> readProfile(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_EMP_PROFILE, memberService.readProfile(principalDetails.getMember().getIdx())));
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_PROFILE, memberService.readProfile(principalDetails.getMember().getIdx())));
     }
 }

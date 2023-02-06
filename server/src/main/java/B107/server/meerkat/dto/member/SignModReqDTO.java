@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
+@JsonInclude(JsonInclude.Include.NON_MEMBERTY)
 public class SignModReqDTO {
 
 	@Max(14)
