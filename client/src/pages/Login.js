@@ -13,14 +13,14 @@ const schema = yup
     memberId: yup
       .string()
       .required("비밀번호를 입력해 주세요 😦"),
-      password: yup
+    password: yup
       .string()
       .required("비밀번호를 입력해 주세요 😦")
   })
   .required();
 
 const LoginScreen = () => {
-  const { loading, userInfo } = useSelector((state) => state.auth)
+  const { loading, isLogin } = useSelector((state) => state.auth)
   // error 불러와서 쓰기
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -35,10 +35,10 @@ const LoginScreen = () => {
   
 
   useEffect(() => {
-    if (userInfo) {
-      navigate('/home')
+    if (isLogin) {
+      navigate('/')
     }
-  }, [navigate, userInfo])
+  }, [navigate, isLogin])
 
   const submitForm = (data) => {
     dispatch(userLogin(data))
