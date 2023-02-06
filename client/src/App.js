@@ -17,11 +17,10 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/cash" element={<Cash />} />
-          <Route path="/map" element={<Map />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/map" element={<Map />} />
         </Route>
-        <Route path="/map" element={<Map />} />
       </Routes>
   );
 }

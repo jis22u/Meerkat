@@ -1,0 +1,20 @@
+.modal {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: rgb(255, 249, 228);
+  padding: 1rem;
+  text-align: center;
+  width: 25rem;
+  height : 30rem;
+  z-index: 10;
+  position: fixed;
+  top: 15vh;
+  left: calc(50% - 13.5rem);
+}
+
+.img {
+  width: 5rem;
+}
+
+
+
