@@ -1,12 +1,22 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { registerUser, userLogin } from 'api/auth'
 
+// initialize userToken from local storage
+const userToken = localStorage.getItem('userToken')
+  ? localStorage.getItem('userToken')
+  : null
+
+const refreshToken = localStorage.getItem('refreshToken')
+  ? localStorage.getItem('refreshToken')
+  : null
 
 const initialState = {
   loading: false,
+  userToken,
+  refreshToken,
   error: null,
+  success: false,
   isLogin: false,
-  chocie: false,
 }
 
 const authSlice = createSlice({
@@ -15,11 +25,11 @@ const authSlice = createSlice({
   reducers: {
     logout: (state) => {
         localStorage.removeItem('userToken')
+        localStorage.removeItem('refreshToken')
+        state.userToken = null
+        state.refreshToken = null
         state.isLogin = false
       },
-    setChoice: (state, { payload }) => {
-      state.choice = payload
-    }
   },
   extraReducers: {
     [userLogin.pending]: (state) => {
@@ -27,6 +37,8 @@ const authSlice = createSlice({
     },
     [userLogin.fulfilled]: (state, { payload }) => {
       state.loading = false;
+      state.userToken = payload.userToken;
+      state.refreshToken = payload.refreshToken;
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
@@ -35,6 +47,7 @@ const authSlice = createSlice({
     
     [registerUser.pending]: (state) => {
       state.loading = true;
+      state.error = null;
     },
     [registerUser.fulfilled]: (state) => {
       state.loading = false;
@@ -45,6 +58,7 @@ const authSlice = createSlice({
     },
   },
 
+  // https://cloudnweb.dev/2021/02/modern-react-redux-tutotials-redux-toolkit-login-user-registration/
 })
 
 export default authSlice.reducer
