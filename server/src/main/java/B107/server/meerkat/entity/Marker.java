@@ -41,4 +41,6 @@ public class Marker extends BaseAtTime implements Serializable {
 
     @Column(name = "exp_date")
     private LocalDateTime expDate; // 종료 시간
+
+    private LocalDateTime modifiedAt; // 수정 시간
 }

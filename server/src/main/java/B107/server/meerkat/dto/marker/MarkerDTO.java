@@ -1,11 +1,13 @@
-package B107.server.meerkat.dto;
+package B107.server.meerkat.dto.marker;
 
 import B107.server.meerkat.entity.Marker;
-import lombok.Data;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
+@Setter
+@Getter
+@NoArgsConstructor
 public class MarkerDTO {
 	private Long idx;
 	private Long memberId;
@@ -14,15 +16,18 @@ public class MarkerDTO {
 	private String location;
 	private LocalDateTime regDate; 		// 등록 시간
 	private LocalDateTime expDate; 		// 종료 시간
+	private LocalDateTime modifiedAt; 	// 수정 시간
+	private LocalDateTime createdAt;	// DB 등록 시간
 
-	public MarkerDTO(Marker marker) {
-		this.idx = marker.getIdx();
+
+	@Builder
+	public MarkerDTO (Marker marker) {
 		this.memberId = marker.getMember().getIdx();
 		this.lat = marker.getLat();
 		this.lng = marker.getLng();
 		this.location = marker.getLocation();
 		this.regDate = marker.getRegDate();
 		this.expDate = marker.getExpDate();
+		this.modifiedAt = marker.getModifiedAt();
 	}
-
 }

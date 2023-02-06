@@ -1,6 +1,7 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
+import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,6 +32,7 @@ public class MarkerCheck extends BaseAtTime implements Serializable {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @Convert(converter = BooleanToYNConverter.class)
     @Column(name = "mc_check")
     private Boolean mcCheck; // 사용자의 마커 등록 가능 여부 체크
 
