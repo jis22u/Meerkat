@@ -49,14 +49,14 @@ const schema = yup
       .matches(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, "이메일을 정확히 입력해 주세요.")
       .required('이메일을 입력해 주세요.'),
       
-      tel: yup
+      tell: yup
       .string()
       .matches(/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/, "번호를 정확히 입력해 주세요.")
     })
   .required();
 
 const Register = () => {
-  const { loading, isLogin} = useSelector((state) => state.auth)
+  const { loading, userInfo, success } = useSelector((state) => state.auth)
   // error 불러와서 쓰기
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -70,15 +70,19 @@ const Register = () => {
   });
 
   useEffect(() => {
-    if (isLogin) navigate('/') 
-  }, [navigate, isLogin])
+    // 가입이 성공했다면, Login page로 Redirect 하기
+    if (success) navigate('/login')
+    // 만약 로그인 한 계정이라면 홈으로 Redirect 하기
+    if (userInfo) navigate('/home') 
+  }, [navigate, userInfo, success]) // userInfo와 success가 변경되면 리렌더링하기
 
   const submitForm = (data) => {
     data.email = data.email.toLowerCase()
     data.memberId = data.memberId.toLowerCase()
-    const { checkPassword, ...form } = data
-    dispatch(registerUser(form))
+    dispatch(registerUser(data)) // Form에 작성된 데이터 한 번에 보내기
   }
+
+  // Form 으로 작성되는 거 required 밑에 유효성 체크 추가해야함
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
@@ -121,9 +125,9 @@ const Register = () => {
       </div>
       <p>{errors.name?.message}</p>
       <div className='form-group'>
-        <label htmlFor='tel'>Phone</label>
+        <label htmlFor='tell'>Phone</label>
         <input
-          {...register('tel')}
+          {...register('tell')}
         />
       </div>
       <p>{errors.tell?.message}</p>

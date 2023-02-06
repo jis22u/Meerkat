@@ -1,6 +1,4 @@
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux'
-import { logout } from 'api/auth'
 
 const BASE_URL = process.env.REACT_APP_URL;
 
@@ -9,18 +7,18 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
-    withCredentials: true
 });
 
 api.interceptors.request.use(function (config) {
-    const { isLogin } = useSelector((state) => state.auth)
-    if (!isLogin) {
+    const accessToken = localStorage.getItem('access-token');
+    const refreshToken = localStorage.getItem('refresh-token');
+    if (!accessToken || !refreshToken) {
         window.location.href = '/login';
     }
+    // refreshToken 만료되기 전 accessToken을 발급 받으면, access만 남아 있을수도 있다.
+    // accessToken은 만료되고 refreshToken만 남는 경우
 
-    const accessToken = localStorage.getItem('access-token');
     config.headers.authorization = `${accessToken}`;
-    
     return config;
 });
 
@@ -33,25 +31,38 @@ api.interceptors.response.use(
         const originalRequest = config;
 
         if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
-            await axios
+            const refreshToken = localStorage.getItem('refreshToken');
+
+
+            const { data } = await axios
                 .post(
-                    `${BASE_URL}/refresh`,
+                    `${BASE_URL}refresh/token`,
+                    {
+                        refreshToken
+                    }
                 )
                 .then(res => {
-                    if (res.data === 'REFRESH_SUCCEED') {
+                    if (res.data === 'Refresh Succeed') {
                         const newAccessToken = res.headers.authorization;
+                        const newRefreshToken = res.headers.Set-Cookie;
 
                         originalRequest.headers.authorization = newAccessToken;
+                        originalRequest.headers.Set-Cookie = newRefreshToken;
+
                         localStorage.setItem('accessToken', newAccessToken);
+                        localStorage.setItem('refreshToken', newRefreshToken);
 
                         return axios(originalRequest);
                     }
+                    return Promise.reject(error);
                 })
                 .catch(err => {
-                    if ( err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED' ) {
+                    if (
+                        err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
+                    ) {
                         localStorage.removeItem('accessToken');
-                        useDispatch(logout)
-                        window.location.replace = '/login';
+                        localStorage.removeItem('refreshToken');
+                        // window.location.replace = '/login';
                     }
                 });
         }
