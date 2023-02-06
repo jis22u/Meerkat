@@ -39,7 +39,7 @@ public class MemberController {
      * 회원 비밀번호 수정
      */
     @PostMapping("/updatePw")
-    public ResponseEntity<ResponseDTO> uapdatePw(@RequestBody @Validated(modPw.class) SignModReqDTO signModReqDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public ResponseEntity<ResponseDTO> updatePw(@RequestBody @Validated(modPw.class) SignModReqDTO signModReqDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_MODPW, memberService.updatePw(signModReqDTO, principalDetails.getMember().getIdx())));
     }
 
