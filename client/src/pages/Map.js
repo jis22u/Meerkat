@@ -12,6 +12,8 @@ const Map = () => {
   const map = useRef();
   const [address, setAddress] = useState("...");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
 
   //스크립트 파일 읽어오기
   const new_script = (src) => {
@@ -121,7 +123,7 @@ const Map = () => {
         const mapContainer = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(36.32232501935818, 127.29547145868312), //좌표설정
-          level: 12,
+          level: 7,
         };
         //맵생성
         map.current = new kakao.maps.Map(mapContainer, options);
@@ -178,8 +180,8 @@ const Map = () => {
       // 지도 중심좌표를 얻어옵니다
       var latLng = map.current.getCenter();
 
-      // 지도 중심좌표는 latLng.getLat()
-      // 경도는 latLng.getLng()
+      setLat(latLng.getLat().toFixed(14))
+      setLng(latLng.getLng().toFixed(14));
 
       // 주소-좌표 변환 객체를 생성합니다
       var geocoder = new kakao.maps.services.Geocoder();
@@ -264,7 +266,7 @@ const Map = () => {
         <Backdrop modalHandler={modalHandler} />
       )}
       {modalIsOpen && (
-        <RegistModal address={address} modalHandler={modalHandler} />
+        <RegistModal address={address} lat={lat} lng={lng} modalHandler={modalHandler} />
       )}
     </div>
   );
