@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${datasource}/test_jisu?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${datasource}/${schema}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${dbUser}
     password: ${dbPwd}
     hikari:
@@ -20,7 +20,7 @@ spring:
       hibernate:
         globally_quoted_identifiers: 'true'
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
       use-new-id-generator-mappings: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl

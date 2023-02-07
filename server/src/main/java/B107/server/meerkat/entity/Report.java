@@ -48,4 +48,5 @@ public class Report extends BaseAtTime implements Serializable {
     @Column(name = "approval_check")
     @Convert(converter = BooleanToYNConverter.class)
     private Boolean approvalCheck;
+
 }

@@ -6,6 +6,7 @@ import B107.server.meerkat.config.security.handler.UserLoginFailureHandler;
 import B107.server.meerkat.dto.token.CommonTokenDTO;
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.entity.Token;
+import B107.server.meerkat.repository.MemberRepository;
 import B107.server.meerkat.repository.TokenRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -40,6 +41,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 	private UserAuthenticationManager userAuthenticationManager;
 	private JwtTokenProvider jwtTokenProvider;
 	private TokenRepository tokenRepository;
+	private MemberRepository memberRepository;
 	private String headerKeyAccess;
 	private String typeAccess;
 
@@ -81,7 +83,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
 		try {
 			String principal = String.valueOf(authResult.getPrincipal());
-
 			Token token = tokenRepository.findByMemberId(principal);
 			if (token != null) {
 				log.info("Token Set Existed - Token issuance");
@@ -99,7 +100,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 				response.addCookie(jwtTokenProvider.generateCookie(commonTokenDTO.getReIssuanceTokenDTO().getRefreshToken()));
 			}
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.OK, SUCCESS_SIGN_IN));
+			response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.OK, SUCCESS_SIGN_IN, principal));
 		} catch (IOException ie) {
 			log.error("유저 정보를 읽지 못했습니다. " + METHOD_NAME, ie);
 		} catch (NullPointerException ne) {

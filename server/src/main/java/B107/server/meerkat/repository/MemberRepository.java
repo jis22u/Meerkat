@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
+import java.util.zip.ZipFile;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberId(String memberId);
