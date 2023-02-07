@@ -10,19 +10,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class MarkerDTO {
 	private Long idx;
-	private Long memberId;
+	private Long memberIdx;
 	private Float lat;
 	private Float lng;
 	private String location;
 	private LocalDateTime regDate; 		// 등록 시간
 	private LocalDateTime expDate; 		// 종료 시간
-	private LocalDateTime modifiedAt; 	// 수정 시간
+	private LocalDateTime modifiedAt; 	// DB 수정 시간
 	private LocalDateTime createdAt;	// DB 등록 시간
 
 
 	@Builder
 	public MarkerDTO (Marker marker) {
-		this.memberId = marker.getMember().getIdx();
+		this.memberIdx = marker.getMember().getIdx();
 		this.lat = marker.getLat();
 		this.lng = marker.getLng();
 		this.location = marker.getLocation();

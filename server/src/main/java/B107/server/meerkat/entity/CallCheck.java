@@ -1,6 +1,7 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
+import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,30 +21,14 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CallCheck extends BaseAtTime implements Serializable {
-
+public class CallCheck implements Serializable {
+    
     @Id
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "cc_check")
+    @Convert(converter = BooleanToYNConverter.class)
     private Boolean ccCheck; // 요청가능여부
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CallCheck callCheck = (CallCheck) o;
-        return member.equals(callCheck.member) && ccCheck.equals(callCheck.ccCheck);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(member, ccCheck);
-    }
 }

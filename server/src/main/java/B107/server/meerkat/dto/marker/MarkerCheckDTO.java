@@ -9,6 +9,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class MarkerCheckDTO {
+	private String memberId;
 	private boolean mc_check;
-	private Long memberId;
 }

@@ -21,31 +21,14 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class MarkerCheck extends BaseAtTime implements Serializable {
+public class MarkerCheck implements Serializable {
 
     @Id
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    @Column(name = "member_id")
+    private String memberId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
-    @Convert(converter = BooleanToYNConverter.class)
     @Column(name = "mc_check")
+    @Convert(converter = BooleanToYNConverter.class)
     private Boolean mcCheck; // 사용자의 마커 등록 가능 여부 체크
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MarkerCheck that = (MarkerCheck) o;
-        return member.equals(that.member) && Objects.equals(mcCheck, that.mcCheck);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(member, mcCheck);
-    }
 }

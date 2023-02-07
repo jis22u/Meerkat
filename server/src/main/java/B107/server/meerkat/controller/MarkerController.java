@@ -32,7 +32,7 @@ public class MarkerController {
 		markerService.registMarker(marker);
 		// 등록된 마커 정보 넘겨줄지??
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.CREATED, Msg.SUCCESS_MARKER_REGISTER));
-		
+
 		// 이미 등록내역이 있는 경우
 	}
 	
