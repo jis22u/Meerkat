@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
 import RegistButton from "components/map/RegistButton";
 import SearchInput from "components/map/SearchInput";
+import RegistModal from "components/map/RegistModal";
+import Backdrop from "components/map/Backdrop";
 
 const Map = () => {
   const { kakao } = window;
-  const [mapState, setMapState] = useState(null);
-  const [address, setAddress] = useState("");
-
+  const map = useRef();
+  const [address, setAddress] = useState("...");
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   //스크립트 파일 읽어오기
   const new_script = (src) => {
@@ -122,23 +124,25 @@ const Map = () => {
           level: 12,
         };
         //맵생성
-        const map = new kakao.maps.Map(mapContainer, options);
-        setMapState(map);
+        map.current = new kakao.maps.Map(mapContainer, options);
 
         // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
         var mapTypeControl = new kakao.maps.MapTypeControl();
 
         // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
         // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-        map.addControl(mapTypeControl, kakao.maps.ControlPosition.TOPRIGHT);
+        map.current.addControl(
+          mapTypeControl,
+          kakao.maps.ControlPosition.TOPRIGHT
+        );
 
         // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
         var zoomControl = new kakao.maps.ZoomControl();
-        map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+        map.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
         // 마커 클러스터러를 생성합니다
         var clusterer = new kakao.maps.MarkerClusterer({
-          map: map, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+          map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
           averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
           minLevel: 10, // 클러스터 할 최소 지도 레벨
         });
@@ -162,42 +166,38 @@ const Map = () => {
         // 클러스터러에 마커들을 추가합니다
         clusterer.addMarkers(markers);
 
-        //중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
-        kakao.maps.event.addListener(map, "idle", function () {
-          // // 지도 중심좌표를 얻어옵니다
-          var latLng = map.getCenter();
-
-          // var message = "변경된 지도 중심좌표는 " + latLng.getLat() + " 이고, ";
-          // message += "경도는 " + latLng.getLng() + " 입니다";
-          // console.log(message);
-
-          // 주소-좌표 변환 객체를 생성합니다
-          var geocoder = new kakao.maps.services.Geocoder();
-
-          searchDetailAddrFromCoords(latLng, function (result, status) {
-            if (status === kakao.maps.services.Status.OK) {
-              setAddress(result[0].address.address_name);
-              // var detailAddr = !!result[0].road_address
-              //   ? "<div>도로명주소 : " +
-              //     result[0].road_address.address_name +
-              //     "</div>"
-              //   : "";
-              // detailAddr +=
-              //   "<div>지번 주소 : " + result[0].address.address_name + "</div>";
-              
-              console.log("실험주소" + result[0].address.address_name);
-              console.log("주소저장" + address)
-            }
-          });
-
-          function searchDetailAddrFromCoords(coords, callback) {
-            // 좌표로 법정동 상세 주소 정보를 요청합니다
-            geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
-          }
-        });
+        addListener();
       });
     });
+    // eslint-disable-next-line
   }, []);
+
+  const addListener = () => {
+    //중심 좌표나 확대 수준이 변경됐을 때 지도 중심 좌표에 대한 주소 정보를 표시하도록 이벤트를 등록합니다
+    kakao.maps.event.addListener(map.current, "idle", function () {
+      // 지도 중심좌표를 얻어옵니다
+      var latLng = map.current.getCenter();
+
+      // 지도 중심좌표는 latLng.getLat()
+      // 경도는 latLng.getLng()
+
+      // 주소-좌표 변환 객체를 생성합니다
+      var geocoder = new kakao.maps.services.Geocoder();
+
+      searchDetailAddrFromCoords(latLng, function (result, status) {
+        if (status === kakao.maps.services.Status.OK) {
+          setAddress(result[0].address.address_name);
+          // 도로명주소 result[0].road_address.address_name
+          // 지번 주소 result[0].address.address_name
+        }
+      });
+
+      function searchDetailAddrFromCoords(coords, callback) {
+        // 좌표로 법정동 상세 주소 정보를 요청합니다
+        geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
+      }
+    });
+  }
 
   const search = (inputValue) => {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -221,14 +221,14 @@ const Map = () => {
         }
 
         // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
-        mapState.setBounds(bounds);
+        map.current.setBounds(bounds);
       }
     }
     // 지도에 마커를 표시하는 함수입니다
     function displayMarker(place) {
       // 마커를 생성하고 지도에 표시합니다
       var marker = new kakao.maps.Marker({
-        map: mapState,
+        map: map.current,
         position: new kakao.maps.LatLng(place.y, place.x),
       });
 
@@ -237,13 +237,17 @@ const Map = () => {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
-            place.place_name +
-            "</div>"
+          place.place_name +
+          "</div>"
         );
-        infowindow.open(mapState, marker);
+        infowindow.open(map.current, marker);
       });
     }
   };
+  const modalHandler = () => {
+    if (modalIsOpen === false) setModalIsOpen(true);
+    if (modalIsOpen === true) setModalIsOpen(false)
+  }
 
   return (
     <div>
@@ -251,8 +255,17 @@ const Map = () => {
         <div id="map" className={classes.map} />
         <MeerkatPin></MeerkatPin>
       </div>
-      <RegistButton></RegistButton>
-      <SearchInput Search={search}></SearchInput>
+      <RegistButton
+        address={address}
+        modalHandler={modalHandler}
+      ></RegistButton>
+      <SearchInput search={search}></SearchInput>
+      {modalIsOpen && (
+        <Backdrop modalHandler={modalHandler} />
+      )}
+      {modalIsOpen && (
+        <RegistModal address={address} modalHandler={modalHandler} />
+      )}
     </div>
   );
 };

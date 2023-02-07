@@ -1,8 +1,6 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-// const backendURL = '' 현재 proxy로 local 8081에 연결한 상태임
-
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ( form , { rejectWithValue }) => {
@@ -12,16 +10,17 @@ export const userLogin = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       }
-      const { data } = await axios.post(
-        `login`,
+      const { data , headers } = await axios.post(
+        `/login`,
         form,
         config
       )
+      localStorage.setItem('userToken', headers.authorization)
+
       console.log(data)
-      localStorage.setItem('userToken', data.userToken)
-      localStorage.setItem('refreshToken', data.refreshToken)
+
       return data
-      // authSlice로 Data를 넘긴다.
+
       
     } catch (error) {
       if (error.response && error.response.data.message) {
@@ -36,6 +35,7 @@ export const userLogin = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   'auth/register',
   async ( form, { rejectWithValue }) => {
+    console.log(form)
     try {
       const config = {
         headers: {
@@ -43,11 +43,17 @@ export const registerUser = createAsyncThunk(
         },
       }
       await axios.post(
-        `register`,
+        `/sign`,  
         form,
         config
       )
-      
+        .then( res => {
+          if (res.status === 200){
+            console.log('hi?')
+            window.location.href = '/login'
+          }
+        })
+
     } catch (error) {
 
       if (error.response && error.response.data.message) {
