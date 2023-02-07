@@ -68,7 +68,7 @@ function App() {
   }
 
 
-  const makeConnection = () => {
+  const makeConnection = async () => {
     peerRef.current = new RTCPeerConnection({
       iceServers: [
         {
