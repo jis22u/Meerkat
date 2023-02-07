@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux'
-import { logout } from 'api/auth'
+import { logout } from 'store/modules/authSlice'
 
 const BASE_URL = process.env.REACT_APP_URL;
 
