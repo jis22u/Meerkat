@@ -1,6 +1,6 @@
 socket-server:
   port: 8085
-  host: 192.168.0.5
+  host: localhost
 
 server:
   port: 8081
@@ -8,7 +8,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://${datasource}/test_donghun?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://${datasource}/${schema}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     username: ${dbUser}
     password: ${dbPwd}
     hikari:

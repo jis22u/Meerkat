@@ -30,15 +30,15 @@ public class Deal extends BaseAtTime implements Serializable {
     private Long idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "response_id")
+    @JoinColumn(name = "response_idx")
     private Member resMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "request_id")
+    @JoinColumn(name = "request_idx")
     private Member reqMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "call_id")
+    @JoinColumn(name = "call_idx")
     private Call call;
 
     @Column(name = "init_time")
@@ -50,16 +50,4 @@ public class Deal extends BaseAtTime implements Serializable {
     private Boolean reported;
     private Boolean permit;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Deal deal = (Deal) o;
-        return idx.equals(deal.idx) && resMember.equals(deal.resMember) && reqMember.equals(deal.reqMember) && call.equals(deal.call) && Objects.equals(initTime, deal.initTime) && Objects.equals(exitTime, deal.exitTime) && Objects.equals(reported, deal.reported) && Objects.equals(permit, deal.permit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idx, resMember, reqMember, call, initTime, exitTime, reported, permit);
-    }
 }

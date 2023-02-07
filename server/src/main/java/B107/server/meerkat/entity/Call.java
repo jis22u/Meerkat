@@ -29,7 +29,7 @@ public class Call extends BaseAtTime implements Serializable {
 
     // 요청자 Idx
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_idx")
     private Member member;
 
     private String location; // 위치 정보
@@ -40,4 +40,5 @@ public class Call extends BaseAtTime implements Serializable {
 
     @Column(name = "room_id")
     private String roomId; // 대화방 id
+
 }

@@ -1,7 +1,8 @@
 package B107.server.meerkat.socket;
 
 
-import B107.server.meerkat.model.Message;
+import B107.server.meerkat.dto.socket.Message;
+import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
 import com.corundumstudio.socketio.listener.DataListener;
@@ -35,33 +36,44 @@ public class SocketModule {
 		// 3. NodeJS에서 socket.on(“send_message”)
 		//    즉, 주어진 이벤트 이름과 객체 클래스로 이벤트를 처리할 수 있음
 		//     브라우저에서 서버로 보낸 데이터 받기
-//        Message.class >>>> JSON string 으로 들어올거임
 		server.addEventListener("offer", Message.class, getOffer());
 		server.addEventListener("answer", Message.class, getAnswer());
+		server.addEventListener("ice", Message.class, getIce());
 	}
 
 
 
 	/*
 	누군가 소켓에 연결할 때 트리거
+	프론트한테 welcome 하라고 명령~~~~~
 	 */
 	private ConnectListener onConnected() {
-		System.out.println("3 SocketModule. (2)");
+		System.out.println("SocketModule - onConnected()");
 
 		return (client) -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
 			client.joinRoom(roomName);
-			client.sendEvent("welcome");
+
+			for (SocketIOClient first : client.getNamespace().getRoomOperations(roomName).getClients()) {
+				if (!first.getSessionId().equals(client.getSessionId())) {
+					first.sendEvent("welcome");
+				}
+			}
+
+			int size = client.getNamespace().getAllClients().size();
+//			if(size == 2) {
+//				client.sendEvent("welcome");
+//			}
+
 			log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}
 
 
 
-	//    ---------------- offer ------------------------
+	//    ---------------- offer & answer & ice ------------------------
 	private DataListener<Message> getOffer() {
-
-		System.out.println("3 SocketModule. getOffer()");
+		System.out.println("SocketModule - getOffer()");
 
 		return (senderClient, data, ackSender) -> {
 			log.info(data.toString());
@@ -70,8 +82,7 @@ public class SocketModule {
 	}
 
 	private DataListener<Message> getAnswer() {
-
-		System.out.println("3 SocketModule. getAnswer()");
+		System.out.println("SocketModule - getAnswer()");
 
 		return (senderClient, data, ackSender) -> {
 			log.info(data.toString());
@@ -79,7 +90,16 @@ public class SocketModule {
 		};
 	}
 
-//    ---------------- offer ------------------------
+	private DataListener<Message> getIce() {
+		System.out.println("SocketModule - getIce()");
+
+		return (senderClient, data, ackSender) -> {
+			log.info(data.toString());
+			socketService.sendSocketIce(senderClient, data);
+		};
+	}
+
+    //  ---------------- offer & answer & ice ------------------------
 
 
 
@@ -87,11 +107,10 @@ public class SocketModule {
 	 누군가 소켓에서 연결을 끊을 때 트리거
 	 */
 	private DisconnectListener onDisconnected() {
-		System.out.println("3 SocketModule. (3)");
+		System.out.println("SocketModule - onDisconnected()");
 
 		return client -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
-
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}

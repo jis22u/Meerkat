@@ -7,7 +7,6 @@ import B107.server.meerkat.config.security.handler.UserLogoutSuccessHandler;
 import B107.server.meerkat.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -54,7 +53,6 @@ public class GlobalFilter {
 	private final PrincipalDetailService principalDetailService;
 	private final TokenRepository tokenRepository;
 
-	@Bean
 	public CorsFilter corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 		CorsConfiguration config = new CorsConfiguration();
@@ -70,7 +68,6 @@ public class GlobalFilter {
 		return new CorsFilter(source);
 	}
 
-	@Bean
 	public UserAuthenticationFilter authenticationFilter() {
 		UserAuthenticationFilter userAuthenticationFilter = new UserAuthenticationFilter(userAuthenticationManager, jwtTokenProvider, tokenRepository);
 		userAuthenticationFilter.setHeaderKeyAccess(headerAccess);
@@ -79,7 +76,6 @@ public class GlobalFilter {
 		return userAuthenticationFilter;
 	}
 
-	@Bean
 	public JwtTokenAuthorizationFilter authorizationFilter() {
 		JwtTokenAuthorizationFilter jwtTokenAuthorizationFilter = new JwtTokenAuthorizationFilter(userAuthenticationManager, jwtTokenProvider, principalDetailService);
 		jwtTokenAuthorizationFilter.setHeaderKeyAccess(headerAccess);
@@ -100,12 +96,10 @@ public class GlobalFilter {
 		return sessionId;
 	}
 
-	@Bean
 	public UserLogoutHandler logoutHandler() {
 		return new UserLogoutHandler();
 	}
 
-	@Bean
 	public UserLogoutSuccessHandler logoutSuccessHandler() {
 		return new UserLogoutSuccessHandler();
 	}

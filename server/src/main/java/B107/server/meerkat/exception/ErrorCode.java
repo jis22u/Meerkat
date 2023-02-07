@@ -13,7 +13,7 @@ import lombok.Getter;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum ErrorCode {
 
-    //EMP
+    //MEMBER
     MEMBER_NOT_FOUND(404, "회원을 찾을 수 없습니다."),
     MEMBER_ALREADY_EXIST(400, "이미 존재하는 회원 입니다."),
     BOOKMARK_ALREADY_EXIST(400, "이미 존재하는 즐겨찾기 입니다."),
