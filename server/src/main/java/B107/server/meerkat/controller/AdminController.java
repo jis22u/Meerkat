@@ -28,8 +28,4 @@ public class AdminController {
     private final MemberRepository memberRepository;
     private final DecodeEncodeHandler decodeEncodeHandler;
 
-    @PostMapping("/member/check")
-    public ResponseDTO check(@RequestBody Model model) {
-        return new ResponseDTO().of(HttpStatus.OK, "hi", model);
-    }
 }

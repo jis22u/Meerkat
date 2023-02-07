@@ -30,15 +30,15 @@ public class Deal extends BaseAtTime implements Serializable {
     private Long idx;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "response_id")
+    @JoinColumn(name = "res_id")
     private Member resMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "request_id")
+    @JoinColumn(name = "req_id")
     private Member reqMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "call_id")
+    @JoinColumn(name = "call_idx")
     private Call call;
 
     @Column(name = "init_time")

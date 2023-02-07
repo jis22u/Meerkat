@@ -31,8 +31,6 @@ public class QDeposit extends EntityPathBase<Deposit> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
-    public final NumberPath<Integer> dealCode = createNumber("dealCode", Integer.class);
-
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
     public final QMember member;
@@ -41,6 +39,8 @@ public class QDeposit extends EntityPathBase<Deposit> {
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public final DateTimePath<java.time.LocalDateTime> regDate = createDateTime("regDate", java.time.LocalDateTime.class);
+
+    public final NumberPath<Integer> transactionCode = createNumber("transactionCode", Integer.class);
 
     public QDeposit(String variable) {
         this(Deposit.class, forVariable(variable), INITS);

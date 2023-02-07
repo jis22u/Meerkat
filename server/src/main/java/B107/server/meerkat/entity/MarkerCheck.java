@@ -23,27 +23,9 @@ import java.util.Objects;
 public class MarkerCheck extends BaseAtTime implements Serializable {
 
     @Id
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     @Column(name = "mc_check")
     private Boolean mcCheck; // 사용자의 마커 등록 가능 여부 체크
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        MarkerCheck that = (MarkerCheck) o;
-        return member.equals(that.member) && Objects.equals(mcCheck, that.mcCheck);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(member, mcCheck);
-    }
 }
