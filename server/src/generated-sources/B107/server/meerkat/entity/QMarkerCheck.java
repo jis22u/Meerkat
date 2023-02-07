@@ -19,17 +19,9 @@ public class QMarkerCheck extends EntityPathBase<MarkerCheck> {
 
     public static final QMarkerCheck markerCheck = new QMarkerCheck("markerCheck");
 
-    public final B107.server.meerkat.config.utils.QBaseAtTime _super = new B107.server.meerkat.config.utils.QBaseAtTime(this);
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
-
     public final BooleanPath mcCheck = createBoolean("mcCheck");
 
     public final StringPath memberId = createString("memberId");
-
-    //inherited
-    public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
     public QMarkerCheck(String variable) {
         super(MarkerCheck.class, forVariable(variable));

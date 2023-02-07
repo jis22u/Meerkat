@@ -29,5 +29,7 @@ public class CallCheck implements Serializable {
 
     @Convert(converter = BooleanToYNConverter.class)
     @Column(name = "cc_check")
+    @Convert(converter = BooleanToYNConverter.class)
     private Boolean ccCheck; // 요청가능여부
+
 }

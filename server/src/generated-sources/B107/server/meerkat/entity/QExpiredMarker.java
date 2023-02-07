@@ -37,6 +37,8 @@ public class QExpiredMarker extends EntityPathBase<ExpiredMarker> {
 
     public final StringPath location = createString("location");
 
+    public final NumberPath<Long> markerIdx = createNumber("markerIdx", Long.class);
+
     public final QMember member;
 
     //inherited

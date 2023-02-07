@@ -1,6 +1,7 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
+import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,9 +28,9 @@ public class Marker extends BaseAtTime implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    // 등록자 ID
+    // 등록자 IDX
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_idx")
     private Member member;
 
     private Float lat; // 위도
@@ -41,4 +42,9 @@ public class Marker extends BaseAtTime implements Serializable {
 
     @Column(name = "exp_date")
     private LocalDateTime expDate; // 종료 시간
+
+    @Convert(converter = BooleanToYNConverter.class)
+    @Column(name = "is_exp")
+    private Boolean isExp;
+
 }

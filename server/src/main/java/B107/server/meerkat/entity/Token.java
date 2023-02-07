@@ -23,4 +23,5 @@ public class Token {
     private String memberId;
 
     private String refreshToken;
+
 }

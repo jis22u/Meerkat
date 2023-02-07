@@ -27,4 +27,5 @@ public class Coin implements Serializable {
 
     @ColumnDefault("0")
     private Integer coin; // 코인 보유량
+
 }

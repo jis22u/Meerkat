@@ -31,6 +31,8 @@ public class QMarker extends EntityPathBase<Marker> {
 
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
+    public final BooleanPath isExp = createBoolean("isExp");
+
     public final NumberPath<Float> lat = createNumber("lat", Float.class);
 
     public final NumberPath<Float> lng = createNumber("lng", Float.class);
