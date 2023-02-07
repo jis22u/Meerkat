@@ -6,7 +6,7 @@ const initialState = {
   loading: false,
   error: null,
   isLogin: false,
-  chocie: false,
+  choice: false,
 }
 
 const authSlice = createSlice({
@@ -17,7 +17,7 @@ const authSlice = createSlice({
         localStorage.removeItem('userToken')
         state.isLogin = false
       },
-    setChoice: (state, { payload }) => {
+    setChoice: (state, {payload}) => {
       state.choice = payload
     }
   },
@@ -26,6 +26,7 @@ const authSlice = createSlice({
       state.loading = true;
     },
     [userLogin.fulfilled]: (state, { payload }) => {
+      state.isLogin = true;
       state.loading = false;
     },
     [userLogin.rejected]: (state, { payload }) => {
