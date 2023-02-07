@@ -21,7 +21,7 @@ public class QMarkerCheck extends EntityPathBase<MarkerCheck> {
 
     public final BooleanPath mcCheck = createBoolean("mcCheck");
 
-    public final StringPath memberId = createString("memberId");
+    public final NumberPath<Long> memberIdx = createNumber("memberIdx", Long.class);
 
     public QMarkerCheck(String variable) {
         super(MarkerCheck.class, forVariable(variable));

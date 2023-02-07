@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -24,11 +25,14 @@ import java.util.Objects;
 public class MarkerCheck implements Serializable {
 
     @Id
-    @Column(name = "member_id")
-    private String memberId;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
+    // 사용자의 마커 등록 여부 체크
+    // true: 등록함 | false: 등록안함
+    @ColumnDefault("false")
     @Column(name = "mc_check")
     @Convert(converter = BooleanToYNConverter.class)
-    private Boolean mcCheck; // 사용자의 마커 등록 가능 여부 체크
+    private Boolean mcCheck;
 
 }

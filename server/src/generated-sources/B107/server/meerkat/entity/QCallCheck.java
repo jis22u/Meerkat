@@ -21,7 +21,7 @@ public class QCallCheck extends EntityPathBase<CallCheck> {
 
     public final BooleanPath ccCheck = createBoolean("ccCheck");
 
-    public final StringPath memberId = createString("memberId");
+    public final NumberPath<Long> memberIdx = createNumber("memberIdx", Long.class);
 
     public QCallCheck(String variable) {
         super(CallCheck.class, forVariable(variable));

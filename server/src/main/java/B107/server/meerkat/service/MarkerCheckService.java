@@ -15,28 +15,10 @@ public class MarkerCheckService {
 
 
 	/**
-	 * 첫 등록 여부 insert
+	 * 해당 사용자의 등록 가능 여부 조회 select
 	 */
 	@Transactional
-	public void addMarkerCheck() {
-
-
-	}
-
-
-	/**
-	 * 마커 등록 혹은 만료될 때마다 update
-	 */
-	@Transactional
-	public void updateMarkerCheck() {
-
-	}
-
-	/**
-	 * 등록 가능 여부 조회 select
-	 */
-	@Transactional
-	public void getMarkerCheck(Long memberId) {
-//		markerCheckRepository.
+	public boolean isMarkerCheck(Long memberIdx) {
+		return markerCheckRepository.findMarkerCheckById(memberIdx);
 	}
 }

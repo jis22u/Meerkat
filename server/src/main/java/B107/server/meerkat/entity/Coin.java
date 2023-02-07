@@ -23,8 +23,8 @@ import java.util.Objects;
 public class Coin implements Serializable {
 
     @Id
-    @Column(name = "member_id")
-    private String memberId;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
     private Integer coin; // 코인 보유량
 
