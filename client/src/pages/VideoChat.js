@@ -1,14 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
 import io from "socket.io-client";
 import { useParams } from 'react-router-dom';
 
 const VideoChat = () => {
   const socketRef = useRef();
   const peerRef = useRef();
-  const localVideoRef = useRef(null);
-  const remoteVideoRef = useRef(null);
-  const ChannelRef = useRef(null);
+  const localVideoRef = useRef();
+  const remoteVideoRef = useRef();
+  const ChannelRef = useRef();
   const { roomName } = useParams();
+  const [text ,setText] = useState('');
+  const [messages, setMessages] = useState([]);
 
   let myStream;
   let cameraOptions
@@ -43,7 +45,7 @@ const VideoChat = () => {
   }
 
 
-  const getMedia = async (deviceId) => {
+  const getMedia = useCallback(async (deviceId) => {
     const initialConstrains = {
       audio: true,
       video: { facingMode: "user" },
@@ -63,7 +65,7 @@ const VideoChat = () => {
       console.error(e);
     }
 
-  }
+  }, [])
 
 
   const makeConnection = async () => {
@@ -102,60 +104,67 @@ const VideoChat = () => {
   useEffect(() => {
     console.log('Render');
     
-    const initCall = async () => {
-      await getMedia();
-      await makeConnection();
+    // const initCall = async () => {
+    //   await getMedia();
+    //   await makeConnection();
 
-      socketRef.current = io("http://192.168.31.154:8085",  {
-      query: `roomName=${roomName}`, //
-    });
+    //   socketRef.current = io("http://192.168.31.154:8085",  {
+    //   query: `roomName=${roomName}`, //
+    // });
     
-    socketRef.current.on("welcome", async () => {
-      ChannelRef.current = peerRef.current.createDataChannel("chat");
-      ChannelRef.current.onmessage = (event) => console.log(event.data);
+    // socketRef.current.on("welcome", async () => {
+    //   ChannelRef.current = peerRef.current.createDataChannel("chat");
+    //   ChannelRef.current.onmessage = (event) => console.log(event.data);
 
-      const offer = await peerRef.current.createOffer();
-      peerRef.current.setLocalDescription(offer);
-      console.log("sent the offer");
+    //   const offer = await peerRef.current.createOffer();
+    //   peerRef.current.setLocalDescription(offer);
+    //   console.log("sent the offer");
                                           
-      socketRef.current.emit("offer",{
-        datas: JSON.stringify(offer),
-        roomName: roomName
-      });
-    });
+    //   socketRef.current.emit("offer",{
+    //     datas: JSON.stringify(offer),
+    //     roomName: roomName
+    //   });
+    // });
 
-    socketRef.current.on("offer", async (offer) => { 
-      peerRef.current.ondatachannel = (event) => {
-        ChannelRef.current = event.channel;
-        ChannelRef.current.onmessage = (event) => console.log(event.data);
-      };
+    // socketRef.current.on("offer", async (offer) => { 
+    //   peerRef.current.ondatachannel = (event) => {
+    //     ChannelRef.current = event.channel;
+    //     ChannelRef.current.onmessage = (event) => console.log(event.data);
+    //   };
 
-      console.log("received the offer");
-      peerRef.current.setRemoteDescription(JSON.parse(offer));
-      const answer = await peerRef.current.createAnswer();
-      peerRef.current.setLocalDescription(answer);
-      socketRef.current.emit("answer", {
-        datas: JSON.stringify(answer), 
-        roomName: roomName
-      });
-      console.log("sent the answer");
+    //   console.log("received the offer");
+    //   peerRef.current.setRemoteDescription(JSON.parse(offer));
+    //   const answer = await peerRef.current.createAnswer();
+    //   peerRef.current.setLocalDescription(answer);
+    //   socketRef.current.emit("answer", {
+    //     datas: JSON.stringify(answer), 
+    //     roomName: roomName
+    //   });
+    //   console.log("sent the answer");
 
-    });
+    // });
 
-    socketRef.current.on("answer", (answer) => {
-      console.log("received the answer");
-      peerRef.current.setRemoteDescription(JSON.parse(answer));
-    });
+    // socketRef.current.on("answer", (answer) => {
+    //   console.log("received the answer");
+    //   peerRef.current.setRemoteDescription(JSON.parse(answer));
+    // });
 
 
-    socketRef.current.on("ice", (ice) => {
-      peerRef.current.addIceCandidate(JSON.parse(ice));
-      console.log("received candidate");
-    });
-    }
-    initCall()
-  })
+    // socketRef.current.on("ice", (ice) => {
+    //   peerRef.current.addIceCandidate(JSON.parse(ice));
+    //   console.log("received candidate");
+    // });
+    // }
+    // initCall()
+  }, [])
 
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    console.log('hi')
+    // ChannelRef.current.send(text)
+    setMessages(messages => [...messages, { yours: true, value: text}])
+    setText("");
+  }
 
   return (
     <div>
@@ -187,6 +196,10 @@ const VideoChat = () => {
       <button onClick={handleCameraOff}>Camera Off</button>
       <button onClick={handleMicOff}>Mic Off</button>
       <button onClick={handleCamDirection}>Camera Change</button>
+      <form onSubmit = {sendMessage}>
+        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
+        <button type="submit" disabled={!text}>🕊️</button>
+      </form>
     </div>
   );
 }
