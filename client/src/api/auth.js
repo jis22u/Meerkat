@@ -2,7 +2,7 @@ import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
 export const userLogin = createAsyncThunk(
-  'auth/kkk',
+  'auth/login',
   async ( form , { rejectWithValue }) => {
     try {
       const config = {

@@ -5,7 +5,7 @@
   padding: 1rem;
   text-align: center;
   width: 18rem;
-  height: 25rem;
+  height: 30rem;
   z-index: 10;
   position: fixed;
   top: 18vh;
@@ -14,4 +14,10 @@
 
 .img {
   width: 5rem;
+}
+
+.coinBox {
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
 }
