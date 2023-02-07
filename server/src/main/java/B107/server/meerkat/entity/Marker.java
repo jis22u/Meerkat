@@ -46,4 +46,5 @@ public class Marker extends BaseAtTime implements Serializable {
     @Convert(converter = BooleanToYNConverter.class)
     @Column(name = "is_exp")
     private Boolean isExp;
+
 }

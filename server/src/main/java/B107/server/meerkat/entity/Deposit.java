@@ -47,16 +47,4 @@ public class Deposit extends BaseAtTime implements Serializable {
     @Column(name = "transaction_code")
     private Integer transactionCode; // 거래코드
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Deposit deposit = (Deposit) o;
-        return idx.equals(deposit.idx) && member.equals(deposit.member) && regDate.equals(deposit.regDate) && coin.equals(deposit.coin) && balance.equals(deposit.balance) && transactionCode.equals(deposit.transactionCode);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(idx, member, regDate, coin, balance, transactionCode);
-    }
 }

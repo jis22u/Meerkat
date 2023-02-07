@@ -78,4 +78,5 @@ public class Member extends BaseAtTime implements Serializable {
     public void update(String newPassword) {
         this.password = newPassword;
     }
+
 }

@@ -22,11 +22,12 @@ import java.util.Objects;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CallCheck implements Serializable {
-    
+
     @Id
     @Column(name = "member_id")
     private String memberId;
 
+    @Convert(converter = BooleanToYNConverter.class)
     @Column(name = "cc_check")
     @Convert(converter = BooleanToYNConverter.class)
     private Boolean ccCheck; // 요청가능여부

@@ -46,4 +46,5 @@ public class ExpiredMarker extends BaseAtTime implements Serializable {
 
     @Column(name = "exp_date")
     private LocalDateTime expDate; // 종료 시간
+
 }

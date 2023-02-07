@@ -40,4 +40,5 @@ public class Call extends BaseAtTime implements Serializable {
 
     @Column(name = "room_id")
     private String roomId; // 대화방 id
+
 }
