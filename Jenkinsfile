@@ -10,15 +10,6 @@ pipeline {
     }
     stages {
 
-        stage('Init') {
-            steps {
-                echo 'clear'
-                sh 'docker stop $(docker ps -aq)'
-                sh 'docker rm $(docker ps -aq)'
-                deleteDir()
-            }
-        }
-
         stage('clone') {
             steps {
                 git url: "$SOURCE_CODE_URL",
