@@ -34,4 +34,11 @@ public interface Msg {
 	// member
 	String SUCCESS_MEMBER_PROFILE = "회원 프로필 조회에 성공하였습니다.";
 	String FAIL_MEMBER_PROFILE = "회원 프로필 조회에 실패하였습니다.";
+
+	// marker
+	String SUCCESS_MARKER_REGISTER = "미어캣 마커 등록에 성공하였습니다.";
+	String SUCCESS_MARKER_DELETE = "미어캣 마커 삭제에 성공하였습니다.";
+	String SUCCESS_MARKER_UPDATE = "미어캣 마커 수정에 성공하였습니다.";
+
+	String FAIL_MARKER_REGISTER = "이미 등록된 미어캣 마커가 있습니다.";
 }

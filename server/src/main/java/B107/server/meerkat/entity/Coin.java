@@ -20,29 +20,12 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Coin extends BaseAtTime implements Serializable {
+public class Coin implements Serializable {
 
     @Id
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(name = "member_id")
+    private String memberId;
 
     private Integer coin; // 코인 보유량
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Coin coin1 = (Coin) o;
-        return member.equals(coin1.member) && coin.equals(coin1.coin);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(member, coin);
-    }
 }
