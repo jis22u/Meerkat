@@ -56,7 +56,7 @@ const schema = yup
   .required();
 
 const Register = () => {
-  const { loading, isLogin} = useSelector((state) => state.auth)
+  const { loading, isLogin } = useSelector((state) => state.auth)
   // error 불러와서 쓰기
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -66,6 +66,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -84,14 +85,14 @@ const Register = () => {
     <form onSubmit={handleSubmit(submitForm)}>
       {/* {error && <Error>{error}</Error>} */}
       <div className='form-group'>
-        <label htmlFor='memberId'>ID</label>
+        <label htmlFor='memberId'>아이디</label>
         <input
           {...register('memberId')}
         />
       </div>
       <p>{errors.memberId?.message}</p>
       <div className='form-group'>
-        <label htmlFor='password'>Password</label>
+        <label htmlFor='password'>비밀번호</label>
         <input
           type='password'
           {...register('password')}
@@ -99,7 +100,7 @@ const Register = () => {
       </div>
       <p>{errors.password?.message}</p>
       <div className='form-group'>
-        <label htmlFor='checkPassword'>Confirm Password</label>
+        <label htmlFor='checkPassword'>비밀번호 확인</label>
         <input
           type='password'
           {...register('checkPassword')}
@@ -107,28 +108,28 @@ const Register = () => {
       </div>
       <p>{errors.checkPassword?.message}</p>
       <div className='form-group'>
-        <label htmlFor='email'>Email</label>
+        <label htmlFor='email'>이메일</label>
         <input
           {...register('email')}
         />
       </div>
       <p>{errors.email?.message}</p>
       <div className='form-group'>
-        <label htmlFor='name'>Nickname</label>
+        <label htmlFor='name'>닉네임</label>
         <input
           {...register('name')}
         />
       </div>
       <p>{errors.name?.message}</p>
       <div className='form-group'>
-        <label htmlFor='tel'>Phone</label>
+        <label htmlFor='tel'>핸드폰</label>
         <input
           {...register('tel')}
         />
       </div>
-      <p>{errors.tell?.message}</p>
+      <p>{errors.tel?.message}</p>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : 'Register'}
+        {loading ? '대기중' : '회원가입'}
         {/* <Spinner /> */}
       </button>
     </form>

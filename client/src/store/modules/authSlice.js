@@ -5,7 +5,7 @@ import { registerUser, userLogin } from 'api/auth'
 const initialState = {
   loading: false,
   error: null,
-  isLogin: true,
+  isLogin: false,
   choice: true,
 }
 
@@ -16,7 +16,7 @@ const authSlice = createSlice({
     logout: (state) => {
         localStorage.removeItem('userToken')
         state.isLogin = false
-      },
+    },
     setChoice: (state, {payload}) => {
       state.choice = payload
     }
