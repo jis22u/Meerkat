@@ -26,12 +26,6 @@ pipeline {
             }
         }
 
-        stage('frontend dockerizing') {
-            steps {
-                sh "docker build -t client ./client"
-            }
-        }
-
 		stage('Deploy') {
             steps{
                 sh 'docker-compose up -d --build'
