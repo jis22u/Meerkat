@@ -4,17 +4,24 @@
   background-color: rgb(255, 249, 228);
   padding: 1rem;
   text-align: center;
-  width: 25rem;
-  height : 30rem;
+  width: 18rem;
+  height: fit-content;
   z-index: 10;
   position: fixed;
-  top: 15vh;
-  left: calc(50% - 13.5rem);
+  top: 10%;
+  left: calc(50% - 10rem);
 }
 
 .img {
   width: 5rem;
 }
 
+.coinView {
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
+}
 
-
+.requestBox {
+  height: 7rem;
+}

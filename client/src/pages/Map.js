@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 
 import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
-import RegistButton from "components/map/RegistButton";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
 import Backdrop from "components/map/Backdrop";
@@ -10,8 +9,10 @@ import Backdrop from "components/map/Backdrop";
 const Map = () => {
   const { kakao } = window;
   const map = useRef();
-  const [address, setAddress] = useState("...");
+  const [address, setAddress] = useState("지도를 움직여 주소를 입력하세요");
   const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [lat, setLat] = useState();
+  const [lng, setLng] = useState();
 
   //스크립트 파일 읽어오기
   const new_script = (src) => {
@@ -121,7 +122,7 @@ const Map = () => {
         const mapContainer = document.getElementById("map");
         const options = {
           center: new kakao.maps.LatLng(36.32232501935818, 127.29547145868312), //좌표설정
-          level: 12,
+          level: 7,
         };
         //맵생성
         map.current = new kakao.maps.Map(mapContainer, options);
@@ -178,8 +179,8 @@ const Map = () => {
       // 지도 중심좌표를 얻어옵니다
       var latLng = map.current.getCenter();
 
-      // 지도 중심좌표는 latLng.getLat()
-      // 경도는 latLng.getLng()
+      setLat(latLng.getLat().toFixed(14));
+      setLng(latLng.getLng().toFixed(14));
 
       // 주소-좌표 변환 객체를 생성합니다
       var geocoder = new kakao.maps.services.Geocoder();
@@ -197,7 +198,7 @@ const Map = () => {
         geocoder.coord2Address(coords.getLng(), coords.getLat(), callback);
       }
     });
-  }
+  };
 
   const search = (inputValue) => {
     // 마커를 클릭하면 장소명을 표출할 인포윈도우 입니다
@@ -237,34 +238,46 @@ const Map = () => {
         // 마커를 클릭하면 장소명이 인포윈도우에 표출됩니다
         infowindow.setContent(
           '<div style="padding:5px;font-size:12px;">' +
-          place.place_name +
-          "</div>"
+            place.place_name +
+            "</div>"
         );
         infowindow.open(map.current, marker);
       });
     }
   };
   const modalHandler = () => {
-    if (modalIsOpen === false) setModalIsOpen(true);
-    if (modalIsOpen === true) setModalIsOpen(false)
-  }
+    if (modalIsOpen === false) {
+      if(address === "지도를 움직여 주소를 입력하세요") {
+        alert("지도를 움직여 주소를 입력하세요")
+        return;
+      }
+      setModalIsOpen(true);
+    }
+    if (modalIsOpen === true) setModalIsOpen(false);
+  };
 
   return (
     <div>
-      <div className="mapBox">
-        <div id="map" className={classes.map} />
-        <MeerkatPin></MeerkatPin>
+      <div id="map" className={classes.map} />
+      <MeerkatPin></MeerkatPin>
+      <div className={classes.addressBox}>
+        <div className={classes.address}>
+          <h1>현재주소</h1>
+          <span>{address}</span>
+        </div>
+        <div className={classes.btn}>
+          <button onClick={modalHandler}>제출</button>
+        </div>
       </div>
-      <RegistButton
-        address={address}
-        modalHandler={modalHandler}
-      ></RegistButton>
       <SearchInput search={search}></SearchInput>
+      {modalIsOpen && <Backdrop modalHandler={modalHandler} />}
       {modalIsOpen && (
-        <Backdrop modalHandler={modalHandler} />
-      )}
-      {modalIsOpen && (
-        <RegistModal address={address} modalHandler={modalHandler} />
+        <RegistModal
+          address={address}
+          lat={lat}
+          lng={lng}
+          modalHandler={modalHandler}
+        />
       )}
     </div>
   );
