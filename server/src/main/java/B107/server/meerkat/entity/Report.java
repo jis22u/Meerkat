@@ -24,7 +24,6 @@ public class Report extends BaseAtTime implements Serializable {
 
     // 신고 건 Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

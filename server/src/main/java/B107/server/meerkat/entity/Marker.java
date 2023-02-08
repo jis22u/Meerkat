@@ -24,7 +24,6 @@ import java.time.LocalDateTime;
 public class Marker extends BaseAtTime implements Serializable {
 
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

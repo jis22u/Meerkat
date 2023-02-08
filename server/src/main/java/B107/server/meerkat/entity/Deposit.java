@@ -24,7 +24,6 @@ import java.util.Objects;
 public class Deposit extends BaseAtTime implements Serializable {
 
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

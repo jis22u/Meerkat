@@ -23,7 +23,6 @@ public class Call extends BaseAtTime implements Serializable {
 
     // 시야 요청건의 Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

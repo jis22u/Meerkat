@@ -28,7 +28,6 @@ public class Member extends BaseAtTime implements Serializable {
 
     // 사용자 Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
