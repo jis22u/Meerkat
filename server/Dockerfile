@@ -1,4 +1,3 @@
 FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=*.jar
-COPY ${JAR_FILE} meerkat-server.jar
+COPY target/meerkat-0.0.1-SNAPSHOT.jar meerkat-server.jar
 ENTRYPOINT ["java","-jar","/meerkat-server.jar"]
