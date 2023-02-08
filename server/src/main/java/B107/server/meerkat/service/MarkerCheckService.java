@@ -19,6 +19,6 @@ public class MarkerCheckService {
 	 */
 	@Transactional
 	public boolean isMarkerCheck(Long memberIdx) {
-		return markerCheckRepository.findMarkerCheckById(memberIdx);
+		return markerCheckRepository.findMcCheckById(memberIdx);
 	}
 }

@@ -13,10 +13,10 @@ import static B107.server.meerkat.entity.QMarkerCheck.markerCheck;
 public class MarkerCheckRepositoryImpl {
 	private final JPAQueryFactory jpaQueryFactory;
 
-	public List<Boolean> findMcCheck(Long memberIdx) {
-		return jpaQueryFactory
-				.select(markerCheck.mcCheck).from(markerCheck)
-				.where(markerCheck.memberIdx.eq(memberIdx))
-				.fetch();
-	}
+//	public List<Boolean> findMcCheck(Long memberIdx) {
+//		return jpaQueryFactory
+//				.select(markerCheck.mcCheck).from(markerCheck)
+//				.where(markerCheck.memberIdx.eq(memberIdx))
+//				.fetch();
+//	}
 }

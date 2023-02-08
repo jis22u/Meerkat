@@ -30,7 +30,7 @@ public class MarkerCheck implements Serializable {
 
     // 사용자의 마커 등록 여부 체크
     // true: 등록함 | false: 등록안함
-    @ColumnDefault("false")
+//    @ColumnDefault("false")
     @Column(name = "mc_check")
     @Convert(converter = BooleanToYNConverter.class)
     private Boolean mcCheck;

@@ -56,9 +56,11 @@ user:
     logout: /logout
     admin: /admin
     member: /member
+    marker: /marker
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER
+    marker: ROLE_MARKER
   permit:
     all: '/**'
   session:

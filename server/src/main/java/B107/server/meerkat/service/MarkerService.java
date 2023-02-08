@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service
@@ -30,7 +31,7 @@ public class MarkerService {
 				.build();
 		markerCheckRepository.save(markerCheck);
 
-		// marker에 Member 세팅
+		// marker에 Member 세팅 <<<<<< JoinColumn 컬럼 초기호
 		marker.setMember(memberRepository.findById(memberIdx).orElse(null));
 		markerRepository.save(marker);
 		return marker;
@@ -42,14 +43,10 @@ public class MarkerService {
 	}
 
 	@Transactional
-	public Marker updateMarker(Long memberIdx, LocalDateTime expDate) {
-		Marker marker = markerRepository.findValidByMemberIdx(memberIdx);
-
-		if(marker.getMember().getIdx() == memberIdx) {
-			marker.setExpDate(expDate);
-			return markerRepository.save(marker);
-		}
-		return null;
+	public Marker updateMarker(Long memberIdx, Marker marker) {
+		Marker curMarker = markerRepository.findValidByMemberIdx(memberIdx);
+		curMarker.setExpDate(marker.getExpDate());
+		return curMarker;
 	}
 
 	@Transactional

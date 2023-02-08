@@ -7,8 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface MarkerCheckRepository extends JpaRepository<MarkerCheck, Long> {
 
-	@Query("select mc from MarkerCheck mc where mc.memberIdx = :memberIdx")
-	boolean findMarkerCheckById(@Param("memberIdx") Long memberIdx);
+	@Query("select mc.mcCheck from MarkerCheck mc where mc.memberIdx = :memberIdx")
+	boolean findMcCheckById(@Param("memberIdx") Long memberIdx);
 
 
 }

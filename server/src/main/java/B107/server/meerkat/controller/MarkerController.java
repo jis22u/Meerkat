@@ -1,5 +1,6 @@
 package B107.server.meerkat.controller;
 
+import B107.server.meerkat.config.jwt.JwtTokenProvider;
 import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
@@ -10,19 +11,22 @@ import B107.server.meerkat.service.MarkerService;
 import antlr.MakeGrammar;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @RestController
-@RequestMapping("/marker")
+@RequestMapping(value = "/marker")
 @RequiredArgsConstructor
 public class MarkerController {
 
+	private final JwtTokenProvider jwtTokenProvider;
 	private final MarkerService markerService;
 	private final MarkerCheckService markerCheckService;
 
@@ -30,11 +34,10 @@ public class MarkerController {
 	@PostMapping("/regist")
 	public ResponseEntity<ResponseDTO> registMarker(@AuthenticationPrincipal PrincipalDetails principalDetails,
 													@RequestBody Marker marker) {
-	
-		// 토큰으로 사용자 idx 뽑아오기
+
 		Long memberIdx = principalDetails.getMember().getIdx();
 
-		// 첫 가입하고 나서 markerCheck의 member_idx 초기화어케 해주지???
+		// 첫 가입하고 나서 markerCheck의 member_idx 초기화 어케 해주지???
 		if(!markerCheckService.isMarkerCheck(memberIdx)) {
 			// 등록 가능한 경우
 			markerService.registMarker(memberIdx, marker);
@@ -57,18 +60,20 @@ public class MarkerController {
 		Long memberIdx = principalDetails.getMember().getIdx();
 		Marker marker = markerService.getValidMarker(memberIdx);
 		MarkerDTO resMarker = new MarkerDTO().of(marker);
-		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_UPDATE, resMarker));
+
+		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_READ, resMarker));
 	}
 
 	@PutMapping("/update")
-	public ResponseEntity<ResponseDTO> updateMarker (@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody LocalDateTime expDate) {
+	public ResponseEntity<ResponseDTO> updateMarker (@AuthenticationPrincipal PrincipalDetails principalDetails,
+													 @RequestBody Marker marker) {
 		Long memberIdx = principalDetails.getMember().getIdx();
-		Marker marker = markerService.updateMarker(memberIdx, expDate);
-		if(marker == null) {
+		Marker tempMarker = markerService.updateMarker(memberIdx, marker);
+		if(tempMarker == null) {
 			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MARKER_UPDATE));
 		}
 
-		MarkerDTO resMarker = new MarkerDTO().of(marker);
+		MarkerDTO resMarker = new MarkerDTO().of(tempMarker);
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_UPDATE, resMarker));
 	}
 
