@@ -4,9 +4,11 @@
   left : calc(50% - 10rem);
 }
 
-button {
+.button {
   width: 6.5rem;
-  height: 4rem;
+  height: 3rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
 }
 
 .buttons {
