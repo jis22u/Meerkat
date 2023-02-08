@@ -1,6 +1,5 @@
 import { Outlet } from 'react-router-dom';
 import Header from 'components/layout/Header'
-import Footer from 'components/layout/Footer'
 import { Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
 
@@ -13,10 +12,9 @@ const Layout = () => {
             <Header />
 
             <main>
-                { !isLogin ? <Navigate to="/login" replace /> : < Outlet /> }
+                {}
+                { isLogin ? <Navigate to="/" replace /> : < Outlet /> }
             </main>
-
-            {<Footer />}
         </div>
     );
 };
