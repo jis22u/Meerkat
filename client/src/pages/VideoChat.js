@@ -1,19 +1,17 @@
-import './App.css';
 import React, { useEffect, useRef } from "react";
 import io from "socket.io-client";
+import { useParams } from 'react-router-dom';
 
-
-function App() {
+const VideoChat = () => {
   const socketRef = useRef();
   const peerRef = useRef();
   const localVideoRef = useRef(null);
   const remoteVideoRef = useRef(null);
   const ChannelRef = useRef(null);
+  const { roomName } = useParams();
 
   let myStream;
   let cameraOptions
-
-  const roomName = "123";
 
   const handleMicOff = () => {
     myStream.getAudioTracks()[0].enabled = !myStream.getAudioTracks()[0].enabled
@@ -68,7 +66,7 @@ function App() {
   }
 
 
-  const makeConnection = () => {
+  const makeConnection = async () => {
     peerRef.current = new RTCPeerConnection({
       iceServers: [
         {
@@ -129,7 +127,7 @@ function App() {
     socketRef.current.on("offer", async (offer) => { 
       peerRef.current.ondatachannel = (event) => {
         ChannelRef.current = event.channel;
-        ChannelRef.current.onmessage((event) => console.log(event.data))
+        ChannelRef.current.onmessage = (event) => console.log(event.data);
       };
 
       console.log("received the offer");
@@ -193,4 +191,4 @@ function App() {
   );
 }
 
-export default App;
+export default VideoChat;
