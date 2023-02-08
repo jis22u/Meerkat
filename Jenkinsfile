@@ -28,17 +28,17 @@ pipeline {
 
 		stage('Deploy') {
             steps{
-                sh 'pwd'
-                sh '~/docker-compose -f docker-compose.yml up -d'
-                sh 'docker-compose ps'
+                sh "pwd"
+                sh "docker-compose up -d --build"
+                sh "docker-compose ps"
             }
             post {
                 success {
-                    echo 'docker-compose success'
+                    echo "docker-compose success"
                 }
 
                 failure {
-                    echo 'docker-compose failed'
+                    echo "docker-compose failed"
                 }
             }		
         }
