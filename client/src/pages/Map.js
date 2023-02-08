@@ -9,7 +9,7 @@ import Backdrop from "components/map/Backdrop";
 const Map = () => {
   const { kakao } = window;
   const map = useRef();
-  const [address, setAddress] = useState("...");
+  const [address, setAddress] = useState("지도를 움직여 주소를 입력하세요");
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
@@ -246,7 +246,13 @@ const Map = () => {
     }
   };
   const modalHandler = () => {
-    if (modalIsOpen === false) setModalIsOpen(true);
+    if (modalIsOpen === false) {
+      if(address === "지도를 움직여 주소를 입력하세요") {
+        alert("지도를 움직여 주소를 입력하세요")
+        return;
+      }
+      setModalIsOpen(true);
+    }
     if (modalIsOpen === true) setModalIsOpen(false);
   };
 

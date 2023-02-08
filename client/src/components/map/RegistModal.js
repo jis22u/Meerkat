@@ -11,14 +11,14 @@ import Slider from "@mui/material/Slider";
 const RegistModal = (props) => {
   let date = new Date();
   const meerkat = false;
-  let certification = true;
+  let certification = false;
   const lat = props.lat;
   const lng = props.lng;
   let array = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24,
   ];
-  const [hourSelect, setHourSelect] = useState();
+  const [hourSelect, setHourSelect] = useState(1);
   const [coin, setCoin] = useState();
 
   // 미어캣, 요청 등록 버튼
@@ -39,7 +39,7 @@ const RegistModal = (props) => {
       console.log("미어캣 요청 axios");
       const startAt = moment().format("YYYY-MM-DDTHH:mm:sszz");
       let exp_date = moment().format(`YYYY-MM-DDT${hour}:00:00`);
-      if (date.getHours > hourSelect) {
+      if (date.getHours() > hourSelect) {
         exp_date = moment().add(1, "d").format(`YYYY-MM-DDT${hour}:00:00`);
       }
       console.log(startAt);
@@ -53,6 +53,9 @@ const RegistModal = (props) => {
       //   "location": String,
       // };
       // 미어캣 등록 axios 요청
+
+      //미어캣 등록이 완료되었습니다. 창 띄워주고 메인페이지로!
+      //해당 좌표를 다시 보여주기(선택)
     } else {
       // 요청일 때
       // const requestRegist = {
@@ -74,7 +77,6 @@ const RegistModal = (props) => {
   //위치 인증
   const confirmBtnHandler = async () => {
     const { myLat, myLng } = await getLocation();
-    console.log(myLat, myLng);
 
     const start = {
       lat: myLat,
@@ -84,6 +86,8 @@ const RegistModal = (props) => {
       lat: lat,
       lng: lng,
     };
+
+    console.log("등록 위치 : " + lat + " " + lng);
     //등록 위치와 내 현재 위치 사이의 거리를 계산해줌(반환값은 miter)
     const distance = haversine(start, end);
 
@@ -105,6 +109,7 @@ const RegistModal = (props) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const myLat = position.coords.latitude.toFixed(14);
         const myLng = position.coords.longitude.toFixed(14);
+        console.log("현재 내 위치 : " + myLat + " " + myLng);
         resolve({ myLat, myLng });
       });
     });
@@ -114,7 +119,7 @@ const RegistModal = (props) => {
   const handleHourSelect = (e) => {
     setHourSelect(e.target.value);
   };
-
+  //설정된 코인 값 바꾸기
   function valuetext(value) {
     setCoin(value);
   }
@@ -155,12 +160,12 @@ const RegistModal = (props) => {
         </select>
       )}
       {!meerkat && (
-        <Box sx={{ width: 250 }}>
-          <div className={classes.coinBox}>
+        <Box sx={{ width: 250, ml: 2}} id="coinBox">
+          <div className={classes.coinView}>
             <h3>금액</h3>
             <h3>{coin}</h3>
           </div>
-          <Slider
+          <Slider 
             aria-label="Coin"
             defaultValue={10}
             getAriaValueText={valuetext}
@@ -172,8 +177,12 @@ const RegistModal = (props) => {
           />
         </Box>
       )}
-      {!meerkat && <h3>요청내용</h3>}
-      {!meerkat && <textarea rows={5} cols={30} ></textarea>}
+      {!meerkat && (
+        <div className={classes.requestBox}>
+          <h3>요청내용</h3>
+          <textarea rows={5} cols={30}></textarea>
+        </div>
+      )}
       <br></br>
       <button onClick={props.modalHandler}>취소</button>
       <button onClick={registButtonHandler}>등록</button>

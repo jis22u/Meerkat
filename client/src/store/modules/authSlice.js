@@ -5,8 +5,8 @@ import { registerUser, userLogin } from 'api/auth'
 const initialState = {
   loading: false,
   error: null,
-  isLogin: false,
-  choice: false,
+  isLogin: true,
+  choice: true,
 }
 
 const authSlice = createSlice({

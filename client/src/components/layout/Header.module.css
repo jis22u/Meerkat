@@ -1,0 +1,16 @@
+.img {
+    width: 13rem;
+    margin: 0 auto;
+    display: block;
+}
+
+.header {
+    background-color: rgb(250, 233, 200);
+    align-items: center;
+}
+
+.brown {
+ height: 0.4rem;
+ margin: 0;
+ background-color: rgb(106, 64, 53);
+}
