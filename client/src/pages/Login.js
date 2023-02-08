@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -66,9 +66,10 @@ const LoginScreen = () => {
       </div>
       <p>{errors.password?.message}</p>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : 'Login'}
+        {loading ? '대기중' : '로그인'}
         {/* <Spinner /> */}
       </button>
+      <Link to='/register'>회원가입</Link>
     </form>
   )
 }

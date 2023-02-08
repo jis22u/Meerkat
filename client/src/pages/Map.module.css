@@ -1,13 +1,24 @@
 .map {
-    position: fixed;
-    width: 100%;
-    height: 800px;
-    left: auto;
-    right: auto;
-  }
+  position: fixed;
+  width: 100%;
+  height: 800px;
+}
 
-  .mapBox {
-    position : fixed;
-    width: 100%;
-    height: 1000px;
-  }
+.addressBox {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+}
+
+.address {
+  margin-bottom: 0px;
+  text-align: center;
+  background-color: rgb(255, 249, 228);
+}
+
+.btn {
+  text-align: center;
+  background-color: rgb(228, 202, 170);
+}
