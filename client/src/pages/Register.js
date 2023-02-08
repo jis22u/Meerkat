@@ -56,7 +56,7 @@ const schema = yup
   .required();
 
 const Register = () => {
-  const { loading, isLogin} = useSelector((state) => state.auth)
+  const { loading, isLogin } = useSelector((state) => state.auth)
   // error 불러와서 쓰기
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -66,6 +66,7 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
@@ -126,7 +127,7 @@ const Register = () => {
           {...register('tel')}
         />
       </div>
-      <p>{errors.tell?.message}</p>
+      <p>{errors.tel?.message}</p>
       <button type='submit' className='button' disabled={loading}>
         {loading ? '대기중' : 'Register'}
         {/* <Spinner /> */}

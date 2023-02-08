@@ -9,8 +9,10 @@ import MyPage from 'pages/MyPage'
 import Cash from 'pages/Cash'
 import Map from 'pages/Map'
 import Login from 'pages/Login';
+import ChangeAccount from 'pages/ChangeAccount';
 // import Protected from 'pages/Protected';
 import VideoChat from 'pages/VideoChat';
+
 
 function App() {
 
@@ -20,6 +22,7 @@ function App() {
             <Route path="/" element={<Home />}/>
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/cash" element={<Cash />} />
+            <Route path="/change-account" element={<ChangeAccount/>} />
         </Route>
         
         <Route element={<AuthLayout />}>

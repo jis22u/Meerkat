@@ -16,7 +16,7 @@ const Home = () => {
     return (
         <div>
             <button onClick={() => clickHandler(true)}>미어캣</button>
-            <button onClick={() => clickHandler(false )}>요청캣</button>
+            <button onClick={() => clickHandler(false)}>요청캣</button>
         </div>
     )
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import io from "socket.io-client";
 import { useParams } from 'react-router-dom';
+import styled from "styled-components";
 
 const VideoChat = () => {
   const socketRef = useRef();
@@ -8,25 +9,68 @@ const VideoChat = () => {
   const localVideoRef = useRef();
   const remoteVideoRef = useRef();
   const ChannelRef = useRef();
+  const myStream = useRef();
   const { roomName } = useParams();
   const [text ,setText] = useState('');
   const [messages, setMessages] = useState([]);
-
-  let myStream;
   let cameraOptions
 
+  const Messages = styled.div`
+      width: 100%;
+      height: 60%;
+      border: 1px solid black;
+      margin-top: 10px;
+      overflow: scroll;
+  `;
+
+
+  const MyRow = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+  `;
+
+  const MyMessage = styled.div`
+    width: 45%;
+    background-color: blue;
+    color: white;
+    padding: 10px;
+    margin-right: 5px;
+    text-align: center;
+    border-top-right-radius: 10%;
+    border-bottom-right-radius: 10%;
+  `;
+
+  const PartnerRow = styled(MyRow)`
+    justify-content: flex-start;
+  `;
+
+  const PartnerMessage = styled.div`
+    width: 45%;
+    background-color: grey;
+    color: white;
+    border: 1px solid lightgray;
+    padding: 10px;
+    margin-left: 5px;
+    text-align: center;
+    border-top-left-radius: 10%;
+    border-bottom-left-radius: 10%;
+  `;
+
+
   const handleMicOff = () => {
-    myStream.getAudioTracks()[0].enabled = !myStream.getAudioTracks()[0].enabled
+    myStream.current.getAudioTracks()[0].enabled = !myStream.current.getAudioTracks()[0].enabled
   }
 
 
   const handleCameraOff = () => {
-    myStream.getVideoTracks()[0].enabled = !myStream.getVideoTracks()[0].enabled
+    myStream.current.getVideoTracks()[0].enabled = !myStream.current.getVideoTracks()[0].enabled
   }
   
 
   const handleCamDirection = async () => {
-    const currentCamera = myStream.getVideoTracks()[0];
+    const currentCamera = myStream.current.getVideoTracks()[0];
 
     cameraOptions.forEach((camera) => {
       if (camera.label !== currentCamera.label) {
@@ -36,7 +80,7 @@ const VideoChat = () => {
     })
     
     if (peerRef.current) {
-      const videoTrack = myStream.getVideoTracks()[0];
+      const videoTrack = myStream.current.getVideoTracks()[0];
       const videoSender = peerRef.current
         .getSenders()
         .find((sender) => sender.track.kind === "video");
@@ -57,10 +101,10 @@ const VideoChat = () => {
     };
 
     try {
-      myStream = await navigator.mediaDevices.getUserMedia(
+      myStream.current = await navigator.mediaDevices.getUserMedia(
         deviceId ? cameraConstraints : initialConstrains
       )
-      localVideoRef.current.srcObject = myStream;
+      localVideoRef.current.srcObject = myStream.current;
     } catch (e) {
       console.error(e);
     }
@@ -93,10 +137,10 @@ const VideoChat = () => {
       remoteVideoRef.current.srcObject = e.streams[0];
     }
 
-    myStream
+    myStream.current
       .getTracks()
       .forEach((track) => {
-        peerRef.current.addTrack(track, myStream)
+        peerRef.current.addTrack(track, myStream.current)
       })
     }
 
@@ -104,66 +148,91 @@ const VideoChat = () => {
   useEffect(() => {
     console.log('Render');
     
-    // const initCall = async () => {
-    //   await getMedia();
-    //   await makeConnection();
+    const initCall = async () => {
+      await getMedia();
+      await makeConnection();
 
-    //   socketRef.current = io("http://192.168.31.154:8085",  {
-    //   query: `roomName=${roomName}`, //
-    // });
+      socketRef.current = io("http://192.168.31.154:8085",  {
+      query: `roomName=${roomName}`, //
+      });
     
-    // socketRef.current.on("welcome", async () => {
-    //   ChannelRef.current = peerRef.current.createDataChannel("chat");
-    //   ChannelRef.current.onmessage = (event) => console.log(event.data);
+    socketRef.current.on("welcome", async () => {
+      ChannelRef.current = peerRef.current.createDataChannel("chat");
+      ChannelRef.current.onmessage = (event) => receiveMessage(event);
 
-    //   const offer = await peerRef.current.createOffer();
-    //   peerRef.current.setLocalDescription(offer);
-    //   console.log("sent the offer");
+      const offer = await peerRef.current.createOffer();
+      peerRef.current.setLocalDescription(offer);
+      console.log("sent the offer");
                                           
-    //   socketRef.current.emit("offer",{
-    //     datas: JSON.stringify(offer),
-    //     roomName: roomName
-    //   });
-    // });
+      socketRef.current.emit("offer",{
+        datas: JSON.stringify(offer),
+        roomName: roomName
+      });
+    });
 
-    // socketRef.current.on("offer", async (offer) => { 
-    //   peerRef.current.ondatachannel = (event) => {
-    //     ChannelRef.current = event.channel;
-    //     ChannelRef.current.onmessage = (event) => console.log(event.data);
-    //   };
+    socketRef.current.on("offer", async (offer) => { 
+      peerRef.current.ondatachannel = (event) => {
+        ChannelRef.current = event.channel;
+        ChannelRef.current.onmessage = (event) => receiveMessage(event);
+      };
 
-    //   console.log("received the offer");
-    //   peerRef.current.setRemoteDescription(JSON.parse(offer));
-    //   const answer = await peerRef.current.createAnswer();
-    //   peerRef.current.setLocalDescription(answer);
-    //   socketRef.current.emit("answer", {
-    //     datas: JSON.stringify(answer), 
-    //     roomName: roomName
-    //   });
-    //   console.log("sent the answer");
+      console.log("received the offer");
+      peerRef.current.setRemoteDescription(JSON.parse(offer));
+      const answer = await peerRef.current.createAnswer();
+      peerRef.current.setLocalDescription(answer);
+      socketRef.current.emit("answer", {
+        datas: JSON.stringify(answer), 
+        roomName: roomName
+      });
+      console.log("sent the answer");
+    });
 
-    // });
-
-    // socketRef.current.on("answer", (answer) => {
-    //   console.log("received the answer");
-    //   peerRef.current.setRemoteDescription(JSON.parse(answer));
-    // });
+    socketRef.current.on("answer", (answer) => {
+      console.log("received the answer");
+      peerRef.current.setRemoteDescription(JSON.parse(answer));
+    });
 
 
-    // socketRef.current.on("ice", (ice) => {
-    //   peerRef.current.addIceCandidate(JSON.parse(ice));
-    //   console.log("received candidate");
-    // });
-    // }
-    // initCall()
+    socketRef.current.on("ice", (ice) => {
+      peerRef.current.addIceCandidate(JSON.parse(ice));
+      console.log("received candidate");
+    });
+    }
+
+    initCall()
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const sendMessage = async (e) => {
+  const receiveMessage = (e) => {
+    setMessages(messages => [...messages, { yours: false, value: e.data}])
+  }
+
+  const sendMessage = (e) => {
     e.preventDefault();
-    console.log('hi')
-    // ChannelRef.current.send(text)
+    ChannelRef.current.send(text)
     setMessages(messages => [...messages, { yours: true, value: text}])
     setText("");
+  }
+
+  const showMessages = (message, index) => {
+    if (message.yours) {
+      return (
+          <MyRow key={index}>
+              <MyMessage>
+                  {message.value}
+              </MyMessage>
+          </MyRow>
+      )
+    }
+
+    return (
+        <PartnerRow key={index}>
+            <PartnerMessage>
+                {message.value}
+            </PartnerMessage>
+        </PartnerRow>
+    )
   }
 
   return (
@@ -193,6 +262,9 @@ const VideoChat = () => {
         playsInline
         autoPlay
       />
+      <Messages>
+        {messages.map(showMessages)}
+      </Messages>
       <button onClick={handleCameraOff}>Camera Off</button>
       <button onClick={handleMicOff}>Mic Off</button>
       <button onClick={handleCamDirection}>Camera Change</button>
