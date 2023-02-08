@@ -1,0 +1,15 @@
+.img {
+  width: 5rem;
+  margin-top: 10%;
+  left : calc(50% - 10rem);
+}
+
+button {
+  width: 6.5rem;
+  height: 4rem;
+}
+
+.buttons {
+  margin: 0 auto;
+  width: fit-content;
+}

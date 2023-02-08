@@ -1,14 +1,17 @@
-.pin {
-    text-align: center;
-    width: rem;
+.requestPinImg {
+    padding: 1rem;
+    width: 18rem;
     z-index: 10;
     position: fixed;
-    top: 15rem;
-    /* left: calc(50% - 5rem); */
-    left: 50%;
-    transform: translateX(-35%);
+    top: 18vh;
+    left: calc(50% - 10rem);
 }
 
-.pinImg {
-    width: 13rem;
+.meerkatPinImg {
+   padding: 1rem;
+    width: 18rem;
+    z-index: 10;
+    position: fixed;
+    top: 18vh;
+    left: calc(50% - 8rem);
 }
