@@ -19,12 +19,6 @@ pipeline {
             }
         }
 
-        stage('frontend dockerizing') {
-            steps {
-                sh "docker build -t client ./client"
-            }
-        }
-
         stage('backend dockerizing') {
             steps {
                 sh "pwd"
@@ -33,6 +27,12 @@ pipeline {
 
                     sh "docker build -t server ./server"
                 }
+            }
+        }
+
+        stage('frontend dockerizing') {
+            steps {
+                sh "docker build -t client ./client"
             }
         }
 
