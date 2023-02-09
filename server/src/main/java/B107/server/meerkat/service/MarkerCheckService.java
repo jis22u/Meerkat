@@ -1,6 +1,9 @@
 package B107.server.meerkat.service;
 
+import B107.server.meerkat.entity.MarkerCheck;
+import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.repository.MarkerCheckRepository;
+import B107.server.meerkat.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,30 +16,24 @@ public class MarkerCheckService {
 
 	private final MarkerCheckRepository markerCheckRepository;
 
-
 	/**
-	 * 첫 등록 여부 insert
+	 * 해당 사용자의 등록 가능 여부 조회 select
 	 */
 	@Transactional
-	public void addMarkerCheck() {
-
-
-	}
-
-
-	/**
-	 * 마커 등록 혹은 만료될 때마다 update
-	 */
-	@Transactional
-	public void updateMarkerCheck() {
-
+	public boolean isMarkerCheck(Long memberIdx) {
+		return markerCheckRepository.findMcCheckById(memberIdx);
 	}
 
 	/**
-	 * 등록 가능 여부 조회 select
+	 * 해당 사용자의 등록 가능 여부 true or false
 	 */
 	@Transactional
-	public void getMarkerCheck(Long memberId) {
-//		markerCheckRepository.
+	public void registMarkerCheck(Long memberIdx, Boolean check) {
+		MarkerCheck markerCheck = MarkerCheck.builder()
+				.memberIdx(memberIdx)
+				.mcCheck(check)
+				.build();
+		markerCheckRepository.save(markerCheck);
+		return;
 	}
 }
