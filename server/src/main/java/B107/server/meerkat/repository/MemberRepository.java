@@ -18,4 +18,6 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     @Modifying(clearAutomatically = true)
     int updateMember(@Param("name") String name, @Param("email") String email, @Param("tel") String tel, @Param("idx") long idx);
 
+    @Query("select m.idx from Member m where m.memberId like :memberId")
+    Long findIdxByMemberId(String memberId);
 }

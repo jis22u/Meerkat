@@ -24,14 +24,6 @@ public class MarkerService {
 
 	@Transactional
 	public Marker registMarker(Long memberIdx, Marker marker) {
-		// 등록 여부 true 처리
-		MarkerCheck markerCheck = MarkerCheck.builder()
-				.memberIdx(memberIdx)
-				.mcCheck(true)
-				.build();
-		markerCheckRepository.save(markerCheck);
-
-		// marker에 Member 세팅 <<<<<< JoinColumn 컬럼 초기호
 		marker.setMember(memberRepository.findById(memberIdx).orElse(null));
 		markerRepository.save(marker);
 		return marker;

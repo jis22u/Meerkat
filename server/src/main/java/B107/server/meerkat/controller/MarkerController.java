@@ -26,7 +26,6 @@ import java.time.format.DateTimeFormatter;
 @RequiredArgsConstructor
 public class MarkerController {
 
-	private final JwtTokenProvider jwtTokenProvider;
 	private final MarkerService markerService;
 	private final MarkerCheckService markerCheckService;
 
@@ -40,6 +39,7 @@ public class MarkerController {
 		// 첫 가입하고 나서 markerCheck의 member_idx 초기화 어케 해주지???
 		if(!markerCheckService.isMarkerCheck(memberIdx)) {
 			// 등록 가능한 경우
+			markerCheckService.registMarkerCheck(memberIdx, true);
 			markerService.registMarker(memberIdx, marker);
 			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.CREATED, Msg.SUCCESS_MARKER_REGISTER));
 		}
@@ -91,6 +91,7 @@ public class MarkerController {
 		if(result == -1L) {
 			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MARKER_DELETE));
 		}
+		markerCheckService.registMarkerCheck(memberIdx, false);
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_DELETE));
 	}
 }
