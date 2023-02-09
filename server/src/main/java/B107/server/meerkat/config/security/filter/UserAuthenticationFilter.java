@@ -6,19 +6,18 @@ import B107.server.meerkat.config.security.handler.UserLoginFailureHandler;
 import B107.server.meerkat.dto.token.CommonTokenDTO;
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.entity.Token;
+import B107.server.meerkat.repository.MemberRepository;
 import B107.server.meerkat.repository.TokenRepository;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Component;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -26,7 +25,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static B107.server.meerkat.config.utils.Msg.*;
+import static B107.server.meerkat.config.utils.Msg.FAIL_SIGN_IN;
+import static B107.server.meerkat.config.utils.Msg.SUCCESS_SIGN_IN;
 
 /**
  * URL 이 /login 으로 넘어올 경우 spring security 에서 자동으로 attemptAuthentication() 으로 보내줌
@@ -36,16 +36,15 @@ import static B107.server.meerkat.config.utils.Msg.*;
 
 @Slf4j
 @Setter
-@Component
 public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	private static final String METHOD_NAME = UserAuthenticationFilter.class.getName();
 	private UserAuthenticationManager userAuthenticationManager;
 	private JwtTokenProvider jwtTokenProvider;
 	private TokenRepository tokenRepository;
+	private MemberRepository memberRepository;
 	private String headerKeyAccess;
 	private String typeAccess;
 
-	@Autowired
 	public UserAuthenticationFilter(UserAuthenticationManager userAuthenticationManager, JwtTokenProvider jwtTokenProvider, TokenRepository tokenRepository) {
 		super(userAuthenticationManager);
 		this.userAuthenticationManager = userAuthenticationManager;
@@ -84,7 +83,6 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 
 		try {
 			String principal = String.valueOf(authResult.getPrincipal());
-
 			Token token = tokenRepository.findByMemberId(principal);
 			if (token != null) {
 				log.info("Token Set Existed - Token issuance");
@@ -102,7 +100,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 				response.addCookie(jwtTokenProvider.generateCookie(commonTokenDTO.getReIssuanceTokenDTO().getRefreshToken()));
 			}
 			response.setContentType("text/html; charset=UTF-8");
-			response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.OK, SUCCESS_SIGN_IN));
+			response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.OK, SUCCESS_SIGN_IN, principal));
 		} catch (IOException ie) {
 			log.error("유저 정보를 읽지 못했습니다. " + METHOD_NAME, ie);
 		} catch (NullPointerException ne) {

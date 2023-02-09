@@ -1,10 +1,7 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -14,8 +11,9 @@ import java.io.Serializable;
 @DynamicInsert
 @DynamicUpdate
 @Entity
-@Table(name = "call")
+@Table(name = "call_on")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,13 +21,12 @@ public class Call extends BaseAtTime implements Serializable {
 
     // 시야 요청건의 Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     // 요청자 Idx
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_idx")
     private Member member;
 
     private String location; // 위치 정보
@@ -40,4 +37,5 @@ public class Call extends BaseAtTime implements Serializable {
 
     @Column(name = "room_id")
     private String roomId; // 대화방 id
+
 }
