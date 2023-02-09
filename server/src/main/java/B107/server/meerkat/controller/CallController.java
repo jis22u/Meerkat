@@ -36,11 +36,11 @@ public class CallController {
 			// 요청 가능한 경우
 			callCheckService.registCallCheck(memberIdx, true);
 			String roomId = callService.registCall(memberIdx, call);
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.CREATED, Msg.SUCCESS_MARKER_REGISTER, roomId));
+			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, roomId));
 		}
 
 		// 이미 등록 내역이 있는 경우
-		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_MARKER_REGISTER, "-1L"));
+		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER, "-1L"));
 
 	}
 }

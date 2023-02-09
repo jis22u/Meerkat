@@ -41,7 +41,7 @@ public class MarkerController {
 			// 등록 가능한 경우
 			markerCheckService.registMarkerCheck(memberIdx, true);
 			markerService.registMarker(memberIdx, marker);
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.CREATED, Msg.SUCCESS_MARKER_REGISTER));
+			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_REGISTER));
 		}
 
 		// 이미 등록 내역이 있는 경우
