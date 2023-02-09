@@ -24,13 +24,6 @@ pipeline {
             }
         }
 
-#        stage('frontend dockerizing') {
-#            steps {
-#                sh "pwd"
-#                sh "docker build -t client ./client"
-#            }
-#        }
-
 
         stage('backend dockerizing') {
             steps {
