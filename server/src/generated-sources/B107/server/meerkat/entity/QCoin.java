@@ -21,7 +21,7 @@ public class QCoin extends EntityPathBase<Coin> {
 
     public final NumberPath<Integer> coin = createNumber("coin", Integer.class);
 
-    public final StringPath memberId = createString("memberId");
+    public final NumberPath<Long> memberIdx = createNumber("memberIdx", Long.class);
 
     public QCoin(String variable) {
         super(Coin.class, forVariable(variable));

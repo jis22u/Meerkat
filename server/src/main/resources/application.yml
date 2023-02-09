@@ -20,7 +20,7 @@ spring:
       hibernate:
         globally_quoted_identifiers: 'true'
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
       use-new-id-generator-mappings: true
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -56,9 +56,11 @@ user:
     logout: /logout
     admin: /admin
     member: /member
+    marker: /marker
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER
+    marker: ROLE_MARKER
   permit:
     all: '/**'
   session:

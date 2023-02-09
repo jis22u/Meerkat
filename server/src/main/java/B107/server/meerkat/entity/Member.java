@@ -59,6 +59,7 @@ public class Member extends BaseAtTime implements Serializable {
     @Column(name = "fcm_token")
     private String fcmToken; // fcm 알림을 받을 token
 
+
     @Override
     public void prePersist() {
         super.prePersist();

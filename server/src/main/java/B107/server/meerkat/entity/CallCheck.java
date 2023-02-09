@@ -24,8 +24,8 @@ import java.util.Objects;
 public class CallCheck implements Serializable {
 
     @Id
-    @Column(name = "member_id")
-    private String memberId;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
     @Column(name = "cc_check")
     @Convert(converter = BooleanToYNConverter.class)

@@ -7,10 +7,8 @@ import org.springframework.data.repository.query.Param;
 
 public interface MarkerRepository extends JpaRepository<Marker, Long> {
 
-	
-	// JpaRepository의 save 메서드 사용하면 필요없을 수도 있겠다
-//	@Query("update Marker m set m.expDate = :expDate where m.idx = :idx")
-//	int updateMarker(@Param("expDate") String expDate, @Param("idx") Long idx);
 
+	@Query("select m from Marker m where m.member.idx = :memberIdx and m.isExp = false")
+	Marker findValidByMemberIdx(@Param("memberIdx") Long memberIdx);
 
 }
