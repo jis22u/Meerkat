@@ -19,7 +19,6 @@ import java.time.format.DateTimeFormatter;
 public class MarkerService {
 
 	private final MarkerRepository markerRepository;
-	private final MarkerCheckRepository markerCheckRepository;
 	private final MemberRepository memberRepository;
 
 	@Transactional
