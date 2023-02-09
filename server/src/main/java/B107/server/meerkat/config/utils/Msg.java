@@ -41,7 +41,12 @@ public interface Msg {
 	String SUCCESS_MARKER_DELETE = "미어캣 마커 삭제에 성공하였습니다.";
 	String SUCCESS_MARKER_UPDATE = "등록 내역 수정에 성공하였습니다.";
 
-	String FAIL_MARKER_REGISTER = "이미 미어캣 마커를 등록하셨습니다.";
+	String FAIL_MARKER_REGISTER = "등록한 미어캣 마커가 이미 존재합니다.";
 	String FAIL_MARKER_DELETE = "삭제 권한이 없습니다.";
 	String FAIL_MARKER_UPDATE = "수정 권한이 없습니다.";
+
+	// call
+	String SUCCESS_CALL_REGISTER = "요청 등록에 성공하였습니다.";
+
+	String FAIL_CALL_REGISTER = "등록한 요청이 이미 존재합니다.";
 }
