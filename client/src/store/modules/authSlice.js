@@ -25,8 +25,10 @@ const authSlice = createSlice({
     [userLogin.pending]: (state) => {
       state.loading = true;
     },
-    [userLogin.fulfilled]: (state, { payload }) => {
-      state.isLogin = true;
+    [userLogin.fulfilled]: (state, { payload : { status }}) => {
+      if (status === 'OK') {
+        state.isLogin = true;
+      }
       state.loading = false;
     },
     [userLogin.rejected]: (state, { payload }) => {
