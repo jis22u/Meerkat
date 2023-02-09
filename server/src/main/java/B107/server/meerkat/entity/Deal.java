@@ -25,7 +25,6 @@ public class Deal extends BaseAtTime implements Serializable {
 
     // 거래 table Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

@@ -1,0 +1,27 @@
+.modal {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  background-color: rgb(255, 249, 228);
+  padding: 1rem;
+  text-align: center;
+  width: 18rem;
+  height: fit-content;
+  z-index: 10;
+  position: fixed;
+  top: 10%;
+  left: calc(50% - 10rem);
+}
+
+.img {
+  width: 5rem;
+}
+
+.coinView {
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
+}
+
+.requestBox {
+  height: 7rem;
+}

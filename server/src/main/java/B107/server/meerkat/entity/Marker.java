@@ -30,7 +30,6 @@ import java.util.Optional;
 public class Marker extends BaseAtTime implements Serializable {
 
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 

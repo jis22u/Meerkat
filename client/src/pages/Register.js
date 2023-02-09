@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
 import { registerUser } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -15,7 +13,7 @@ const schema = yup
       .min(6, "최소 6자 이상 작성해야 합니다.")
       .max(12, "최대 12자까지 작성 가능합니다.")
       .matches(
-        /^[A-Za-z][A-Za-z0-9_]{6,12}$/,
+        /^[A-Za-z][A-Za-z0-9_]{5,11}$/,
         "아이디는 숫자, 영문으로 작성 가능합니다."
       )
       .required("비밀번호를 입력해 주세요!"),
@@ -25,7 +23,7 @@ const schema = yup
       .min(8, "최소 8자 이상 작성해야 합니다.")
       .max(16, "최대 16자까지 작성 가능합니다.")
       .matches(
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,16}$/,
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{7,15}$/,
       "비밀번호는 영어, 숫자, 특수문자만 가능합니다.")
       .required("비밀번호를 입력해 주세요!"),
 
@@ -36,10 +34,10 @@ const schema = yup
 
       name: yup
       .string()
-      .min(4, "최소 4자 이상 작성해야 합니다.")
+      .min(2, "최소 2자 이상 작성해야 합니다.")
       .max(12, "최대 12자까지 작성 가능합니다.")
       .matches(
-        /^[A-Za-z0-9가-힣]{4,12}$/,
+        /^[A-Za-z0-9가-힣]{1,11}$/,
         "닉네임은 영어, 한글, 숫자만 가능합니다."
       )
       .required(),
@@ -49,53 +47,48 @@ const schema = yup
       .matches(/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i, "이메일을 정확히 입력해 주세요.")
       .required('이메일을 입력해 주세요.'),
       
-      tell: yup
+      tel: yup
       .string()
       .matches(/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/, "번호를 정확히 입력해 주세요.")
     })
   .required();
 
 const Register = () => {
-  const { loading, userInfo, success } = useSelector((state) => state.auth)
-  // error 불러와서 쓰기
+  const { loading } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
+    mode: "onChange",
     resolver: yupResolver(schema),
   });
 
-  useEffect(() => {
-    // 가입이 성공했다면, Login page로 Redirect 하기
-    if (success) navigate('/login')
-    // 만약 로그인 한 계정이라면 홈으로 Redirect 하기
-    if (userInfo) navigate('/home') 
-  }, [navigate, userInfo, success]) // userInfo와 success가 변경되면 리렌더링하기
 
-  const submitForm = (data) => {
+  const submitForm = async (data) => {
     data.email = data.email.toLowerCase()
     data.memberId = data.memberId.toLowerCase()
-    dispatch(registerUser(data)) // Form에 작성된 데이터 한 번에 보내기
+    const { checkPassword, ...form } = data
+    const res = await dispatch(registerUser(form))
+    if (res.error?.message) {
+      alert(res.payload)
+    }
   }
-
-  // Form 으로 작성되는 거 required 밑에 유효성 체크 추가해야함
 
   return (
     <form onSubmit={handleSubmit(submitForm)}>
       {/* {error && <Error>{error}</Error>} */}
       <div className='form-group'>
-        <label htmlFor='memberId'>ID</label>
+        <label htmlFor='memberId'>아이디</label>
         <input
           {...register('memberId')}
         />
       </div>
       <p>{errors.memberId?.message}</p>
       <div className='form-group'>
-        <label htmlFor='password'>Password</label>
+        <label htmlFor='password'>비밀번호</label>
         <input
           type='password'
           {...register('password')}
@@ -103,7 +96,7 @@ const Register = () => {
       </div>
       <p>{errors.password?.message}</p>
       <div className='form-group'>
-        <label htmlFor='checkPassword'>Confirm Password</label>
+        <label htmlFor='checkPassword'>비밀번호 확인</label>
         <input
           type='password'
           {...register('checkPassword')}
@@ -111,28 +104,28 @@ const Register = () => {
       </div>
       <p>{errors.checkPassword?.message}</p>
       <div className='form-group'>
-        <label htmlFor='email'>Email</label>
+        <label htmlFor='email'>이메일</label>
         <input
           {...register('email')}
         />
       </div>
       <p>{errors.email?.message}</p>
       <div className='form-group'>
-        <label htmlFor='name'>Nickname</label>
+        <label htmlFor='name'>닉네임</label>
         <input
           {...register('name')}
         />
       </div>
       <p>{errors.name?.message}</p>
       <div className='form-group'>
-        <label htmlFor='tell'>Phone</label>
+        <label htmlFor='tel'>핸드폰</label>
         <input
-          {...register('tell')}
+          {...register('tel')}
         />
       </div>
-      <p>{errors.tell?.message}</p>
+      <p>{errors.tel?.message}</p>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : 'Register'}
+        {loading ? '대기중' : '회원가입'}
         {/* <Spinner /> */}
       </button>
     </form>

@@ -7,67 +7,53 @@ const api = axios.create({
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true
 });
 
 api.interceptors.request.use(function (config) {
-    const accessToken = localStorage.getItem('access-token');
-    const refreshToken = localStorage.getItem('refresh-token');
-    if (!accessToken || !refreshToken) {
+    const accessToken = localStorage.getItem('userToken');
+    if (!accessToken) {
         window.location.href = '/login';
+        return
     }
-    // refreshToken 만료되기 전 accessToken을 발급 받으면, access만 남아 있을수도 있다.
-    // accessToken은 만료되고 refreshToken만 남는 경우
-
     config.headers.authorization = `${accessToken}`;
+    
     return config;
 });
 
-api.interceptors.response.use(
-    function (response) {
-        return response;
-    },
-    async function (error) {
-        const { config, response } = error;
-        const originalRequest = config;
+// api.interceptors.response.use(
+//     function (response) {
+//         return response;
+//     },
+//     async function (error) {
+//         const { config, response } = error;
+//         const originalRequest = config;
 
-        if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
-            const refreshToken = localStorage.getItem('refreshToken');
+//         if (response && response.data.error.code === 'ACCESS_TOKEN_EXPIRED') {
+//             await axios
+//                 .post(
+//                     `${BASE_URL}/refresh`,
+//                 )
+//                 .then(res => {
+//                     if (res.data === 'REFRESH_SUCCEED') {
+//                         const newAccessToken = res.headers.authorization;
 
+//                         originalRequest.headers.authorization = newAccessToken;
+//                         localStorage.setItem('accessToken', newAccessToken);
 
-            const { data } = await axios
-                .post(
-                    `${BASE_URL}refresh/token`,
-                    {
-                        refreshToken
-                    }
-                )
-                .then(res => {
-                    if (res.data === 'Refresh Succeed') {
-                        const newAccessToken = res.headers.authorization;
-                        const newRefreshToken = res.headers.Set-Cookie;
+//                         return axios(originalRequest);
+//                     }
+//                 })
+//                 .catch(err => {
+//                     if ( err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED' ) {
+//                         localStorage.removeItem('accessToken');
+//                         window.location.replace = '/login';
+//                     }
+//                 });
+//         }
+        
+//         return Promise.reject(error);
+//     },
+// );
 
-                        originalRequest.headers.authorization = newAccessToken;
-                        originalRequest.headers.Set-Cookie = newRefreshToken;
-
-                        localStorage.setItem('accessToken', newAccessToken);
-                        localStorage.setItem('refreshToken', newRefreshToken);
-
-                        return axios(originalRequest);
-                    }
-                    return Promise.reject(error);
-                })
-                .catch(err => {
-                    if (
-                        err.response.data.error.code === 'REFRESH_TOKEN_EXPIRED'
-                    ) {
-                        localStorage.removeItem('accessToken');
-                        localStorage.removeItem('refreshToken');
-                        // window.location.replace = '/login';
-                    }
-                });
-        }
-        return Promise.reject(error);
-    },
-);
-
-export default api;
+export default api

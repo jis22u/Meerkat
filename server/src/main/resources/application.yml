@@ -48,7 +48,7 @@ jwt:
     access: 18000000
     refresh: 6048000000
   secret:
-    key: ${jwt-secret-key}
+    key: ${jwt_secret_key}
 
 user:
   url:

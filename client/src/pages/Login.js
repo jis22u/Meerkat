@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,14 +13,14 @@ const schema = yup
     memberId: yup
       .string()
       .required("비밀번호를 입력해 주세요 😦"),
-      password: yup
+    password: yup
       .string()
       .required("비밀번호를 입력해 주세요 😦")
   })
   .required();
 
 const LoginScreen = () => {
-  const { loading, userInfo } = useSelector((state) => state.auth)
+  const { loading, isLogin } = useSelector((state) => state.auth)
   // error 불러와서 쓰기
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -35,13 +35,17 @@ const LoginScreen = () => {
   
 
   useEffect(() => {
-    if (userInfo) {
-      navigate('/home')
+    if (isLogin) {
+      navigate('/')
     }
-  }, [navigate, userInfo])
+  }, [navigate, isLogin])
 
-  const submitForm = (data) => {
-    dispatch(userLogin(data))
+  const submitForm = async (data) => {
+    data.memberId = data.memberId.toLowerCase()
+    const { payload } = await dispatch(userLogin(data))
+    if (payload.status === "BAD_REQUEST"){
+      alert(payload.message)
+    }
   }
 
   return (
@@ -66,9 +70,10 @@ const LoginScreen = () => {
       </div>
       <p>{errors.password?.message}</p>
       <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : 'Login'}
+        {loading ? '대기중' : '로그인'}
         {/* <Spinner /> */}
       </button>
+      <Link to='/register'>회원가입</Link>
     </form>
   )
 }
