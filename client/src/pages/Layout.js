@@ -12,7 +12,7 @@ const Layout = () => {
         <div>
             <Header />
 
-            <main>
+            <main className=''>
                 { !isLogin ? <Navigate to="/login" replace /> : < Outlet /> }
             </main>
 

@@ -1,6 +1,6 @@
 .img {
-  width: 5rem;
-  margin-top: 10%;
+  width: 10rem;
+  margin-top: 2rem;
   left : calc(50% - 10rem);
 }
 
@@ -9,6 +9,7 @@
   height: 3rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  margin-bottom: 2rem;
 }
 
 .buttons {

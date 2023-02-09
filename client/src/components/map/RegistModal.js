@@ -1,6 +1,6 @@
 import { useState } from "react";
+import {setMeerkat} from "api/map";
 
-// import customAxios from "api/customAxios";
 import haversine from "haversine-distance";
 import moment from "moment";
 
@@ -10,7 +10,7 @@ import Slider from "@mui/material/Slider";
 
 const RegistModal = (props) => {
   let date = new Date();
-  const meerkat = false;
+  const meerkat = true;
   let certification = false;
   const lat = props.lat;
   const lng = props.lng;
@@ -37,7 +37,7 @@ const RegistModal = (props) => {
       alert("위치인증을 해주세요");
     } else if (meerkat) {
       console.log("미어캣 요청 axios");
-      const startAt = moment().format("YYYY-MM-DDTHH:mm:sszz");
+      const startAt = moment().format("YYYY-MM-DDTHH:mm:ss");
       let exp_date = moment().format(`YYYY-MM-DDT${hour}:00:00`);
       if (date.getHours() > hourSelect) {
         exp_date = moment().add(1, "d").format(`YYYY-MM-DDT${hour}:00:00`);
@@ -45,17 +45,17 @@ const RegistModal = (props) => {
       console.log(startAt);
       console.log(exp_date);
       // 위치 인증했고 meerkat일 때
-      // const meerkatRegist = {
-      //   "exp_date": startAt,
-      //   "reg_date": exp_date,
-      //   "lat": lat,
-      //   "lng": lng,
-      //   "location": String,
-      // };
-      // 미어캣 등록 axios 요청
+      const meerkatContent = {
+        "exp_date": startAt,
+        "reg_date": exp_date,
+        "lat": lat,
+        "lng": lng,
+        "location": String,
+      };
 
-      //미어캣 등록이 완료되었습니다. 창 띄워주고 메인페이지로!
-      //해당 좌표를 다시 보여주기(선택)
+      // 미어캣 등록 axios 요청
+      await setMeerkat(meerkatContent);
+
     } else {
       // 요청일 때
       // const requestRegist = {

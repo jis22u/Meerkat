@@ -1,17 +1,13 @@
 .requestPinImg {
-    padding: 1rem;
-    width: 18rem;
-    z-index: 10;
+    width: 10rem;
     position: fixed;
-    top: 18vh;
-    left: calc(50% - 10rem);
+    left: calc(50% - 3.6rem);
+    top: 30%;
 }
 
 .meerkatPinImg {
-   padding: 1rem;
-    width: 18rem;
-    z-index: 10;
+    width: 10rem;
     position: fixed;
-    top: 18vh;
-    left: calc(50% - 8rem);
+    left: calc(50% - 3.6rem);
+    top: 30%;
 }
