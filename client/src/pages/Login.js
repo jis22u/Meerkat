@@ -40,8 +40,12 @@ const LoginScreen = () => {
     }
   }, [navigate, isLogin])
 
-  const submitForm = (data) => {
-    dispatch(userLogin(data))
+  const submitForm = async (data) => {
+    data.memberId = data.memberId.toLowerCase()
+    const { payload } = await dispatch(userLogin(data))
+    if (payload.status === "BAD_REQUEST"){
+      alert(payload.message)
+    }
   }
 
   return (

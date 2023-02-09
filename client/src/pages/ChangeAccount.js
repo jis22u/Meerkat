@@ -1,29 +1,19 @@
-// import { useEffect } from "react"
 import { useForm } from 'react-hook-form'
 import { useSelector} from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useEffect, useState } from 'react';
-
+import { getAccount }  from 'api/user'
 
 const schema = yup
   .object({
-    // memberId: yup
-    //   .string()
-    //   .min(6, "최소 6자 이상 작성해야 합니다.")
-    //   .max(12, "최대 12자까지 작성 가능합니다.")
-    //   .matches(
-    //     /^[A-Za-z][A-Za-z0-9_]{6,12}$/,
-    //     "아이디는 숫자, 영문으로 작성 가능합니다."
-    //   )
-    //   .required("비밀번호를 입력해 주세요!"),
       password: yup
       .string()
       .min(8, "최소 8자 이상 작성해야 합니다.")
       .max(16, "최대 16자까지 작성 가능합니다.")
       .matches(
-      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{8,16}$/,
+      /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()])[a-zA-Z0-9!@#$%^&*()]{7,15}$/,
       "비밀번호는 영어, 숫자, 특수문자만 가능합니다.")
       .required("비밀번호를 입력해 주세요!"),
 
@@ -34,10 +24,10 @@ const schema = yup
 
       name: yup
       .string()
-      .min(4, "최소 4자 이상 작성해야 합니다.")
+      .min(4, "최소 2자 이상 작성해야 합니다.")
       .max(12, "최대 12자까지 작성 가능합니다.")
       .matches(
-        /^[A-Za-z0-9가-힣]{4,12}$/,
+        /^[A-Za-z0-9가-힣]{1,11}$/,
         "닉네임은 영어, 한글, 숫자만 가능합니다."
       )
       .required(),
@@ -68,12 +58,10 @@ const ChangeAccount = () => {
       });
 
 
-
     const submitForm = (data) => {
         console.log(data)
         data.email = data.email.toLowerCase()
-        data.memberId = data.memberId.toLowerCase()
-        // const { checkPassword, ...form } = data
+        const { checkPassword, memberId, ...form } = data
         // dispatch(registerUser(form))
       }
     
@@ -82,9 +70,13 @@ const ChangeAccount = () => {
     }
 
     useEffect(() => {
-        setDefaultValues({
-            memberId: 'asdryzx', name: '승환이임', email: 'asdryzx@naver.com', tel:'010-6543-6404'
-        })
+      const getData = async () => {
+        await getAccount()
+          .then((res) => {
+            setDefaultValues(res.data.value)
+          })
+      }
+      getData()
     }, [])
 
     return (
@@ -93,24 +85,24 @@ const ChangeAccount = () => {
                 <form onSubmit={handleSubmit(submitForm)}>
                     {/* {error && <Error>{error}</Error>} */}
                     <div className='form-group'>
-                      <label htmlFor='memberId'>ID</label>
+                      <label htmlFor='memberId'>아이디</label>
                       <input
-                        defaultValue={defaultValues?.memberId}
                         disabled={true}
+                        defaultValue={defaultValues?.memberId}
+                        {...register('memberId')}
                       />
                     </div>
                     <p>{errors.memberId?.message}</p>
                     <div className='form-group'>
-                      <label htmlFor='password'>Password</label>
+                      <label htmlFor='password'>비밀번호</label>
                       <input
                         type='password'
                         {...register('password')}
-
                       />
                     </div>
                     <p>{errors.password?.message}</p>
                     <div className='form-group'>
-                      <label htmlFor='checkPassword'>Confirm Password</label>
+                      <label htmlFor='checkPassword'>비밀번호 확인</label>
                       <input
                         type='password'
                         {...register('checkPassword')}
@@ -118,7 +110,7 @@ const ChangeAccount = () => {
                     </div>
                     <p>{errors.checkPassword?.message}</p>
                     <div className='form-group'>
-                      <label htmlFor='email'>Email</label>
+                      <label htmlFor='email'>이메일</label>
                       <input
                         {...register('email')}
                         defaultValue={defaultValues?.email}
@@ -126,7 +118,7 @@ const ChangeAccount = () => {
                     </div>
                     <p>{errors.email?.message}</p>
                     <div className='form-group'>
-                      <label htmlFor='name'>Nickname</label>
+                      <label htmlFor='name'>닉네임</label>
                       <input
                         {...register('name')}
                         defaultValue={defaultValues?.name}
@@ -134,7 +126,7 @@ const ChangeAccount = () => {
                     </div>
                     <p>{errors.name?.message}</p>
                     <div className='form-group'>
-                      <label htmlFor='tel'>Phone</label>
+                      <label htmlFor='tel'>핸드폰</label>
                       <input
                         {...register('tel')}
                         defaultValue={defaultValues?.tel}
