@@ -15,9 +15,8 @@ export const userLogin = createAsyncThunk(
         form,
         config
       )
-      localStorage.setItem('userToken', headers.authorization)
 
-      console.log(data)
+      localStorage.setItem('userToken', headers.authorization)
 
       return data
 
@@ -42,19 +41,18 @@ export const registerUser = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       }
-      await axios.post(
+      const res = await axios.post(
         `/sign`,  
         form,
         config
       )
-        .then( res => {
-          if (res.status === 200){
-            console.log('hi?')
-            window.location.href = '/login'
-          }
-        })
+
+      if (res.status === 200) {
+        window.location.href = '/login'
+      } 
 
     } catch (error) {
+      console.log(error)
 
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message)
