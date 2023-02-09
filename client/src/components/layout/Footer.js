@@ -5,7 +5,6 @@ import HomeIcon from "@mui/icons-material/Home";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import HistoryIcon from "@mui/icons-material/History";
-import classes from "./Footer.module.css";
 import { createTheme } from "@mui/system";
 
 const Footer = () => {
@@ -21,7 +20,7 @@ const Footer = () => {
   const [selected, setSelected] = useState(0);
   // 새로고침 할 때 Home으로 돌아가지는 것을 막아야함 (로컬 스토리지 이용하면 해결될 듯?)
   return (
-    <footer className={classes.footer}>
+    <footer>
       <BottomNavigation
         sx={{ height: 80}}
         theme={meerkat}

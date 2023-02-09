@@ -1,31 +1,24 @@
 import classes from "./RegistrationDetail.module.css";
 import { useEffect, useState } from "react";
 import moment from "moment";
+import { getMeerkatDetail, modifyMeerkat } from "api/map";
 
 const RegistrationDetail = () => {
   const [detailContent, setDetailContent] = useState();
   const [modify, setModify] = useState(false);
+  const [hourSelect, setHourSelect] = useState(1);
   let date = new Date();
+  let newDetailContext = {};
 
   let array = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24,
   ];
 
-  const [hourSelect, setHourSelect] = useState(1);
-
   useEffect(() => {
     //데이터 받아와서 데이터 객체로 만들기
-    if (!detailContent) {
-      console.log(detailContent);
-      const tmp = {
-        location: "대전광역시 유성구 어디대로 230-2",
-        start: "2023-02-24 12:00:00",
-        end: "2023-02-24 14:00:00",
-      };
-      setDetailContent(tmp);
-    }
-  }, [detailContent]);
+    getMeerkatDetail().then((responce) => setDetailContent(responce));
+  }, []);
 
   const registButtonHandler = async () => {
     setModify(true);
@@ -41,22 +34,32 @@ const RegistrationDetail = () => {
     }
 
     console.log("미어캣 요청 axios");
-    const startAt = moment().format("YYYY-MM-DDTHH:mm:sszz");
     let exp_date = moment().format(`YYYY-MM-DDT${hour}:00:00`);
     if (date.getHours() > hourSelect) {
       exp_date = moment().add(1, "d").format(`YYYY-MM-DDT${hour}:00:00`);
     }
-    console.log(startAt);
     console.log(exp_date);
-    // 위치 인증했고 meerkat일 때
-    // const meerkatRegist = {
-    //   "exp_date": startAt,
-    //   "reg_date": exp_date,
-    //   "lat": lat,
-    //   "lng": lng,
-    //   "location": String,
-    // };
+
+    newDetailContext = {
+      exp_data: exp_date,
+      reg_date: detailContent.reg_date,
+      lat: detailContent.lat,
+      lng: detailContent.lng,
+      location: detailContent.location
+    }
+    newDetailContext.exp_date = exp_date;
+
     // 미어캣 등록 axios 요청
+    modifyMeerkat(newDetailContext).then(responce => {
+      if(responce === "OK"){
+        alert("수정이 완료되었습니다.")
+        setModify(false);
+      }else{
+        alert("오류 아마도 responce 타입 안맞음")
+        setModify(false);
+      }
+    }
+    ) 
 
     //미어캣 등록이 완료되었습니다. 창 띄워주고 메인페이지로!
     //해당 좌표를 다시 보여주기(선택)
@@ -80,11 +83,11 @@ const RegistrationDetail = () => {
         <h3>선택위치</h3>
         {detailContent && <p>{detailContent.location}</p>}
         <h3>시작시간</h3>
-        {detailContent && <p>{detailContent.start}</p>}
+        {detailContent && <p>{detailContent.reg_date}</p>}
         {modify && (
           <div>
             <h3>종료시간</h3>
-            {detailContent && <p>{detailContent.end}</p>}
+            {detailContent && <p>{detailContent.exp_date}</p>}
             {modify && (
               <select onChange={handleHourSelect} value={hourSelect}>
                 {array.map((item) => (
