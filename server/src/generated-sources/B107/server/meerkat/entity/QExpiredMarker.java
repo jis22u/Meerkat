@@ -31,9 +31,9 @@ public class QExpiredMarker extends EntityPathBase<ExpiredMarker> {
 
     public final NumberPath<Long> idx = createNumber("idx", Long.class);
 
-    public final NumberPath<Float> lat = createNumber("lat", Float.class);
+    public final NumberPath<Double> lat = createNumber("lat", Double.class);
 
-    public final NumberPath<Float> lng = createNumber("lng", Float.class);
+    public final NumberPath<Double> lng = createNumber("lng", Double.class);
 
     public final StringPath location = createString("location");
 
