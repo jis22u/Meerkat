@@ -68,12 +68,12 @@ public class MarkerController {
 	public ResponseEntity<ResponseDTO> updateMarker (@AuthenticationPrincipal PrincipalDetails principalDetails,
 													 @RequestBody Marker marker) {
 		Long memberIdx = principalDetails.getMember().getIdx();
-		Marker tempMarker = markerService.updateMarker(memberIdx, marker);
-		if(tempMarker == null) {
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MARKER_UPDATE));
+		Marker changeMarker = markerService.updateMarker(memberIdx, marker);
+		if(changeMarker == null) {
+			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_MARKER_UPDATE));
 		}
 
-		MarkerDTO resMarker = new MarkerDTO().of(tempMarker);
+		MarkerDTO resMarker = new MarkerDTO().of(changeMarker);
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_UPDATE, resMarker));
 	}
 
@@ -89,7 +89,7 @@ public class MarkerController {
 		Long memberIdx = principalDetails.getMember().getIdx();
 		Long result = markerService.deleteMarker(memberIdx);
 		if(result == -1L) {
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.FAIL_MARKER_DELETE));
+			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_MARKER_DELETE));
 		}
 		markerCheckService.registMarkerCheck(memberIdx, false);
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_DELETE));
