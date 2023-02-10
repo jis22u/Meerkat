@@ -31,5 +31,9 @@ public class CallService {
 		return roomId.toString();
 	}
 
+//	@Transactional
+//	public Long findIdxByRoomId(String roomId) {
+//		return callRepository.findIdxByRoomId(roomId);
+//	}
 
 }

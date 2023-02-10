@@ -36,6 +36,8 @@ public class CallController {
 			// 요청 가능한 경우
 			callCheckService.registCallCheck(memberIdx, true);
 			String roomId = callService.registCall(memberIdx, call);
+			// 요청 idx도 찾아서 보내주기
+//			Long callIdx = callService.findIdxByRoomId(roomId);
 			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, roomId));
 		}
 
@@ -43,4 +45,11 @@ public class CallController {
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER, "-1L"));
 
 	}
+
+	// 요청자 대기 페이지에서 2분 만료됨/ 5분 지났을때/ 둘 중 한명이 나갔을 때
+	// 해당 방id 폐쇄하기
+	// roomId 도 같이 들어와야겟구나
+
+
+
 }

@@ -10,6 +10,8 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 
 // 3
 
@@ -62,10 +64,18 @@ public class SocketModule {
 				}
 			}
 
+
+
 			int size = client.getNamespace().getAllClients().size();
-//			if(size == 2) {
-//				client.sendEvent("welcome");
-//			}
+			if(size == 1) {
+				// 요청자가 먼저 들어와있다
+				System.out.println("요청자      "+11111);
+			} else if(size == 2) {
+				// 미어캣 들어왔다
+				// 시작 시간 찍어주기
+				System.out.println("미어캣       "+ 2222);
+				System.out.println(LocalDateTime.now());
+			}
 
 			log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
 		};
@@ -113,6 +123,13 @@ public class SocketModule {
 
 		return client -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
+
+//			int size = client.getNamespace().getAllClients().size();
+//			if(size == 1) {
+//
+//			}
+
+
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}

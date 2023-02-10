@@ -2,6 +2,7 @@ B107\server\meerkat\entity\Call$CallBuilder.class
 B107\server\meerkat\dto\member\mod.class
 B107\server\meerkat\config\security\filter\UserAuthenticationManager.class
 B107\server\meerkat\dto\marker\MarkerCheckDTO.class
+B107\server\meerkat\service\CallService.class
 B107\server\meerkat\entity\CallCheck$CallCheckBuilder.class
 B107\server\meerkat\config\security\auth\MemberDTO.class
 B107\server\meerkat\dto\token\ReIssuanceTokenDTO.class
@@ -58,6 +59,7 @@ B107\server\meerkat\dto\marker\MarkerDTO.class
 B107\server\meerkat\controller\MarkerController.class
 B107\server\meerkat\entity\Marker$MarkerBuilder.class
 B107\server\meerkat\config\security\handler\UserLoginFailureHandler.class
+B107\server\meerkat\repository\querydsl\MarkerCheckRepositoryImpl.class
 B107\server\meerkat\controller\AdminController.class
 B107\server\meerkat\entity\QMember.class
 B107\server\meerkat\entity\Token.class
@@ -102,11 +104,14 @@ B107\server\meerkat\dto\member\ProfileRes$ProfileResBuilder.class
 B107\server\meerkat\socket\SocketService.class
 B107\server\meerkat\exception\PasswordNotMatchException.class
 B107\server\meerkat\repository\DealRepository.class
+B107\server\meerkat\controller\CallController.class
 B107\server\meerkat\dto\member\MemResDTO$MemResDTOBuilder.class
 B107\server\meerkat\entity\Deal.class
 B107\server\meerkat\config\security\auth\PrincipalDetails.class
 B107\server\meerkat\controller\MemberController.class
 B107\server\meerkat\config\socket\ServerCommandLineRunner.class
+B107\server\meerkat\service\CallCheckService.class
 B107\server\meerkat\entity\Deal$DealBuilder.class
 B107\server\meerkat\config\security\filter\UserAuthenticationFilter.class
 B107\server\meerkat\exception\ErrorCode.class
+B107\server\meerkat\config\utils\RandomNumber.class

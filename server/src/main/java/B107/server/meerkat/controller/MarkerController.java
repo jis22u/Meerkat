@@ -74,6 +74,7 @@ public class MarkerController {
 		}
 
 		MarkerDTO resMarker = new MarkerDTO().of(changeMarker);
+		System.out.println(resMarker.getExpDate());
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_UPDATE, resMarker));
 	}
 
