@@ -24,6 +24,7 @@ function App() {
             <Route path="/cash" element={<Cash />} />
             <Route path="/change-account" element={<ChangeAccount/>} />
             <Route path="/registration-detail" element={<RegistrationDetail />} />
+            <Route path="/room/:roomName" element={<VideoChat />} />
         </Route>
         
         <Route element={<AuthLayout />}>
@@ -32,7 +33,6 @@ function App() {
         </Route>
 
       <Route path="/map" element={<Map />} />
-      <Route path="/room/:roomName" element={<VideoChat />} />
     </Routes>
   );
 }

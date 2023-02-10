@@ -19,52 +19,53 @@ const VideoChat = () => {
   const { choice } = useSelector((state) => state.auth)
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
+  const [seconds, setSeconds] = useState(60);
   const navigate = useNavigate()
 
   let cameraOptions
 
-  const Messages = styled.div`
-      width: 100%;
-      height: 60%;
-      border: 1px solid black;
-      margin-top: 10px;
-      overflow: scroll;
-  `;
+  // const Messages = styled.div`
+  //     width: 100%;
+  //     height: 60%;
+  //     border: 1px solid black;
+  //     margin-top: 10px;
+  //     overflow: scroll;
+  // `;
 
 
-  const MyRow = styled.div`
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 10px;
-  `;
+  // const MyRow = styled.div`
+  //   width: 100%;
+  //   display: flex;
+  //   justify-content: flex-end;
+  //   margin-top: 10px;
+  // `;
 
-  const MyMessage = styled.div`
-    width: 45%;
-    background-color: blue;
-    color: white;
-    padding: 10px;
-    margin-right: 5px;
-    text-align: center;
-    border-top-right-radius: 10%;
-    border-bottom-right-radius: 10%;
-  `;
+  // const MyMessage = styled.div`
+  //   width: 45%;
+  //   background-color: blue;
+  //   color: white;
+  //   padding: 10px;
+  //   margin-right: 5px;
+  //   text-align: center;
+  //   border-top-right-radius: 10%;
+  //   border-bottom-right-radius: 10%;
+  // `;
 
-  const PartnerRow = styled(MyRow)`
-    justify-content: flex-start;
-  `;
+  // const PartnerRow = styled(MyRow)`
+  //   justify-content: flex-start;
+  // `;
 
-  const PartnerMessage = styled.div`
-    width: 45%;
-    background-color: grey;
-    color: white;
-    border: 1px solid lightgray;
-    padding: 10px;
-    margin-left: 5px;
-    text-align: center;
-    border-top-left-radius: 10%;
-    border-bottom-left-radius: 10%;
-  `;
+  // const PartnerMessage = styled.div`
+  //   width: 45%;
+  //   background-color: grey;
+  //   color: white;
+  //   border: 1px solid lightgray;
+  //   padding: 10px;
+  //   margin-left: 5px;
+  //   text-align: center;
+  //   border-top-left-radius: 10%;
+  //   border-bottom-left-radius: 10%;
+  // `;
 
 
   const handleMicOff = () => {
@@ -144,9 +145,22 @@ const VideoChat = () => {
 
     peerRef.current.oniceconnectionstatechange = (e) => {
       const status = peerRef.current.iceConnectionState
-      if (status === "connected" && !isJoin.current) {
+      console.log('현재 연결 상태:', status)
+      if (status === "connected") {
+        const interval = setInterval(() => {
+          setSeconds(seconds => seconds - 1);
+          console.log('계속 세리는 중')
+        }, 1000);
         isJoin.current = true
         setStyle(true)
+        setTimeout(() => {
+          navigate('/')
+        }, 60000)
+        
+        // clearInterval(interval)
+
+      } else if (status === "disconnected") {
+        alert('연결이 끊어졌습니다.')
       }
     }
 
@@ -166,13 +180,12 @@ const VideoChat = () => {
 
   useEffect(() => {
     console.log('Render');
-    
 
     const initCall = async () => {
       await getMedia();
       await makeConnection();
 
-      socketRef.current = io("192.168.31.154:8085",  {
+      socketRef.current = io("http://i8b107.p.ssafy.io:8085",  {
       query: `roomName=${roomName}`, //
       });
     
@@ -186,7 +199,7 @@ const VideoChat = () => {
                                           
       socketRef.current.emit("offer",{
         datas: JSON.stringify(offer),
-        roomName: roomName
+        roomName: roomName,
       });
     });
 
@@ -219,14 +232,16 @@ const VideoChat = () => {
     });
     }
     
-    if (!isJoin.current) {
-      setTimeout(() => {
-        isJoin.current ? console.log('입장완료') : navigate('/')
-      }, 5000)
-    }
+    // if (!isJoin.current) {
+    //   setTimeout(() => {
+    //     isJoin.current ? console.log('입장완료') : navigate('/')
+    //   }, 10000)
+    // }
 
     initCall()
-    
+
+    // return () => clearInterval(interval)
+  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -234,35 +249,38 @@ const VideoChat = () => {
     setMessages(messages => [...messages, { yours: false, value: e.data}])
   }
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    ChannelRef.current.send(text)
-    setMessages(messages => [...messages, { yours: true, value: text}])
-    setText("");
-  }
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   ChannelRef.current.send(text)
+  //   setMessages(messages => [...messages, { yours: true, value: text}])
+  //   setText("");
+  // }
 
-  const showMessages = (message, index) => {
-    if (message.yours) {
-      return (
-          <MyRow key={index}>
-              <MyMessage>
-                  {message.value}
-              </MyMessage>
-          </MyRow>
-      )
-    }
+  // const showMessages = (message, index) => {
+  //   if (message.yours) {
+  //     return (
+  //         <MyRow key={index}>
+  //             <MyMessage>
+  //                 {message.value}
+  //             </MyMessage>
+  //         </MyRow>
+  //     )
+  //   }
 
-    return (
-        <PartnerRow key={index}>
-            <PartnerMessage>
-                {message.value}
-            </PartnerMessage>
-        </PartnerRow>
-    )
-  }
+  //   return (
+  //       <PartnerRow key={index}>
+  //           <PartnerMessage>
+  //               {message.value}
+  //           </PartnerMessage>
+  //       </PartnerRow>
+  //   )
+  // }
 
   return (  
-    <div className={styles.topBox}>\
+    <div className={styles.topBox}>
+      <div style = {{position : 'absolute'}}>
+        <h1>{parseInt(seconds / 60)} : {seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60 }</h1>
+      </div>
       <div style = {{ display : style ? "none" : "block" }}>
         <Waiting />
       </div>
@@ -282,16 +300,16 @@ const VideoChat = () => {
           autoPlay
           muted
         />
-        <Messages>
+        {/* <Messages>
           {messages.map(showMessages)}
-        </Messages>
+        </Messages> */}
         <button onClick={handleCameraOff}>Camera Off</button>
         <button onClick={handleMicOff}>Mic Off</button>
         <button onClick={handleCamDirection}>Camera Change</button>
-        <form onSubmit = {sendMessage}>
+        {/* <form onSubmit = {sendMessage}>
           <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
           <button type="submit" disabled={!text}>🕊️</button>
-        </form>
+        </form> */}
       </div>
     </div>
   );
