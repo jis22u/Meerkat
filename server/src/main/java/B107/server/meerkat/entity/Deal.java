@@ -44,13 +44,9 @@ public class Deal extends BaseAtTime implements Serializable {
     @JoinColumn(name = "call_idx")
     private Call call;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "init_time")
     private LocalDateTime initTime;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "exit_time")
     private LocalDateTime exitTime;
 

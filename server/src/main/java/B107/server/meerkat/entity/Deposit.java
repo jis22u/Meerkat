@@ -36,8 +36,6 @@ public class Deposit extends BaseAtTime implements Serializable {
     @JoinColumn(name = "member_idx")
     private Member member;
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "reg_date")
     private LocalDateTime regDate; // 거래 일시
 
