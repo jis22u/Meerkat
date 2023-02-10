@@ -50,9 +50,11 @@ public class SocketModule {
 	private ConnectListener onConnected() {
 		System.out.println("SocketModule - onConnected()");
 
+
 		return (client) -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
 			client.joinRoom(roomName);
+
 
 			for (SocketIOClient first : client.getNamespace().getRoomOperations(roomName).getClients()) {
 				if (!first.getSessionId().equals(client.getSessionId())) {
