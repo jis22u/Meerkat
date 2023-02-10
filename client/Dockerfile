@@ -6,6 +6,5 @@ RUN apt-get install -y sudo
 RUN sudo npm install
 RUN sudo npm audit fix
 COPY / /client
-RUN sudo npm run build
-CMD ["npx", "serve", "-s", "build"]
+RUN sudo npm start
 EXPOSE 3000
