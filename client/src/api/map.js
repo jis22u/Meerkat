@@ -1,21 +1,49 @@
 import api from "./customAxios";
 
-export const setMeerkat = async (meerkatContent) => {
-  const res = await api.post("/marker/regist", meerkatContent);
-  if (res.status === "OK") {
-    alert("미어캣 등록이 완료되었습니다.");
-    //페이지 전환
-  } else {
-    alert("미어캣을 여러개 등록할 수 없습니다.");
-  }
-};
-
-export const getMeerkatDetail = async() => {
-  const res = await api.get("/marker/");
-  return res.data;
-};
-
-export const modifyMeerkat = async(meerkatContent) => {
-  const res = await api.put("/marker/update", meerkatContent);
-  return res.data;
+export const getMarkers = async () => {
+  const res = await api({method: "get", url: ""})
+  return res;
 }
+
+export const setMeerkat = async (meerkatContent) => {
+  console.log(meerkatContent);
+  const res = await api({
+    method: "post",
+    url: "marker/regist",
+    data: meerkatContent,
+  });
+  console.log(res);
+  alert(res.data.message);
+};
+
+export const getMeerkatDetail = async () => {
+  const res = await api({ method: "get", url: "/marker/" });
+  console.log(res);
+  return res.data;
+};
+
+export const modifyMeerkat = async (meerkatContent) => {
+  const res = await api({
+    method: "put",
+    url: "/marker/update",
+    data: meerkatContent,
+  });
+  console.log(res);
+  return res;
+};
+
+export const deleteMeerkat = async () => {
+  const res = await api({ method: "delete", url: "/marker/delete" });
+  console.log(res);
+};
+
+export const sendRequest = async (requestContext) => {
+  const res = await api({
+    method: "post",
+    url: "/call/regist",
+    data: requestContext,
+  });
+  console.log(requestContext);
+  //방번호 리턴
+  return res;
+};

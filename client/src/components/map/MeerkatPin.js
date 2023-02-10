@@ -1,14 +1,15 @@
 import classes from "./MeerkatPin.module.css";
+import { useSelector } from "react-redux";
 
 const MeerkatPin = () => {
-  const meerkat = true;
+  const { choice } = useSelector((state) => state.auth);
 
   return (
     <div className={classes.pin}>
-      {meerkat && (
+      {choice && (
         <img alt="" src="img/meerkat_pin.png" className={classes.meerkatPinImg}></img>
       )}
-      {!meerkat && (
+      {!choice && (
         <img alt="" src="img/request_pin.png" className={classes.requestPinImg}></img>
       )}
     </div>

@@ -1,21 +1,52 @@
 pipeline {
     agent any
-
+    options {
+        timeout(time: 1, unit: 'HOURS')
+    }
+    environment {
+        SOURCECODE_JENKINS_CREDENTIAL_ID = 'user_donghun'
+        SOURCE_CODE_URL = 'https://lab.ssafy.com/s08-webmobile1-sub2/S08P12B107.git'
+        RELEASE_BRANCH = 'develop'
+        datasource = 'i8b107.p.ssafy.io'
+        dbUser = 'admin'
+        dbPwd = '!ssafyB107'
+        jwt_secret_key = 'ssafy8thCommonB107'
+        schema = 'devdb'
+    }
     stages {
-        stage('Build') {
+
+        stage('clone') {
             steps {
-                echo 'Building..'
+                git url: "$SOURCE_CODE_URL",
+                    branch: "$RELEASE_BRANCH",
+                    credentialsId: "$SOURCECODE_JENKINS_CREDENTIAL_ID"
+                sh "ls -al"
             }
         }
-        stage('Test') {
+
+
+        stage('backend dockerizing') {
             steps {
-                echo 'Testing..'
+                sh "pwd"
+                sh "docker build -t server ./server"
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'Deploying....'
+
+		stage('Deploy') {
+            steps{
+                sh "pwd"
+                sh "docker-compose up -d --build"
+                sh "docker-compose ps"
             }
+            post {
+                success {
+                    echo "docker-compose success"
+                }
+
+                failure {
+                    echo "docker-compose failed"
+                }
+            }		
         }
     }
 }

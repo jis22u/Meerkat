@@ -190,4 +190,10 @@ public class JwtTokenProvider {
         cookie.setPath("/");
         return cookie;
     }
+
+    public Long getMemberIdx(String token) {
+        Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        String member_idx = String.valueOf(claims.getBody().get("idx"));
+        return Long.parseLong(member_idx);
+    }
 }
