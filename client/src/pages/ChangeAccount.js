@@ -3,8 +3,9 @@ import { useSelector} from 'react-redux'
 // import { useNavigate } from 'react-router-dom'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useEffect, useState } from 'react';
+import { useEffect, useState} from 'react';
 import { getAccount }  from 'api/user'
+import api from 'api/customAxios'
 
 const schema = yup
   .object({
@@ -48,26 +49,19 @@ const ChangeAccount = () => {
     // const navigate = useNavigate()
     const [defaultValues, setDefaultValues] = useState();
 
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm({
-        mode: "onChange",
-        resolver: yupResolver(schema),
-      });
-
 
     const submitForm = (data) => {
-        console.log(data)
         data.email = data.email.toLowerCase()
         const { checkPassword, memberId, ...form } = data
-        // dispatch(registerUser(form))
+        console.log(form)
+        const res = api({method: 'post', url: '/member/updateInfo', data: form})
+        console.log(res)
       }
     
     const deleteHandler = async () => {
         console.log('삭제 요청')
     }
+
 
     useEffect(() => {
       const getData = async () => {
@@ -78,6 +72,17 @@ const ChangeAccount = () => {
       }
       getData()
     }, [])
+
+    const {
+      register,
+      handleSubmit,
+      formState: { errors },
+    } = useForm({
+      mode: "onChange",
+      defaultValues,
+      resolver: yupResolver(schema),
+    });
+
 
     return (
         <div>
