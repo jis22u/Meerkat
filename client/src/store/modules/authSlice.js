@@ -19,6 +19,7 @@ const authSlice = createSlice({
     },
     setChoice: (state, {payload}) => {
       state.choice = payload
+      console.log('hi')
     }
   },
   extraReducers: {
