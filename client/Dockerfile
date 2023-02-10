@@ -3,6 +3,6 @@ WORKDIR /client
 COPY ./package*.json /client
 RUN npm install
 COPY / /cient
-RUN npm run bild
+RUN npm run build
 CMD ["npx", "serve", "-s", "build"]
 EXPOSE 3000
