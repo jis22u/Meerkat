@@ -1,3 +1,4 @@
 FROM openjdk:8-jdk-alpine
-COPY target/meerkat-0.0.1-SNAPSHOT.jar meerkat-server.jar
-ENTRYPOINT ["java","-jar","/meerkat-server.jar"]
+RUN echo ${DIR}
+COPY /var/jenkins_home/workspace/common-B107-meerkat-develop/server/target/meerkat-0.0.1-SNAPSHOT.jar /var/jenkins_home/workspace/common-B107-meerkat-develop/meerkat-0.0.1-SNAPSHOT.jar
+ENTRYPOINT ["java","-jar","/var/jenkins_home/workspace/common-B107-meerkat-develop/meerkat-0.0.1-SNAPSHOT.jar"]

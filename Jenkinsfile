@@ -24,6 +24,7 @@ pipeline {
             }
         }
 
+
         stage('backend dockerizing') {
             steps {
                 sh "pwd"
