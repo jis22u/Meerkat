@@ -1,5 +1,5 @@
-import { useState } from "react";
-import {setMeerkat} from "api/map";
+import { useState, useRef } from "react";
+import { setMeerkat, sendRequest } from "api/map";
 
 import haversine from "haversine-distance";
 import moment from "moment";
@@ -7,70 +7,64 @@ import moment from "moment";
 import classes from "./RegistModal.module.css";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 const RegistModal = (props) => {
+  const navigate = useNavigate();
   let date = new Date();
-  const meerkat = true;
+  const { choice } = useSelector((state) => state.auth);
   let certification = false;
   const lat = props.lat;
   const lng = props.lng;
+  const location = props.address;
+  let content = useRef();
   let array = [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
     22, 23, 24,
   ];
-  const [hourSelect, setHourSelect] = useState(1);
+  let hourSelect = useRef(1);
   const [coin, setCoin] = useState();
 
   // 미어캣, 요청 등록 버튼
   const registButtonHandler = async () => {
-    let hour = hourSelect;
-    if (meerkat) {
-      if (hourSelect < 10) {
-        hour = `0${hour}`;
-      }
-      // eslint-disable-next-line
-      if (hourSelect == 24) {
-        hour = "00";
-      }
-    }
-    if (meerkat && certification === false) {
+    let hour = hourSelect.current.value;
+
+    if (choice && certification === false) {
       alert("위치인증을 해주세요");
-    } else if (meerkat) {
-      console.log("미어캣 요청 axios");
+    } else if (choice) {
+      if (hourSelect.current < 10) hour = `0${hour}`;
+
+      if (hourSelect === 24) hour = "00";
+
       const startAt = moment().format("YYYY-MM-DDTHH:mm:ss");
       let exp_date = moment().format(`YYYY-MM-DDT${hour}:00:00`);
-      if (date.getHours() > hourSelect) {
+
+      if (date.getHours() > hourSelect.current || hourSelect.current === 24)
         exp_date = moment().add(1, "d").format(`YYYY-MM-DDT${hour}:00:00`);
-      }
-      console.log(startAt);
-      console.log(exp_date);
-      // 위치 인증했고 meerkat일 때
+
       const meerkatContent = {
-        "exp_date": startAt,
-        "reg_date": exp_date,
-        "lat": lat,
-        "lng": lng,
-        "location": String,
+        exp_date: exp_date,
+        reg_date: startAt,
+        lat: lat,
+        lng: lng,
+        location: location,
       };
 
       // 미어캣 등록 axios 요청
       await setMeerkat(meerkatContent);
-
+      navigate("/registration-detail");
     } else {
-      // 요청일 때
-      // const requestRegist = {
-      //   "createAt": "YYYY-MM-DDTHH:mm:sszz",
-      //   "modifiedAt": "YYYY-MM-DDTHH:mm:sszz",
-      //   "coin": 5,
-      //   "content": "String",
-      //   "lat": lat,
-      //   "lng": lng,
-      //   "location": String,
-      //   "room_id": "",
-      //   "member_id": "Bigint"
-      // };
+      const requestContent = {
+        coin: 5,
+        content: content.current.value,
+        lat: lat,
+        lng: lng,
+        location: location,
+      };
       // 요청 axios 요청
-      console("요청 보내기");
+      await sendRequest(requestContent);
+      navigate("/");
     }
   };
 
@@ -87,16 +81,16 @@ const RegistModal = (props) => {
       lng: lng,
     };
 
-    console.log("등록 위치 : " + lat + " " + lng);
-    //등록 위치와 내 현재 위치 사이의 거리를 계산해줌(반환값은 miter)
+    console.log(myLat + " " + myLng);
+    console.log(lat + " " + lng);
+
     const distance = haversine(start, end);
 
-    // 500미터 안에 있을 때 위치 인증 성공
-    if (distance < 500) {
+    if (distance < 50900090909090) {
       certification = true;
       alert("위치 인증이 완료 되었습니다.");
       certification = true;
-    } else if (distance >= 0.5) {
+    } else if (distance >= 50900090909090) {
       alert("등록 위치에서 멀리 떨어져잇습니다.");
     } else {
       alert("위치 인증에 실패했습니다.");
@@ -109,16 +103,11 @@ const RegistModal = (props) => {
       navigator.geolocation.getCurrentPosition((position) => {
         const myLat = position.coords.latitude.toFixed(14);
         const myLng = position.coords.longitude.toFixed(14);
-        console.log("현재 내 위치 : " + myLat + " " + myLng);
         resolve({ myLat, myLng });
       });
     });
   };
 
-  //셀렉트박스 시간 설정
-  const handleHourSelect = (e) => {
-    setHourSelect(e.target.value);
-  };
   //설정된 코인 값 바꾸기
   function valuetext(value) {
     setCoin(value);
@@ -126,14 +115,14 @@ const RegistModal = (props) => {
 
   return (
     <div className={classes.modal}>
-      {meerkat && (
+      {choice && (
         <img
           className={classes.img}
           alt="meerkat"
           src="img/meerkat_profile.png"
         ></img>
       )}
-      {!meerkat && (
+      {!choice && (
         <img
           className={classes.img}
           alt="request"
@@ -144,14 +133,14 @@ const RegistModal = (props) => {
       <hr></hr>
       <h3>선택 위치</h3>
       <p>{props.address}</p>
-      {meerkat && (
+      {choice && (
         <button className="cBtn" onClick={confirmBtnHandler}>
           위치인증
         </button>
       )}
-      {meerkat && <h3>종료시간</h3>}
-      {meerkat && (
-        <select onChange={handleHourSelect} value={hourSelect}>
+      {choice && <h3>종료시간</h3>}
+      {choice && (
+        <select ref={hourSelect}>
           {array.map((item) => (
             <option value={item} key={item}>
               {item}:00시까지
@@ -159,13 +148,13 @@ const RegistModal = (props) => {
           ))}
         </select>
       )}
-      {!meerkat && (
-        <Box sx={{ width: 250, ml: 2}} id="coinBox">
+      {!choice && (
+        <Box sx={{ width: 250, ml: 2 }} id="coinBox">
           <div className={classes.coinView}>
             <h3>금액</h3>
             <h3>{coin}</h3>
           </div>
-          <Slider 
+          <Slider
             aria-label="Coin"
             defaultValue={10}
             getAriaValueText={valuetext}
@@ -177,10 +166,10 @@ const RegistModal = (props) => {
           />
         </Box>
       )}
-      {!meerkat && (
+      {!choice && (
         <div className={classes.requestBox}>
           <h3>요청내용</h3>
-          <textarea rows={5} cols={30}></textarea>
+          <textarea rows={5} cols={30} ref={content}></textarea>
         </div>
       )}
       <br></br>

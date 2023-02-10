@@ -5,6 +5,7 @@ import MeerkatPin from "components/map/MeerkatPin";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
 import Backdrop from "components/map/Backdrop";
+import Header from "components/layout/Header";
 
 const Map = () => {
   const { kakao } = window;
@@ -258,6 +259,7 @@ const Map = () => {
 
   return (
     <div>
+      <Header></Header>
       <div id="map" className={classes.map} />
       <MeerkatPin></MeerkatPin>
       <div className={classes.addressBox}>

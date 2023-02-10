@@ -1,7 +1,10 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
 import io from "socket.io-client";
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
+import { useSelector } from "react-redux";
+import Waiting from 'components/chat/Waiting'
+import styles from './VideoChat.module.css'
 
 const VideoChat = () => {
   const socketRef = useRef();
@@ -13,6 +16,11 @@ const VideoChat = () => {
   const { roomName } = useParams();
   const [text ,setText] = useState('');
   const [messages, setMessages] = useState([]);
+  const { choice } = useSelector((state) => state.auth)
+  const [ style, setStyle ] = useState(choice)
+  const isJoin = useRef(choice)
+  const navigate = useNavigate()
+
   let cameraOptions
 
   const Messages = styled.div`
@@ -106,7 +114,7 @@ const VideoChat = () => {
       )
       localVideoRef.current.srcObject = myStream.current;
     } catch (e) {
-      console.error(e);
+      console.error(e, "getMedia를 실행할 수 없습니다.");
     }
 
   }, [])
@@ -133,26 +141,38 @@ const VideoChat = () => {
         roomName: roomName
       });
     }
+
+    peerRef.current.oniceconnectionstatechange = (e) => {
+      const status = peerRef.current.iceConnectionState
+      if (status === "connected" && !isJoin.current) {
+        isJoin.current = true
+        setStyle(true)
+      }
+    }
+
     peerRef.current.ontrack= (e) => {
       remoteVideoRef.current.srcObject = e.streams[0];
     }
 
-    myStream.current
+    if (myStream.current) {
+      myStream.current
       .getTracks()
       .forEach((track) => {
         peerRef.current.addTrack(track, myStream.current)
       })
+    }
     }
 
 
   useEffect(() => {
     console.log('Render');
     
+
     const initCall = async () => {
       await getMedia();
       await makeConnection();
 
-      socketRef.current = io("http://i8b107.p.ssafy.io:8085",  {
+      socketRef.current = io("192.168.31.154:8085",  {
       query: `roomName=${roomName}`, //
       });
     
@@ -198,6 +218,12 @@ const VideoChat = () => {
       console.log("received candidate");
     });
     }
+    
+    if (!isJoin.current) {
+      setTimeout(() => {
+        isJoin.current ? console.log('입장완료') : navigate('/')
+      }, 5000)
+    }
 
     initCall()
     
@@ -235,43 +261,38 @@ const VideoChat = () => {
     )
   }
 
-  return (
-    <div>
-      <video
-        style={{
-          width: 240,
-          height: 240,
-          margin: 5,
-          backgroundColor: "black",
-        }}
-        ref={localVideoRef}
-        muted
-        playsInline
-        autoPlay
-      />
-      <video
-        id="remotevideo"
-        style={{
-          width: 240,
-          height: 240,
-          margin: 5,
-          backgroundColor: "black",
-        }}
-        ref={remoteVideoRef}
-        muted
-        playsInline
-        autoPlay
-      />
-      <Messages>
-        {messages.map(showMessages)}
-      </Messages>
-      <button onClick={handleCameraOff}>Camera Off</button>
-      <button onClick={handleMicOff}>Mic Off</button>
-      <button onClick={handleCamDirection}>Camera Change</button>
-      <form onSubmit = {sendMessage}>
-        <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
-        <button type="submit" disabled={!text}>🕊️</button>
-      </form>
+  return (  
+    <div className={styles.topBox}>\
+      <div style = {{ display : style ? "none" : "block" }}>
+        <Waiting />
+      </div>
+      <div style = {{ display : style ? "block" : "none "}} className={styles.videoBox}>
+        <video
+          className={styles.video}
+          ref={localVideoRef}
+          playsInline
+          autoPlay
+          muted
+        />
+        <video
+          id="remotevideo"
+          className={styles.video}
+          ref={remoteVideoRef}
+          playsInline
+          autoPlay
+          muted
+        />
+        <Messages>
+          {messages.map(showMessages)}
+        </Messages>
+        <button onClick={handleCameraOff}>Camera Off</button>
+        <button onClick={handleMicOff}>Mic Off</button>
+        <button onClick={handleCamDirection}>Camera Change</button>
+        <form onSubmit = {sendMessage}>
+          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
+          <button type="submit" disabled={!text}>🕊️</button>
+        </form>
+      </div>
     </div>
   );
 }
