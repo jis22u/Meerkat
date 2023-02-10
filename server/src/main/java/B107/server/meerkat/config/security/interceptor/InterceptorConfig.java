@@ -19,8 +19,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(roleInterceptor)
-				.order(1)
-				.addPathPatterns("/**")
+				.order(0)
+//				.addPathPatterns("/**")
 				.excludePathPatterns("/sign");
 	}
 }

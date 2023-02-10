@@ -1,6 +1,7 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
+import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,30 +21,16 @@ import java.util.Objects;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CallCheck extends BaseAtTime implements Serializable {
+public class CallCheck implements Serializable {
 
     @Id
-    @Column(name = "idx")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idx;
+    @Column(name = "member_idx")
+    private Long memberIdx;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
-
+    // 사용자의 마커 요청 여부 체크
+    // true: 등록함 | false: 등록안함
     @Column(name = "cc_check")
+    @Convert(converter = BooleanToYNConverter.class)
     private Boolean ccCheck; // 요청가능여부
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CallCheck callCheck = (CallCheck) o;
-        return member.equals(callCheck.member) && ccCheck.equals(callCheck.ccCheck);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(member, ccCheck);
-    }
 }

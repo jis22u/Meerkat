@@ -26,6 +26,10 @@ public class PrincipalDetails implements UserDetails {
 		return member.getPassword();
 	}
 
+	/**
+	 * String member_id 반환
+	 * @return
+	 */
 	@Override
 	public String getUsername() {
 		return member.getMemberId();
