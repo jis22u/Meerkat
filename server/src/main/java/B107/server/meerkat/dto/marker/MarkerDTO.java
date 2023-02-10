@@ -17,12 +17,7 @@ public class MarkerDTO {
 	private Double lng;
 	private String location;
 
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime regDate; 		// 등록 시간
-
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	private LocalDateTime expDate; 		// 만료 시간
 
 
