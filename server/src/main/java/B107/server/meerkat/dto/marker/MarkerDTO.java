@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 public class MarkerDTO {
-	private Float lat;
-	private Float lng;
+	private Double lat;
+	private Double lng;
 	private String location;
 
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
@@ -27,7 +27,7 @@ public class MarkerDTO {
 
 
 	@Builder
-	public MarkerDTO(Float lat, Float lng, String location, LocalDateTime regDate, LocalDateTime expDate) {
+	public MarkerDTO(Double lat, Double lng, String location, LocalDateTime regDate, LocalDateTime expDate) {
 		this.lat = lat;
 		this.lng = lng;
 		this.location = location;
