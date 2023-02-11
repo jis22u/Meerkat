@@ -186,7 +186,7 @@ const VideoChat = () => {
       await getMedia();
       await makeConnection();
 
-      socketRef.current = io("http://localhost:8085",  {
+      socketRef.current = io("http://i8b107.p.ssafy.io:8085",  {
       query: `roomName=${roomName}`, //
       });
     
