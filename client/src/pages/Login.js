@@ -1,12 +1,9 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import { useNavigate, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { userLogin } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
-// import Error from 'components/layout/Error'
 
 const schema = yup
   .object({
@@ -20,10 +17,8 @@ const schema = yup
   .required();
 
 const LoginScreen = () => {
-  const { loading, isLogin } = useSelector((state) => state.auth)
-  // error 불러와서 쓰기
+  const { loading } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
-  const navigate = useNavigate()
 
   const {
     register,
@@ -33,17 +28,10 @@ const LoginScreen = () => {
     resolver: yupResolver(schema),
   });
   
-
-  useEffect(() => {
-    if (isLogin) {
-      navigate('/')
-    }
-  }, [navigate, isLogin])
-
   const submitForm = async (data) => {
     data.memberId = data.memberId.toLowerCase()
     const { payload } = await dispatch(userLogin(data))
-    if (payload.status === "BAD_REQUEST"){
+    if (payload.status !== "OK"){
       alert(payload.message)
     }
   }
