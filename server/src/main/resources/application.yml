@@ -1,6 +1,6 @@
 socket-server:
   port: 8085
-  host: ${datasource}
+  host: localhost
 
 server:
   port: 8081
