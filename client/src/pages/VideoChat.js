@@ -155,8 +155,10 @@ const VideoChat = () => {
         setStyle(true)
         setTimeout(() => {
           navigate('/')
+        // {replace: true}
         }, 60000)
         
+
         // clearInterval(interval)
 
       } else if (status === "disconnected") {
@@ -180,7 +182,6 @@ const VideoChat = () => {
 
   useEffect(() => {
     console.log('Render');
-
     const initCall = async () => {
       await getMedia();
       await makeConnection();
