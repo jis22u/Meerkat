@@ -23,17 +23,17 @@ public class CallService {
 	public String registCall(Long memberIdx, Call call) {
 		String ranNum = new RandomNumber().makeRanNum();
 		StringBuilder sb = new StringBuilder();
-		StringBuilder roomId = sb.append(memberIdx).append(ranNum);
+		StringBuilder roomName = sb.append(memberIdx).append(ranNum);
 
 		call.setMember(memberRepository.findById(memberIdx).orElse(null));
-		call.setRoomId(roomId.toString());
+		call.setRoomName(roomName.toString());
 		callRepository.save(call);
-		return roomId.toString();
+		return roomName.toString();
 	}
 
 //	@Transactional
-//	public Long findIdxByRoomId(String roomId) {
-//		return callRepository.findIdxByRoomId(roomId);
+//	public Long findIdxByRoomName(String roomName) {
+//		return callRepository.findIdxByRoomName(roomName);
 //	}
 
 }
