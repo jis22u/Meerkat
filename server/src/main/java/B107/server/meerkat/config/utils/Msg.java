@@ -49,4 +49,5 @@ public interface Msg {
 	String SUCCESS_CALL_REGISTER = "요청 등록에 성공하였습니다.";
 
 	String FAIL_CALL_REGISTER = "등록한 요청이 이미 존재합니다.";
+	String SUCCESS_CALL_FIND = "제공 가능 미어캣 목록 호출에 성공했습니다.";
 }

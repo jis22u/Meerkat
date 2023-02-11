@@ -33,11 +33,13 @@ B107\server\meerkat\dto\token\CommonTokenDTO.class
 B107\server\meerkat\entity\Call.class
 B107\server\meerkat\repository\MemberRepository.class
 B107\server\meerkat\repository\MarkerCheckRepository.class
+B107\server\meerkat\dto\call\QCallDistanceReqDTO.class
 B107\server\meerkat\entity\Member$MemberBuilder.class
 B107\server\meerkat\config\utils\BaseAtTime.class
 B107\server\meerkat\dto\token\TokenResDTO.class
 B107\server\meerkat\config\utils\Msg.class
 B107\server\meerkat\entity\QMarkerCheck.class
+B107\server\meerkat\dto\call\QCallDistanceResDTO.class
 B107\server\meerkat\config\security\interceptor\InterceptorConfig.class
 B107\server\meerkat\entity\Member.class
 B107\server\meerkat\dto\socket\Message$MessageBuilder.class
@@ -51,6 +53,7 @@ B107\server\meerkat\entity\QCoin.class
 B107\server\meerkat\entity\QDeposit.class
 B107\server\meerkat\entity\QMarker.class
 B107\server\meerkat\exception\CustomExceptionReturn.class
+B107\server\meerkat\dto\call\CallDistanceReqDTO$CallDistanceReqDTOBuilder.class
 B107\server\meerkat\config\security\handler\UserLogoutHandler.class
 B107\server\meerkat\entity\ExpiredMarker.class
 B107\server\meerkat\socket\SocketModule.class
@@ -64,6 +67,7 @@ B107\server\meerkat\repository\querydsl\MarkerCheckRepositoryImpl.class
 B107\server\meerkat\controller\AdminController.class
 B107\server\meerkat\entity\QMember.class
 B107\server\meerkat\entity\Token.class
+B107\server\meerkat\dto\call\CallDistanceResDTO.class
 B107\server\meerkat\entity\Report.class
 B107\server\meerkat\dto\member\SignModReqDTO$SignModReqDTOBuilder.class
 B107\server\meerkat\config\utils\JacksonConfig$1.class
@@ -77,6 +81,7 @@ B107\server\meerkat\repository\ExpiredMarkerRepository.class
 B107\server\meerkat\config\security\handler\UserLogoutSuccessHandler.class
 B107\server\meerkat\config\security\handler\ResponseHandler.class
 B107\server\meerkat\dto\token\CommonTokenDTO$CommonTokenDTOBuilder.class
+B107\server\meerkat\dto\call\CallDistanceReqDTO.class
 B107\server\meerkat\entity\Token$TokenBuilder.class
 B107\server\meerkat\config\security\auth\MemberDTO$MemberDTOBuilder.class
 B107\server\meerkat\entity\QCall.class
@@ -101,6 +106,7 @@ B107\server\meerkat\service\MarkerService.class
 B107\server\meerkat\repository\CoinRepository.class
 B107\server\meerkat\dto\socket\Message.class
 B107\server\meerkat\config\security\handler\DecodeEncodeHandler.class
+B107\server\meerkat\dto\call\CallDistanceResDTO$CallDistanceResDTOBuilder.class
 B107\server\meerkat\repository\CallRepository.class
 B107\server\meerkat\dto\member\ProfileRes$ProfileResBuilder.class
 B107\server\meerkat\socket\SocketService.class
