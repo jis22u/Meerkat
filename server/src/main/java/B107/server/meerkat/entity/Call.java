@@ -30,8 +30,8 @@ public class Call extends BaseAtTime implements Serializable {
     private Member member;
 
     private String location; // 위치 정보
-    private Float lat; // 위도
-    private Float lng; // 경도
+    private Double lat; // 위도
+    private Double lng; // 경도
     private Integer coin; // 주고받은 코인량
     private String content; // 요청사항 String
 

@@ -35,6 +35,7 @@ public class MarkerService {
 
 	@Transactional
 	public Marker updateMarker(Long memberIdx, Marker marker) {
+		log.info(String.valueOf(LocalDateTime.now()));
 		Marker curMarker = markerRepository.findValidByMemberIdx(memberIdx);
 		curMarker.setExpDate(marker.getExpDate());
 		return curMarker;

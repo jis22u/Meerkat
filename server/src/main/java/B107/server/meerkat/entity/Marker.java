@@ -38,17 +38,13 @@ public class Marker extends BaseAtTime implements Serializable {
     @JoinColumn(name = "member_idx")
     private Member member;
 
-    private Float lat; // 위도
-    private Float lng; // 경도
+    private Double lat; // 위도
+    private Double lng; // 경도
     private String location; // 위치 정보
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "reg_date")
     private LocalDateTime regDate; // 등록 시간
 
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
     @Column(name = "exp_date")
     private LocalDateTime expDate; // 종료 시간
 

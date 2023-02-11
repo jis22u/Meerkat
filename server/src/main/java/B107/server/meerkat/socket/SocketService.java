@@ -56,7 +56,7 @@ public class SocketService {
 		System.out.println("SocketService - sendSocketIce()");
 
 		for (
-				SocketIOClient client : senderClient.getNamespace().getRoomOperations(message.getRoomName()).getClients()) {
+				SocketIOClient client: senderClient.getNamespace().getRoomOperations(message.getRoomName()).getClients()) {
 			if (!client.getSessionId().equals(senderClient.getSessionId())) {
 				client.sendEvent("ice", message.getDatas());
 			}

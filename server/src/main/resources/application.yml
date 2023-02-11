@@ -1,6 +1,6 @@
 socket-server:
   port: 8085
-  host: http://i8b107.p.ssafy.io
+  host: 192.168.0.11
 
 server:
   port: 8081
