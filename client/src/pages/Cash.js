@@ -31,7 +31,9 @@ const Cash = () => {
 
     const sendCash = async () => {
       try {
-        const response = await axios.post("http://172.20.0.3:3000", { data: { cash } }).then((res) => console.log(res));
+        const response = await axios
+          .post("http://i8b107.p.ssafy.io:3000", { data: { cash } })
+          .then((res) => console.log(res));
         console.log(response);
       } catch(e) {
         console.error(e);
