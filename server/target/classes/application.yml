@@ -52,7 +52,7 @@ jwt:
 
 user:
   url:
-    client: 0.0.0.0
+    client: localhost
     logout: /logout
     admin: /admin
     member: /member
