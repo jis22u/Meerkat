@@ -4,10 +4,7 @@ import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
-import B107.server.meerkat.dto.member.ProfileRes;
-import B107.server.meerkat.dto.member.SignModReqDTO;
-import B107.server.meerkat.dto.member.mod;
-import B107.server.meerkat.dto.member.modPw;
+import B107.server.meerkat.dto.member.*;
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.exception.ErrorCode;
 import B107.server.meerkat.exception.MemberNotFoundException;
@@ -88,6 +85,6 @@ public class MemberService {
         return MyInfoList.stream().map(member -> ProfileRes.builder().build().of(member)).collect(Collectors.toList()).get(0);
     }
 
-    public MemPageRESDTO myPage(Long idx) {
-    }
+//    public MemPageResDTO myPage(Long idx) {
+//    }
 }
