@@ -2,6 +2,7 @@ package B107.server.meerkat.socket;
 
 
 import B107.server.meerkat.dto.socket.Message;
+import B107.server.meerkat.repository.RoomRepository;
 import com.corundumstudio.socketio.SocketIOClient;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.corundumstudio.socketio.listener.ConnectListener;
@@ -23,11 +24,13 @@ public class SocketModule {
 
 	private final SocketIOServer server;
 	private final SocketService socketService;
+	private final RoomRepository roomRepository;
 
 
-	public SocketModule(SocketIOServer server, SocketService socketService) {
+	public SocketModule(SocketIOServer server, SocketService socketService, RoomRepository roomRepository) {
 		System.out.println("3 SocketModule. (1)");
 
+		this.roomRepository = roomRepository;
 		this.server = server;
 		this.socketService = socketService;
 
@@ -129,9 +132,13 @@ public class SocketModule {
 //
 //			}
 
+//			client.leaveRoom(client.getSessionId().toString());
+//			client.disconnect();
+
 
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}
+
 
 }

@@ -1,6 +1,6 @@
 socket-server:
   port: 8085
-  host: 192.168.0.11
+  host: localhost
 
 server:
   port: 8081
@@ -52,17 +52,21 @@ jwt:
 
 user:
   url:
-    client: http://localhost:3000
+    client: http://i8b107.p.ssafy.io
     logout: /logout
     admin: /admin
     member: /member
     marker: /marker
     call: /call
+    room: /room
+    coin: /coin
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER
     marker: ROLE_MARKER
     call: ROLE_CALL
+    room: ROLE_ROOM
+    coin: ROLE_COIN
   permit:
     all: '/**'
   session:
