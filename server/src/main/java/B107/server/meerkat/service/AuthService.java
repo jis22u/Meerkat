@@ -3,6 +3,7 @@ package B107.server.meerkat.service;
 import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
 import B107.server.meerkat.dto.member.SignModReqDTO;
 import B107.server.meerkat.entity.CallCheck;
+import B107.server.meerkat.entity.Coin;
 import B107.server.meerkat.entity.MarkerCheck;
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.exception.ErrorCode;
@@ -10,6 +11,7 @@ import B107.server.meerkat.exception.MemberAlreadyExistException;
 import B107.server.meerkat.exception.MemberNotFoundException;
 import B107.server.meerkat.exception.PasswordNotMatchException;
 import B107.server.meerkat.repository.CallCheckRepository;
+import B107.server.meerkat.repository.CoinRepository;
 import B107.server.meerkat.repository.MarkerCheckRepository;
 import B107.server.meerkat.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ public class AuthService {
     private final MemberRepository memberRepository;
     private final MarkerCheckRepository markerCheckRepository;
     private final CallCheckRepository callCheckRepository;
+    private final CoinRepository coinRepository;
 
 
     @Transactional
@@ -42,7 +45,7 @@ public class AuthService {
         String password = decodeEncodeHandler.passwordEncode(signModReqDTO.getPassword());
         memberRepository.save(signModReqDTO.of(memberId, password));
 
-        // markerCheck, callCheck 초기화
+        // markerCheck, callCheck, coin 초기화
         Long memberIdx =  memberRepository.findIdxByMemberId(memberId);
         MarkerCheck markerCheck = MarkerCheck.builder()
                 .memberIdx(memberIdx)
@@ -55,6 +58,11 @@ public class AuthService {
                 .ccCheck(false)
                 .build();
         callCheckRepository.save(callCheck);
+
+        Coin coin = Coin.builder()
+                .memberIdx(memberIdx)
+                .build();
+        coinRepository.save(coin);
 
         return memberId;
     }

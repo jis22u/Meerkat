@@ -1,6 +1,6 @@
 socket-server:
   port: 8085
-  host: localhost
+  host: 192.168.1.26
 
 server:
   port: 8081
@@ -59,12 +59,14 @@ user:
     marker: /marker
     call: /call
     room: /room
+    coin: /coin
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER
     marker: ROLE_MARKER
     call: ROLE_CALL
     room: ROLE_ROOM
+    coin: ROLE_COIN
   permit:
     all: '/**'
   session:
