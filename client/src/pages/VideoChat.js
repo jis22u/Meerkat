@@ -172,8 +172,8 @@ const VideoChat = () => {
       await getMedia();
       await makeConnection();
 
-      socketRef.current = io("192.168.1.26:8085",  {
-      query: `roomName=${roomName}`, //
+      socketRef.current = io("http://43.201.72.34:8085", {
+        query: `roomName=${roomName}`, //
       });
     
     socketRef.current.on("welcome", async () => {
