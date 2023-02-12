@@ -41,15 +41,13 @@ export const registerUser = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       }
-      const res = await axios.post(
+      const { data } = await axios.post(
         `/sign`,  
         form,
         config
       )
 
-      if (res.status === 200) {
-        window.location.href = '/login'
-      } 
+      return data
 
     } catch (error) {
       console.log(error)

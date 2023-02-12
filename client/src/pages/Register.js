@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useNavigate } from 'react-router-dom';
 
 // import Error from 'components/layout/Error'
 
@@ -56,6 +57,7 @@ const schema = yup
 const Register = () => {
   const { loading } = useSelector((state) => state.auth)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const {
     register,
@@ -74,6 +76,8 @@ const Register = () => {
     const res = await dispatch(registerUser(form))
     if (res.error?.message) {
       alert(res.payload)
+    } else {
+      navigate('/login')
     }
   }
 

@@ -33,7 +33,7 @@ function App() {
 
         <Route element={<OnlyHeaderLayout />}>
           <Route path="/map" element={<Map />} />
-          <Route path="/room/:roomName" element={<VideoChat />} />
+          <Route path="/room/:roomName/:idx" element={<VideoChat />} />
         </Route>
     </Routes>
   );
