@@ -14,6 +14,7 @@ import B107.server.meerkat.repository.CallCheckRepository;
 import B107.server.meerkat.repository.CoinRepository;
 import B107.server.meerkat.repository.MarkerCheckRepository;
 import B107.server.meerkat.repository.MemberRepository;
+import javafx.scene.canvas.GraphicsContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

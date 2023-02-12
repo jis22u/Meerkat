@@ -121,6 +121,7 @@ B107\server\meerkat\repository\CoinRepository.class
 B107\server\meerkat\dto\socket\Message.class
 B107\server\meerkat\config\security\handler\DecodeEncodeHandler.class
 B107\server\meerkat\dto\call\CallDistanceResDTO$CallDistanceResDTOBuilder.class
+B107\server\meerkat\service\DealService.class
 B107\server\meerkat\repository\CallRepository.class
 B107\server\meerkat\dto\member\ProfileRes$ProfileResBuilder.class
 B107\server\meerkat\socket\SocketService.class
