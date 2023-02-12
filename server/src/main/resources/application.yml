@@ -52,7 +52,7 @@ jwt:
 
 user:
   url:
-    client: http://i8b107.p.ssafy.io
+    client: localhost
     logout: /logout
     admin: /admin
     member: /member
