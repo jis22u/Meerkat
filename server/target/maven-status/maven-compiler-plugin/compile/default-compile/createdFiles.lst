@@ -23,6 +23,7 @@ B107\server\meerkat\entity\Deposit.class
 B107\server\meerkat\config\security\interceptor\RoleInterceptor.class
 B107\server\meerkat\config\utils\ErrorResponseDTO.class
 B107\server\meerkat\repository\TokenRepository.class
+B107\server\meerkat\dto\member\MemPageDealDTO$MemPageDealDTOBuilder.class
 B107\server\meerkat\config\jwt\JwtTokenProvider.class
 B107\server\meerkat\dto\token\TokenResDTO$TokenResDTOBuilder.class
 B107\server\meerkat\exception\MemberNotFoundException.class
@@ -52,6 +53,7 @@ B107\server\meerkat\dto\member\MemResDTO.class
 B107\server\meerkat\exception\MeerkatServerException.class
 B107\server\meerkat\config\utils\QBaseAtTime.class
 B107\server\meerkat\entity\QCoin.class
+B107\server\meerkat\dto\member\MemPageDealDTO.class
 B107\server\meerkat\entity\QDeposit.class
 B107\server\meerkat\entity\QMarker.class
 B107\server\meerkat\exception\CustomExceptionReturn.class
@@ -79,6 +81,7 @@ B107\server\meerkat\entity\Deposit$DepositBuilder.class
 B107\server\meerkat\entity\QDeal.class
 B107\server\meerkat\entity\QReport.class
 B107\server\meerkat\dto\room\RoomDTO.class
+B107\server\meerkat\dto\member\MemPageResDTO$MemPageResDTOBuilder.class
 B107\server\meerkat\entity\QCallCheck.class
 B107\server\meerkat\service\MemberService.class
 B107\server\meerkat\repository\ExpiredMarkerRepository.class
@@ -128,6 +131,7 @@ B107\server\meerkat\config\security\auth\PrincipalDetails.class
 B107\server\meerkat\controller\MemberController.class
 B107\server\meerkat\config\socket\ServerCommandLineRunner.class
 B107\server\meerkat\service\CallCheckService.class
+B107\server\meerkat\dto\member\MemPageResDTO.class
 B107\server\meerkat\entity\Deal$DealBuilder.class
 B107\server\meerkat\config\security\filter\UserAuthenticationFilter.class
 B107\server\meerkat\exception\ErrorCode.class
