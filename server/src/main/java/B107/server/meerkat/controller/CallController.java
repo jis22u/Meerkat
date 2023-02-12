@@ -3,6 +3,7 @@ package B107.server.meerkat.controller;
 import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
+import B107.server.meerkat.dto.call.CallDistanceReqDTO;
 import B107.server.meerkat.dto.room.RoomDTO;
 import B107.server.meerkat.entity.Call;
 import B107.server.meerkat.service.CallCheckService;
@@ -24,15 +25,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class CallController {
 
+    private static final String METHOD_NAME = CallController.class.getName();
+
 	private final CallService callService;
 	private final CallCheckService callCheckService;
 	private final RoomService roomService;
 
-	@PostMapping("/regist")
-	public ResponseEntity<ResponseDTO> registCall(@AuthenticationPrincipal PrincipalDetails principalDetails,
-													@RequestBody Call call) {
+    @PostMapping("/regist")
+    public ResponseEntity<ResponseDTO> registCall(@AuthenticationPrincipal PrincipalDetails principalDetails,
+                                                  @RequestBody Call call) {
 
-		Long memberIdx = principalDetails.getMember().getIdx();
+        Long memberIdx = principalDetails.getMember().getIdx();
 
 		// 첫 가입하고 나서 CallCheck의 member_idx 초기화 해주기
 		if(!callCheckService.isCallCheck(memberIdx)) {
@@ -56,10 +59,13 @@ public class CallController {
 
 		// 이미 등록 내역이 있는 경우
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER));
-
-	}
-
+    }
 
 
+    @PostMapping("/find")
+    public ResponseEntity<ResponseDTO> findValidMarkers(@RequestBody CallDistanceReqDTO callDistanceReqDTO, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+        log.info(METHOD_NAME + "- findValidMarkers");
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_FIND, callService.findValidMarkers(callDistanceReqDTO, principalDetails.getMember().getIdx())));
+    }
 
 }

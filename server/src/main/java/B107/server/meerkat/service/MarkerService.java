@@ -1,8 +1,6 @@
 package B107.server.meerkat.service;
 
 import B107.server.meerkat.entity.Marker;
-import B107.server.meerkat.entity.MarkerCheck;
-import B107.server.meerkat.repository.MarkerCheckRepository;
 import B107.server.meerkat.repository.MarkerRepository;
 import B107.server.meerkat.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @Service

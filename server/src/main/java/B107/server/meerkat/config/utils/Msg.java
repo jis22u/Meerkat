@@ -34,6 +34,8 @@ public interface Msg {
 	// member
 	String SUCCESS_MEMBER_PROFILE = "회원 프로필 조회에 성공하였습니다.";
 	String FAIL_MEMBER_PROFILE = "회원 프로필 조회에 실패하였습니다.";
+	String SUCCESS_MEMBER_MYPAGE= "회원 마이 페이지 조회에 성공하였습니다.";
+	String FAIL_MEMBER_MYPAGE= "회원 마이 페이지 조회에 실패하였습니다.";
 
 	// marker
 	String SUCCESS_MARKER_REGISTER = "미어캣 마커 등록에 성공하였습니다.";
@@ -48,6 +50,7 @@ public interface Msg {
 	// call
 	String SUCCESS_CALL_REGISTER = "요청 등록에 성공하였습니다.";
 	String FAIL_CALL_REGISTER = "등록한 요청이 이미 존재합니다.";
+	String SUCCESS_CALL_FIND = "제공 가능 미어캣 목록 호출에 성공했습니다.";
 
 	// room
 	String SUCCESS_ROOM_JOIN = "입장 가능한 방입니다.";
