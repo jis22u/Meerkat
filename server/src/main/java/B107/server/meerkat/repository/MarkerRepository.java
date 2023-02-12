@@ -1,6 +1,7 @@
 package B107.server.meerkat.repository;
 
 import B107.server.meerkat.dto.call.CallDistanceResDTO;
+import B107.server.meerkat.dto.marker.MarkerDTO;
 import B107.server.meerkat.entity.Marker;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,4 +19,8 @@ public interface MarkerRepository extends JpaRepository<Marker, Long> {
 	@Query("select m from Marker m where m.member.idx = :memberIdx and m.isExp = false")
 	Marker findValidByMemberIdx(@Param("memberIdx") Long memberIdx);
 
+	@Query("SELECT new B107.server.meerkat.dto.marker.MarkerDTO(m.lat, m.lng, m.location, m.regDate, m.expDate) " +
+			"FROM Marker m " +
+			"WHERE m.expDate >= CURRENT_TIMESTAMP ")
+	List<MarkerDTO> findValidAllMarkers();
 }

@@ -40,6 +40,7 @@ public interface Msg {
 	// marker
 	String SUCCESS_MARKER_REGISTER = "미어캣 마커 등록에 성공하였습니다.";
 	String SUCCESS_MARKER_READ = "미어캣 마커 조회에 성공하였습니다.";
+	String SUCCESS_MARKERS_READ = "모든 미어캣 마커 조회에 성공하였습니다.";
 	String SUCCESS_MARKER_DELETE = "미어캣 마커 삭제에 성공하였습니다.";
 	String SUCCESS_MARKER_UPDATE = "등록 내역 수정에 성공하였습니다.";
 
