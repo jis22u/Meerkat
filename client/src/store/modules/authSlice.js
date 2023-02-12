@@ -7,6 +7,7 @@ const initialState = {
   error: null,
   isLogin: false,
   choice: true,
+  selected: 0,
 }
 
 const authSlice = createSlice({
@@ -19,7 +20,10 @@ const authSlice = createSlice({
     },
     setChoice: (state, {payload}) => {
       state.choice = payload
-      console.log('hi')
+    },
+    setSelected: (state, {payload}) => {
+      state.selected = payload
+      console.log(state.selected, '어디?')
     }
   },
   extraReducers: {
@@ -51,5 +55,5 @@ const authSlice = createSlice({
 
 })
 
-export const { logout, setChoice } = authSlice.actions
+export const { logout, setChoice, setSelected } = authSlice.actions
 export default authSlice.reducer

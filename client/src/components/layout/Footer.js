@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { BottomNavigation, BottomNavigationAction } from "@mui/material";
-import { useState } from "react";
+import { useState} from "react";
 import HomeIcon from "@mui/icons-material/Home";
 import ContactPageIcon from "@mui/icons-material/ContactPage";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
@@ -17,8 +17,9 @@ const Footer = () => {
     }
   });
   
-  const [selected, setSelected] = useState(0);
-  // 새로고침 할 때 Home으로 돌아가지는 것을 막아야함 (로컬 스토리지 이용하면 해결될 듯?)
+  const pathname = window.location.pathname
+  const [selected, setSelected] = useState(pathname);
+
   return (
     <footer>
       <BottomNavigation
@@ -36,6 +37,7 @@ const Footer = () => {
           component={Link}
           to="/"
           id="icon"
+          value = "/"
         />
         <BottomNavigationAction
         
@@ -43,18 +45,23 @@ const Footer = () => {
           icon={<ContactPageIcon sx={{ width: 30}}/>}
           component={Link}
           to="/mypage"
+          value = "/mypage"
         />
         <BottomNavigationAction
           label="등록내역"
           icon={<HistoryIcon />}
           component={Link}
           to="/registration-detail"
+          value = "/registration-detail"
+
         />
         <BottomNavigationAction
           label="코인"
           icon={<LocalAtmIcon />}
           component={Link}
           to="/cash"
+          value = "/cash"
+
         />
       </BottomNavigation>
     </footer>

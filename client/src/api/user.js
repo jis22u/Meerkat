@@ -6,3 +6,9 @@ export const getAccount = async () => {
     return result
 }
 
+export const verifyRoom = async (body) => {
+    const result = await api({ method: 'get', url: '/call/join' , data: body })
+    return result
+}
+
+

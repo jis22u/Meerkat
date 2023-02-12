@@ -63,8 +63,12 @@ const RegistModal = (props) => {
         location: location,
       };
       // 요청 axios 요청
-      await sendRequest(requestContent);
-      navigate("/");
+      const { data } = await sendRequest(requestContent);
+      if (data.status === "OK") {
+        navigate(`/room/${data.value.roomName}/${data.value.idx}`); 
+      } else {
+        alert(data.message)
+      }
     }
   };
 
