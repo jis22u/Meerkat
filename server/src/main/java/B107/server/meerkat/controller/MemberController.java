@@ -54,8 +54,8 @@ public class MemberController {
     /**
      * 회원 마이페이지
      */
-//    @GetMapping("/profile/mypage")
-//    public ResponseEntity<ResponseDTO> myPage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
-//        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_MYPAGE, memberService.myPage(principalDetails.getMember().getIdx())));
-//    }
+    @GetMapping("/profile/mypage")
+    public ResponseEntity<ResponseDTO> myPage(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MEMBER_MYPAGE, memberService.readMyPage(principalDetails.getMember().getIdx())));
+    }
 }
