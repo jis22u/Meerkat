@@ -7,6 +7,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CallRepository extends JpaRepository<Call, Long> {
 
-//	@Query("select c.idx from Call c where c.roomId like :roomId")
-//	Long findIdxByRoomId(@Param("roomId") String roomId);
+//	@Query("select c.idx from Call c where c.roomName like :roomName")
+//	Long findIdxByRoomName(@Param("roomName") String roomName);
 }

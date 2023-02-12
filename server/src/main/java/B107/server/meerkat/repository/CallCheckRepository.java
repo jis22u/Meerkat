@@ -9,4 +9,7 @@ public interface CallCheckRepository extends JpaRepository<CallCheck, Long> {
 
 	@Query("select cc.ccCheck from CallCheck cc where cc.memberIdx = :memberIdx")
 	boolean findCcCheckById(@Param("memberIdx") Long memberIdx);
+
+	@Query("select cc from CallCheck cc where cc.memberIdx = :memberIdx")
+	CallCheck findCallChkById(@Param("memberIdx") Long memberIdx);
 }

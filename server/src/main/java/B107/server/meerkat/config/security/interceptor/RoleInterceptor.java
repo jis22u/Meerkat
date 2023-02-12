@@ -33,10 +33,13 @@ public class RoleInterceptor implements HandlerInterceptor {
 	private final String memberRole;
 	private final String markerRole;
 	private final String callRole;
+	private final String roomRole;
+
 	private final String adminURL;
 	private final String memberURL;
 	private final String markerURL;
 	private final String callURL;
+	private final String roomURL;
 
 	@Autowired
 	public RoleInterceptor(DecodeEncodeHandler decodeEncodeHandler, JwtTokenProvider jwtTokenProvider,
@@ -44,20 +47,24 @@ public class RoleInterceptor implements HandlerInterceptor {
 						   @Value(value = "${user.role.member}") String memberRole,
 						   @Value(value = "${user.role.marker}") String markerRole,
 						   @Value(value = "${user.role.call}") String callRole,
+						   @Value(value = "${user.role.room}") String roomRole,
 						   @Value(value = "${user.url.admin}") String adminURL,
 						   @Value(value = "${user.url.member}") String memberURL,
 						   @Value(value = "${user.url.marker}") String markerURL,
-						   @Value(value = "${user.url.call}") String callURL) {
+						   @Value(value = "${user.url.call}") String callURL,
+						   @Value(value = "${user.url.room}") String roomURL) {
 		this.decodeEncodeHandler = decodeEncodeHandler;
 		this.jwtTokenProvider = jwtTokenProvider;
 		this.adminRole = adminRole;
 		this.memberRole = memberRole;
 		this.markerRole = markerRole;
 		this.callRole = callRole;
+		this.roomRole = roomRole;
 		this.adminURL = adminURL;
 		this.memberURL = memberURL;
 		this.markerURL = markerURL;
 		this.callURL = callURL;
+		this.roomURL = roomURL;
 	}
 
 	@Override
@@ -122,6 +129,19 @@ public class RoleInterceptor implements HandlerInterceptor {
 //							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole) || role.equals(callRole))) {
+								log.info("MEMBER role validate - Success");
+								result = true;
+							} else {
+								log.warn("MEMBER role validate - Fail");
+								response.setContentType("text/html; charset=UTF-8");
+								response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
+							}
+							break Outer;
+						}
+						if (request.getRequestURI().startsWith(roomURL)) {
+//							System.out.println("여기 왔니");  XXXX
+							log.info("MEMBER role validate ...");
+							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole) || role.equals(callRole) || role.equals(roomRole))) {
 								log.info("MEMBER role validate - Success");
 								result = true;
 							} else {
