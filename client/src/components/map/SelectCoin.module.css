@@ -1,0 +1,5 @@
+.coinView {
+  display: flex;
+  justify-content: space-around;
+  height: 3rem;
+}

@@ -10,7 +10,7 @@ const Layout = () => {
     const pathname = window.location.pathname
 
     return (
-        <div>
+        <div className='body'>
             <Header />
 
             <main className=''>

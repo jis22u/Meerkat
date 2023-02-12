@@ -13,7 +13,7 @@ const MyPage = () => {
     }
 
     return (
-        <div>
+        <div className='body'>
             <button onClick={() => navigate('/change-account')}>회원정보 수정</button>
             <button onClick={logoutHandler}>로그아웃</button>
             <button onClick={() => navigate('/cash')}>충전하기</button>

@@ -4,7 +4,6 @@ import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
-import Backdrop from "components/map/Backdrop";
 
 const Map = () => {
   const { kakao } = window;
@@ -126,16 +125,6 @@ const Map = () => {
         };
         //맵생성
         map.current = new kakao.maps.Map(mapContainer, options);
-
-        // 일반 지도와 스카이뷰로 지도 타입을 전환할 수 있는 지도타입 컨트롤을 생성합니다
-        var mapTypeControl = new kakao.maps.MapTypeControl();
-
-        // 지도에 컨트롤을 추가해야 지도위에 표시됩니다
-        // kakao.maps.ControlPosition은 컨트롤이 표시될 위치를 정의하는데 TOPRIGHT는 오른쪽 위를 의미합니다
-        map.current.addControl(
-          mapTypeControl,
-          kakao.maps.ControlPosition.TOPRIGHT
-        );
 
         // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
         var zoomControl = new kakao.maps.ZoomControl();
@@ -262,15 +251,14 @@ const Map = () => {
       <MeerkatPin></MeerkatPin>
       <div className={classes.addressBox}>
         <div className={classes.address}>
-          <h1>현재주소</h1>
+          <h1 className={classes.currentAddressTitle}>현재주소</h1>
           <span>{address}</span>
         </div>
-        <div className={classes.btn}>
-          <button onClick={modalHandler}>제출</button>
+        <div className={classes.btnBackground}>
+          <button onClick={modalHandler} className={classes.btn}>등록</button>
         </div>
       </div>
       <SearchInput search={search}></SearchInput>
-      {modalIsOpen && <Backdrop modalHandler={modalHandler} />}
       {modalIsOpen && (
         <RegistModal
           address={address}
