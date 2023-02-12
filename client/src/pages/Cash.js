@@ -1,5 +1,6 @@
 import React, { useState, useContext, useMemo, useRef } from 'react';
 import axios from 'axios';
+import Payment from 'components/cash/Payment';
 
 const Cash = () => {
 
@@ -56,7 +57,8 @@ const Cash = () => {
             <h3>총 결제 금액 : {cash} 원</h3>
             <p></p>
             <div>
-              <button onClick={sendCash}> 충전하기 </button>
+              {/* <button onClick={sendCash} > 충전하기 </button> */}
+              <Payment cash={cash}/>
             </div>
         </div>
     );
