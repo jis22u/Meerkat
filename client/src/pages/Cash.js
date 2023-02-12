@@ -1,10 +1,11 @@
 import React, { useState, useContext, useMemo, useRef } from 'react';
 import axios from 'axios';
+import Payment from 'components/cash/Payment';
 
 const Cash = () => {
 
     const coin = useContext('CoinContext');
-    // 보유 코인 데이터 받아오기
+    // 1. API로 사용자의 보유 코인 데이터 받아오기
 
     const [cash , setCash] = useState(1100);
     const [mycoin , setMyCoin] = useState(0); // 받아온 코인 데이터를 초기값으로
@@ -29,15 +30,6 @@ const Cash = () => {
       setMyCoin(50)
     }
 
-    const sendCash = async () => {
-      try {
-        const response = await axios.post('http://localhost:3000', {data : {cash}}).then(res=>console.log(res));
-        console.log(response);
-      } catch(e) {
-        console.error(e);
-      }
-    }
-
     return (
         <div>
             cash 충전입니다.
@@ -56,7 +48,7 @@ const Cash = () => {
             <h3>총 결제 금액 : {cash} 원</h3>
             <p></p>
             <div>
-              <button onClick={sendCash}> 충전하기 </button>
+              <Payment cash={cash}/>
             </div>
         </div>
     );
