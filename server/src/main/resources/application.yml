@@ -58,11 +58,13 @@ user:
     member: /member
     marker: /marker
     call: /call
+    room: /room
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER
     marker: ROLE_MARKER
     call: ROLE_CALL
+    room: ROLE_ROOM
   permit:
     all: '/**'
   session:

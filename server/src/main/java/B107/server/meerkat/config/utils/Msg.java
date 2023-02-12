@@ -49,7 +49,10 @@ public interface Msg {
 
 	// call
 	String SUCCESS_CALL_REGISTER = "요청 등록에 성공하였습니다.";
-
 	String FAIL_CALL_REGISTER = "등록한 요청이 이미 존재합니다.";
 	String SUCCESS_CALL_FIND = "제공 가능 미어캣 목록 호출에 성공했습니다.";
+
+	// room
+	String SUCCESS_ROOM_JOIN = "입장 가능한 방입니다.";
+	String FAIL_ROOM_CLOSED = "폐쇄된 방입니다.";
 }

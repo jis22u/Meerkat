@@ -28,21 +28,22 @@ public class CallService {
     private final MemberRepository memberRepository;
     private final MarkerRepository markerRepository;
 
-    @Transactional
-    public String registCall(Long memberIdx, Call call) {
-        String ranNum = new RandomNumber().makeRanNum();
-        StringBuilder sb = new StringBuilder();
-        StringBuilder roomId = sb.append(memberIdx).append(ranNum);
 
-        call.setMember(memberRepository.findById(memberIdx).orElse(null));
-        call.setRoomId(roomId.toString());
-        callRepository.save(call);
-        return roomId.toString();
-    }
+	@Transactional
+	public String registCall(Long memberIdx, Call call) {
+		String ranNum = new RandomNumber().makeRanNum();
+		StringBuilder sb = new StringBuilder();
+		StringBuilder roomName = sb.append(memberIdx).append(ranNum);
+
+		call.setMember(memberRepository.findById(memberIdx).orElse(null));
+		call.setRoomName(roomName.toString());
+		callRepository.save(call);
+		return roomName.toString();
+	}
 
 //	@Transactional
-//	public Long findIdxByRoomId(String roomId) {
-//		return callRepository.findIdxByRoomId(roomId);
+//	public Long findIdxByRoomName(String roomName) {
+//		return callRepository.findIdxByRoomName(roomName);
 //	}
 
     @Transactional
