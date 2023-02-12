@@ -103,3 +103,9 @@ button {
   border-radius: 16px;
   margin: 1%;
 }
+
+.box {
+  left: 0px;
+  right: 0px;
+  max-height: 100%;
+}

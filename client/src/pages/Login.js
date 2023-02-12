@@ -38,7 +38,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="main">
+    <div className="box">
       <h1 className="title">로그인</h1>
       <div className="customBox">
         <form onSubmit={handleSubmit(submitForm)} className={classes.form}>
