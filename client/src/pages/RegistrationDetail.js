@@ -87,9 +87,9 @@ const RegistrationDetail = () => {
   };
 
   return (
-    <div>
+    <div className='main'>
       {detailContent && (
-        <div>
+        <div className="box">
           <h1 className="title">등록내역</h1>
           <div className="customBox">
             <img

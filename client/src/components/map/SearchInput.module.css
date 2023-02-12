@@ -1,3 +1,15 @@
 .input {
 position: fixed;
+display: flex;
+margin: 2%;
+}
+
+.searchBtn{
+    width: 4rem;
+    padding: 2%;
+}
+
+.inputWindow{
+    width: 15rem;
+    margin: 1%;
 }
