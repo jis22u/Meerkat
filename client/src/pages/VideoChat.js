@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Waiting from 'components/chat/Waiting'
 import styles from './VideoChat.module.css'
-import { verifyRoom } from 'api/user'
+import { verifyRoom, roomClose } from 'api/user'
 
 const Messages = styled.div`
 width: 50%;
@@ -65,12 +65,12 @@ const VideoChat = () => {
   const isJoin = useRef(choice)
   const navigate = useNavigate()
 
-  const two = useRef(10);
-  const five = useRef(30);
+  const two = useRef(60);
+  const five = useRef(120);
   const twoInterval = useRef();
   const fiveInterval = useRef();
-  const [twoSeconds, setTwoSeconds] = useState(10);
-  const [fiveSeconds, setFiveSeconds] = useState(30);
+  const [twoSeconds, setTwoSeconds] = useState(60);
+  const [fiveSeconds, setFiveSeconds] = useState(120);
 
 
   let cameraOptions
@@ -154,6 +154,7 @@ const VideoChat = () => {
 
     peerRef.current.oniceconnectionstatechange = (e) => {
       const status = peerRef.current.iceConnectionState
+
       console.log('현재 연결 상태:', status)
       if (status === "connected") {
         isJoin.current = true
@@ -165,13 +166,13 @@ const VideoChat = () => {
             setFiveSeconds(seconds => seconds - 1);
           } else {
             clearTimeout(fiveInterval.current)
-            navigate('/')
+            navigate('/hangup', { state : choice , replace : true })
           }
         }, 1000);
         
       } else if (status === "disconnected") {
         alert('연결이 끊어졌습니다.')
-        navigate('/')
+        navigate('/hangup', { state : choice , replace : true })
       }
     }
 
@@ -180,25 +181,32 @@ const VideoChat = () => {
     }
 
     if (myStream.current) {
+      console.log('myStream 있어')
       myStream.current
       .getTracks()
       .forEach((track) => {
         peerRef.current.addTrack(track, myStream.current)
       })
-    }
+    } else (console.log('myStream 없어'))
     }
 
 
   useEffect(() => {
     console.log('Render');
-    // const data = verifyRoom({room_name: roomName, idx})
-    // console.log(data)
 
+    // 7006237/8
     const initCall = async () => {
-      await getMedia();
+      const { data } = await verifyRoom({roomName, idx})
+      console.log(data)
+      if (data.status !== "OK") {
+        navigate('/')
+        return
+      }
+      getMedia();
+      // await을 일단 빼뒀음
       await makeConnection();
 
-      socketRef.current = io("http://192.168.1.209:8085",  {
+      socketRef.current = io("http://192.168.1.26:8085",  {
       query: `roomName=${roomName}`, //
       });
     
@@ -262,6 +270,13 @@ const VideoChat = () => {
       clearTimeout(twoInterval.current);
       clearTimeout(fiveInterval.current);
 
+      if (peerRef.current) peerRef.current.close()
+      if (socketRef.current) socketRef.current.disconnect()
+      if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
+      if (!choice) {
+        const data = roomClose({ roomName, idx })
+        console.log('폐쇄', data)
+      }
       // 카메라 + 소켓 disconnect
     }
 
@@ -323,7 +338,7 @@ const VideoChat = () => {
           autoPlay
           muted
         />
-        <div style = {{ display : 'none' }}>
+        <div>
           <Messages>
             {messages.map(showMessages)}
           </Messages>
