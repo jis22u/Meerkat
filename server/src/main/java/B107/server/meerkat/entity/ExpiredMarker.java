@@ -1,6 +1,10 @@
 package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -37,8 +41,8 @@ public class ExpiredMarker extends BaseAtTime implements Serializable {
     @JoinColumn(name = "member_idx")
     private Member member;
 
-    private Float lat; // 위도
-    private Float lng; // 경도
+    private Double lat; // 위도
+    private Double lng; // 경도
     private String location; // 위치 정보
 
     @Column(name = "reg_date")

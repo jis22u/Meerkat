@@ -30,8 +30,10 @@ function App() {
         <Route path="/register" element={<Register />} />
       </Route>
 
-      <Route path="/map" element={<Map />} />
-      <Route path="/room/:roomName" element={<VideoChat />} />
+        <Route element={<OnlyHeaderLayout />}>
+          <Route path="/map" element={<Map />} />
+          <Route path="/room/:roomName/:idx" element={<VideoChat />} />
+        </Route>
     </Routes>
   );
 }

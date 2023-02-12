@@ -18,10 +18,8 @@ const schema = yup
   .required();
 
 const LoginScreen = () => {
-  const { loading, isLogin } = useSelector((state) => state.auth);
-  // error 불러와서 쓰기
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { loading } = useSelector((state) => state.auth)
+  const dispatch = useDispatch()
 
   const {
     register,
@@ -30,18 +28,12 @@ const LoginScreen = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-
-  useEffect(() => {
-    if (isLogin) {
-      navigate("/");
-    }
-  }, [navigate, isLogin]);
-
+  
   const submitForm = async (data) => {
-    data.memberId = data.memberId.toLowerCase();
-    const { payload } = await dispatch(userLogin(data));
-    if (payload.status === "BAD_REQUEST") {
-      alert(payload.message);
+    data.memberId = data.memberId.toLowerCase()
+    const { payload } = await dispatch(userLogin(data))
+    if (payload.status !== "OK"){
+      alert(payload.message)
     }
   };
 
