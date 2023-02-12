@@ -31,7 +31,9 @@ const Cash = () => {
 
     const sendCash = async () => {
       try {
-        const response = await axios.post('http://localhost:3000', {data : {cash}}).then(res=>console.log(res));
+        const response = await axios
+          .post("http://43.201.72.34:3000", { data: { cash } })
+          .then((res) => console.log(res));
         console.log(response);
       } catch(e) {
         console.error(e);

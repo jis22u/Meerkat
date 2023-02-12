@@ -3,6 +3,7 @@ import Register from "pages/Register";
 
 import 'App.css';
 import Layout from 'pages/Layout';
+import OnlyHeaderLayout from 'pages/OnlyHeaderLayout';
 import AuthLayout from 'pages/AuthLayout';
 import Home from 'pages/Home';
 import MyPage from 'pages/MyPage'
@@ -10,7 +11,6 @@ import Cash from 'pages/Cash'
 import Map from 'pages/Map'
 import Login from 'pages/Login';
 import ChangeAccount from 'pages/ChangeAccount';
-// import Protected from 'pages/Protected';
 import VideoChat from "pages/VideoChat";
 import RegistrationDetail from "pages/RegistrationDetail";
 
@@ -31,8 +31,10 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
 
-      <Route path="/map" element={<Map />} />
-      <Route path="/room/:roomName" element={<VideoChat />} />
+        <Route element={<OnlyHeaderLayout />}>
+          <Route path="/map" element={<Map />} />
+          <Route path="/room/:roomName" element={<VideoChat />} />
+        </Route>
     </Routes>
   );
 }

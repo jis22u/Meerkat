@@ -2,5 +2,8 @@ FROM node:latest
 WORKDIR /client
 COPY ./package*.json /client
 COPY / /client
-RUN npm start
+RUN npm install
 EXPOSE 3000
+RUN npm run build
+CMD ["npx", "serve", "-s", "build"]
+
