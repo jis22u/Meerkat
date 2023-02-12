@@ -21,14 +21,7 @@ public class RoomController {
 
 	private final RoomService roomService;
 
-	@PutMapping("/exp/{roomName}")
-	public ResponseEntity<ResponseDTO> updateRoom (@AuthenticationPrincipal PrincipalDetails principalDetails, @PathVariable("roomName") String roomName) {
-		Long memberIdx = principalDetails.getMember().getIdx();
-		roomService.expiredRoom(roomName);
-		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ACCESS));
-	}
-
-	@GetMapping("/join")
+	@PutMapping("/join")
 	public ResponseEntity<ResponseDTO> joinRoom (@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody RoomDTO roomDto) {
 		// 방 테이블에 정보 입력
 		Long memberIdx = principalDetails.getMember().getIdx();
@@ -43,7 +36,17 @@ public class RoomController {
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_ROOM_CLOSED));
 	}
 
+	@PutMapping("/exp")
+	public ResponseEntity<ResponseDTO> updateRoom (@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody RoomDTO roomDto) {
+		// 요청 보낸 사용자 idx
+		Long memberIdx = principalDetails.getMember().getIdx();
 
+		// 폐쇄할 방 이름
+		String roomName = roomDto.getRoomName();
+		roomService.expiredRoom(roomName);
+
+		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ACCESS));
+	}
 
 
 }

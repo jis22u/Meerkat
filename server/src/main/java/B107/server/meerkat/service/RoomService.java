@@ -1,7 +1,9 @@
 package B107.server.meerkat.service;
 
+import B107.server.meerkat.entity.CallCheck;
 import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.entity.Room;
+import B107.server.meerkat.repository.CallCheckRepository;
 import B107.server.meerkat.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoomService {
 	private final RoomRepository roomRepository;
 
+	private final CallCheckService callCheckService;
 	/**
 	 * 처음 방 생성 및 할당이 되면 실행
 	 * */
@@ -35,9 +38,14 @@ public class RoomService {
 	 */
 	@Transactional
 	public void expiredRoom(String roomName) {
+		// 방 폐쇄
 		Room room = roomRepository.findRoomByRoomName(roomName);
 		room.setIsValid(false);
 		roomRepository.save(room);
+
+		// 해당 방의 요청자 call 제한 풀어주기
+		Long reqIdx = room.getRequestIdx();
+		callCheckService.registCallCheck(reqIdx, false);
 	}
 
 	@Transactional
@@ -49,7 +57,7 @@ public class RoomService {
 	public void memberToRoom(Long memberIdx, String roomName) {
 		Room room = roomRepository.findRoomByRoomName(roomName);
 		Long requestIdx = room.getRequestIdx();
-		if(memberIdx != requestIdx) {
+		if(!memberIdx.equals(requestIdx)) {
 			room.setResponseIdx(memberIdx);
 			roomRepository.save(room);
 		}

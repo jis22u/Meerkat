@@ -16,7 +16,7 @@ public interface RoomRepository extends JpaRepository<Room, Long> {
 
 
 	/**
-	 * roomName로 idx 객체 찾기
+	 * roomName로 room idx 객체 찾기
 	 */
 	@Query("select r.idx from Room r where r.roomName like :roomName")
 	Long findIdxByRoomName(@Param("roomName") String roomName);

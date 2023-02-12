@@ -132,6 +132,9 @@ public class SocketModule {
 //
 //			}
 
+//			client.leaveRoom(client.getSessionId().toString());
+//			client.disconnect();
+
 
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
