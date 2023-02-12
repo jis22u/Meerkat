@@ -16,9 +16,18 @@
   margin-bottom: 0px;
   text-align: center;
   background-color: rgb(255, 249, 228);
+  padding: 3%;
 }
 
-.btn {
+.btnBackground {
   text-align: center;
   background-color: rgb(228, 202, 170);
+}
+
+.btn{
+  padding: 2% 5%;
+}
+
+.currentAddressTitle{
+  margin: 2%;
 }

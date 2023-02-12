@@ -9,7 +9,7 @@ const Layout = () => {
     const { isLogin } = useSelector((state) => state.auth)
 
     return (
-        <div>
+        <div className='body'>
             <Header />
 
             <main className=''>

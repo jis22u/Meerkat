@@ -44,6 +44,7 @@ export const sendRequest = async (requestContext) => {
     data: requestContext,
   });
   console.log(requestContext);
+  console.log(res);
   //방번호 리턴
   return res;
 };
