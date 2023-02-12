@@ -3,9 +3,11 @@ package B107.server.meerkat.controller;
 import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
+import B107.server.meerkat.dto.room.RoomDTO;
 import B107.server.meerkat.entity.Call;
 import B107.server.meerkat.service.CallCheckService;
 import B107.server.meerkat.service.CallService;
+import B107.server.meerkat.service.RoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,7 @@ public class CallController {
 
 	private final CallService callService;
 	private final CallCheckService callCheckService;
+	private final RoomService roomService;
 
 	@PostMapping("/regist")
 	public ResponseEntity<ResponseDTO> registCall(@AuthenticationPrincipal PrincipalDetails principalDetails,
@@ -35,20 +38,27 @@ public class CallController {
 		if(!callCheckService.isCallCheck(memberIdx)) {
 			// 요청 가능한 경우
 			callCheckService.registCallCheck(memberIdx, true);
-			String roomId = callService.registCall(memberIdx, call);
+			String roomName = callService.registCall(memberIdx, call);
+
+			// 방 테이블에 insert
+			Long roomIdx = roomService.registRoom(memberIdx, roomName);
+
+			// RoomReqDTO 생성
+			RoomDTO res = RoomDTO.builder()
+					.idx(roomIdx)
+					.roomName(roomName)
+					.build();
+
 			// 요청 idx도 찾아서 보내주기
-//			Long callIdx = callService.findIdxByRoomId(roomId);
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, roomId));
+//			Long callIdx = callService.findIdxByRoomName(roomName);
+			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, res));
 		}
 
 		// 이미 등록 내역이 있는 경우
-		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER, "-1L"));
+		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER));
 
 	}
 
-	// 요청자 대기 페이지에서 2분 만료됨/ 5분 지났을때/ 둘 중 한명이 나갔을 때
-	// 해당 방id 폐쇄하기
-	// roomId 도 같이 들어와야겟구나
 
 
 

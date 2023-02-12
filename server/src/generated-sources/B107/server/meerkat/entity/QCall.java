@@ -44,7 +44,7 @@ public class QCall extends EntityPathBase<Call> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = _super.modifiedAt;
 
-    public final StringPath roomId = createString("roomId");
+    public final StringPath roomName = createString("roomName");
 
     public QCall(String variable) {
         this(Call.class, forVariable(variable), INITS);

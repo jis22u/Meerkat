@@ -2,6 +2,7 @@ B107\server\meerkat\entity\Call$CallBuilder.class
 B107\server\meerkat\config\utils\JacksonConfig.class
 B107\server\meerkat\dto\member\mod.class
 B107\server\meerkat\config\security\filter\UserAuthenticationManager.class
+B107\server\meerkat\entity\Room.class
 B107\server\meerkat\dto\marker\MarkerCheckDTO.class
 B107\server\meerkat\service\CallService.class
 B107\server\meerkat\entity\CallCheck$CallCheckBuilder.class
@@ -34,6 +35,7 @@ B107\server\meerkat\entity\Call.class
 B107\server\meerkat\repository\MemberRepository.class
 B107\server\meerkat\repository\MarkerCheckRepository.class
 B107\server\meerkat\entity\Member$MemberBuilder.class
+B107\server\meerkat\entity\Room$RoomBuilder.class
 B107\server\meerkat\config\utils\BaseAtTime.class
 B107\server\meerkat\dto\token\TokenResDTO.class
 B107\server\meerkat\config\utils\Msg.class
@@ -53,6 +55,7 @@ B107\server\meerkat\entity\QMarker.class
 B107\server\meerkat\exception\CustomExceptionReturn.class
 B107\server\meerkat\config\security\handler\UserLogoutHandler.class
 B107\server\meerkat\entity\ExpiredMarker.class
+B107\server\meerkat\repository\RoomRepository.class
 B107\server\meerkat\socket\SocketModule.class
 B107\server\meerkat\entity\Coin.class
 B107\server\meerkat\dto\member\SignModReqDTO.class
@@ -71,6 +74,7 @@ B107\server\meerkat\MeerkatApplication.class
 B107\server\meerkat\entity\Deposit$DepositBuilder.class
 B107\server\meerkat\entity\QDeal.class
 B107\server\meerkat\entity\QReport.class
+B107\server\meerkat\dto\room\RoomDTO.class
 B107\server\meerkat\entity\QCallCheck.class
 B107\server\meerkat\service\MemberService.class
 B107\server\meerkat\repository\ExpiredMarkerRepository.class
@@ -78,9 +82,12 @@ B107\server\meerkat\config\security\handler\UserLogoutSuccessHandler.class
 B107\server\meerkat\config\security\handler\ResponseHandler.class
 B107\server\meerkat\dto\token\CommonTokenDTO$CommonTokenDTOBuilder.class
 B107\server\meerkat\entity\Token$TokenBuilder.class
+B107\server\meerkat\dto\room\RoomDTO$RoomDTOBuilder.class
+B107\server\meerkat\controller\RoomController.class
 B107\server\meerkat\config\security\auth\MemberDTO$MemberDTOBuilder.class
 B107\server\meerkat\entity\QCall.class
 B107\server\meerkat\config\utils\BooleanToYNConverter.class
+B107\server\meerkat\dto\call\CallDTO.class
 B107\server\meerkat\controller\AuthController.class
 B107\server\meerkat\config\utils\ErrorResponseDTO$Error.class
 B107\server\meerkat\entity\Marker.class
@@ -93,9 +100,11 @@ B107\server\meerkat\repository\ReportRepository.class
 B107\server\meerkat\dto\member\modPw.class
 B107\server\meerkat\dto\marker\MarkerDTO$MarkerDTOBuilder.class
 B107\server\meerkat\dto\member\signUp.class
+B107\server\meerkat\service\RoomService.class
 B107\server\meerkat\entity\CallCheck.class
 B107\server\meerkat\config\socket\SocketIOConfig.class
 B107\server\meerkat\repository\CallCheckRepository.class
+B107\server\meerkat\entity\QRoom.class
 B107\server\meerkat\exception\GlobalExceptionHandler.class
 B107\server\meerkat\service\MarkerService.class
 B107\server\meerkat\repository\CoinRepository.class

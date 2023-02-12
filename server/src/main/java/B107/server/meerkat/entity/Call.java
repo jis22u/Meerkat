@@ -35,7 +35,7 @@ public class Call extends BaseAtTime implements Serializable {
     private Integer coin; // 주고받은 코인량
     private String content; // 요청사항 String
 
-    @Column(name = "room_id")
-    private String roomId; // 대화방 id
+    @Column(name = "room_name")
+    private String roomName; // 대화방 id
 
 }
