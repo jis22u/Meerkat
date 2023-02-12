@@ -5,6 +5,8 @@ import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
 import B107.server.meerkat.dto.marker.MarkerDTO;
+import B107.server.meerkat.dto.member.SignModReqDTO;
+import B107.server.meerkat.dto.member.mod;
 import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.service.MarkerCheckService;
 import B107.server.meerkat.service.MarkerService;
@@ -15,6 +17,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -64,6 +67,11 @@ public class MarkerController {
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_READ, resMarker));
 	}
 
+	@GetMapping("/findAll")
+	public ResponseEntity<ResponseDTO> getValidAllMarkers() {
+		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKERS_READ, markerService.getValidAllMarkers()));
+	}
+
 	@PutMapping("/update")
 	public ResponseEntity<ResponseDTO> updateMarker (@AuthenticationPrincipal PrincipalDetails principalDetails,
 													 @RequestBody Marker marker) {
@@ -95,4 +103,6 @@ public class MarkerController {
 		markerCheckService.registMarkerCheck(memberIdx, false);
 		return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_MARKER_DELETE));
 	}
+
+
 }
