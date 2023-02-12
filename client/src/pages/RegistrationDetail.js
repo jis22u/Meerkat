@@ -87,7 +87,7 @@ const RegistrationDetail = () => {
   };
 
   return (
-    <div>
+    <div className="box">
       {detailContent && (
         <div>
           <h1 className="title">등록내역</h1>

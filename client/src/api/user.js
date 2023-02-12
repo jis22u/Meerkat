@@ -6,3 +6,14 @@ export const getAccount = async () => {
     return result
 }
 
+export const verifyRoom = async (body) => {
+    const result = await api({ method: 'put', url: '/room/join' , data: body })
+    return result
+}
+
+export const roomClose = async (body) => {
+    const result = await api({ method: 'put', url: '/room/exp' , data: body })
+    return result
+}
+
+

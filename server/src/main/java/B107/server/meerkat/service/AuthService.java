@@ -46,7 +46,7 @@ public class AuthService {
         String password = decodeEncodeHandler.passwordEncode(signModReqDTO.getPassword());
         memberRepository.save(signModReqDTO.of(memberId, password));
 
-        // markerCheck, callCheck 초기화
+        // markerCheck, callCheck, coin 초기화
         Long memberIdx =  memberRepository.findIdxByMemberId(memberId);
         MarkerCheck markerCheck = MarkerCheck.builder()
                 .memberIdx(memberIdx)
@@ -59,13 +59,12 @@ public class AuthService {
                 .ccCheck(false)
                 .build();
         callCheckRepository.save(callCheck);
-        
+
         Coin coin = Coin.builder()
                 .memberIdx(memberIdx)
-                .coin(0)
                 .build();
         coinRepository.save(coin);
-        
+
         return memberId;
     }
 

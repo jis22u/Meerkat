@@ -77,6 +77,7 @@ B107\server\meerkat\entity\Report.class
 B107\server\meerkat\dto\member\SignModReqDTO$SignModReqDTOBuilder.class
 B107\server\meerkat\config\utils\JacksonConfig$1.class
 B107\server\meerkat\MeerkatApplication.class
+B107\server\meerkat\service\CoinService.class
 B107\server\meerkat\entity\Deposit$DepositBuilder.class
 B107\server\meerkat\entity\QDeal.class
 B107\server\meerkat\entity\QReport.class
@@ -98,6 +99,7 @@ B107\server\meerkat\config\utils\BooleanToYNConverter.class
 B107\server\meerkat\dto\call\CallDTO.class
 B107\server\meerkat\controller\AuthController.class
 B107\server\meerkat\config\utils\ErrorResponseDTO$Error.class
+B107\server\meerkat\controller\CoinController.class
 B107\server\meerkat\entity\Marker.class
 B107\server\meerkat\entity\QExpiredMarker.class
 B107\server\meerkat\dto\member\ProfileRes.class
@@ -119,6 +121,7 @@ B107\server\meerkat\repository\CoinRepository.class
 B107\server\meerkat\dto\socket\Message.class
 B107\server\meerkat\config\security\handler\DecodeEncodeHandler.class
 B107\server\meerkat\dto\call\CallDistanceResDTO$CallDistanceResDTOBuilder.class
+B107\server\meerkat\service\DealService.class
 B107\server\meerkat\repository\CallRepository.class
 B107\server\meerkat\dto\member\ProfileRes$ProfileResBuilder.class
 B107\server\meerkat\socket\SocketService.class
