@@ -1,4 +1,4 @@
-.topBox {
+.container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -7,7 +7,18 @@
     width: 100vw;
 }
 
-.video {
+.timer {
+    position : 'absolute';
+}
+
+.localVideo {
+    width: 240;
+    height: 240;
+    margin: 5;
+    background-color: "black";
+}
+
+.remoteVideo {
     width: 240;
     height: 240;
     margin: 5;

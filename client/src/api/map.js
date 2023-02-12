@@ -38,12 +38,14 @@ export const deleteMeerkat = async () => {
 };
 
 export const sendRequest = async (requestContext) => {
+
   const res = await api({
     method: "post",
     url: "/call/regist",
     data: requestContext,
   });
   console.log(requestContext);
+  console.log(res);
   //방번호 리턴
   return res;
 };

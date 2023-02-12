@@ -5,6 +5,50 @@ import styled from "styled-components";
 import { useSelector } from "react-redux";
 import Waiting from 'components/chat/Waiting'
 import styles from './VideoChat.module.css'
+import { verifyRoom, roomClose } from 'api/user'
+
+const Messages = styled.div`
+width: 50%;
+height: 30%;
+border: 1px solid black;
+margin-top: 10px;
+overflow: scroll;
+`;
+
+
+const MyRow = styled.div`
+width: 100%;
+display: flex;
+justify-content: flex-end;
+margin-top: 10px;
+`;
+
+const MyMessage = styled.div`
+width: 45%;
+background-color: blue;
+color: white;
+padding: 10px;
+margin-right: 5px;
+text-align: center;
+border-top-right-radius: 10%;
+border-bottom-right-radius: 10%;
+`;
+
+const PartnerRow = styled(MyRow)`
+justify-content: flex-start;
+`;
+
+const PartnerMessage = styled.div`
+width: 45%;
+background-color: grey;
+color: white;
+border: 1px solid lightgray;
+padding: 10px;
+margin-left: 5px;
+text-align: center;
+border-top-left-radius: 10%;
+border-bottom-left-radius: 10%;
+`;
 
 const VideoChat = () => {
   const socketRef = useRef();
@@ -13,59 +57,24 @@ const VideoChat = () => {
   const remoteVideoRef = useRef();
   const ChannelRef = useRef();
   const myStream = useRef();
-  const { roomName } = useParams();
+  const { roomName, idx } = useParams();
   const [text ,setText] = useState('');
   const [messages, setMessages] = useState([]);
   const { choice } = useSelector((state) => state.auth)
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
-  const [seconds, setSeconds] = useState(60);
   const navigate = useNavigate()
+
+  const two = useRef(60);
+  const five = useRef(120);
+  const twoInterval = useRef();
+  const fiveInterval = useRef();
+  const [twoSeconds, setTwoSeconds] = useState(60);
+  const [fiveSeconds, setFiveSeconds] = useState(120);
+
 
   let cameraOptions
 
-  // const Messages = styled.div`
-  //     width: 100%;
-  //     height: 60%;
-  //     border: 1px solid black;
-  //     margin-top: 10px;
-  //     overflow: scroll;
-  // `;
-
-
-  // const MyRow = styled.div`
-  //   width: 100%;
-  //   display: flex;
-  //   justify-content: flex-end;
-  //   margin-top: 10px;
-  // `;
-
-  // const MyMessage = styled.div`
-  //   width: 45%;
-  //   background-color: blue;
-  //   color: white;
-  //   padding: 10px;
-  //   margin-right: 5px;
-  //   text-align: center;
-  //   border-top-right-radius: 10%;
-  //   border-bottom-right-radius: 10%;
-  // `;
-
-  // const PartnerRow = styled(MyRow)`
-  //   justify-content: flex-start;
-  // `;
-
-  // const PartnerMessage = styled.div`
-  //   width: 45%;
-  //   background-color: grey;
-  //   color: white;
-  //   border: 1px solid lightgray;
-  //   padding: 10px;
-  //   margin-left: 5px;
-  //   text-align: center;
-  //   border-top-left-radius: 10%;
-  //   border-bottom-left-radius: 10%;
-  // `;
 
 
   const handleMicOff = () => {
@@ -145,24 +154,25 @@ const VideoChat = () => {
 
     peerRef.current.oniceconnectionstatechange = (e) => {
       const status = peerRef.current.iceConnectionState
+
       console.log('현재 연결 상태:', status)
       if (status === "connected") {
-        const interval = setInterval(() => {
-          setSeconds(seconds => seconds - 1);
-          console.log('계속 세리는 중')
-        }, 1000);
         isJoin.current = true
         setStyle(true)
-        setTimeout(() => {
-          navigate('/')
-        // {replace: true}
-        }, 60000)
+        fiveInterval.current = setInterval(() => {
+          console.log(five.current)
+          if (five.current !== 0) {
+            five.current -= 1
+            setFiveSeconds(seconds => seconds - 1);
+          } else {
+            clearTimeout(fiveInterval.current)
+            navigate('/hangup', { state : choice , replace : true })
+          }
+        }, 1000);
         
-
-        // clearInterval(interval)
-
       } else if (status === "disconnected") {
         alert('연결이 끊어졌습니다.')
+        navigate('/hangup', { state : choice , replace : true })
       }
     }
 
@@ -171,19 +181,29 @@ const VideoChat = () => {
     }
 
     if (myStream.current) {
+      console.log('myStream 있어')
       myStream.current
       .getTracks()
       .forEach((track) => {
         peerRef.current.addTrack(track, myStream.current)
       })
-    }
+    } else (console.log('myStream 없어'))
     }
 
 
   useEffect(() => {
     console.log('Render');
+
+    // 7006237/8
     const initCall = async () => {
-      await getMedia();
+      const { data } = await verifyRoom({roomName, idx})
+      console.log(data)
+      if (data.status !== "OK") {
+        navigate('/')
+        return
+      }
+      getMedia();
+      // await을 일단 빼뒀음
       await makeConnection();
 
       socketRef.current = io("http://43.201.72.34:8085", {
@@ -233,16 +253,33 @@ const VideoChat = () => {
     });
     }
     
-    // if (!isJoin.current) {
-    //   setTimeout(() => {
-    //     isJoin.current ? console.log('입장완료') : navigate('/')
-    //   }, 10000)
-    // }
+    if (!choice) {
+      twoInterval.current = setInterval(() => {
+        if (two.current !== 0) {
+          two.current -= 1
+          setTwoSeconds(seconds => seconds - 1)
+        } else {
+          isJoin.current ? console.log('미어캣 입장완료') : navigate('/')
+        }
+      }, 1000)
+    }
 
     initCall()
-
-    // return () => clearInterval(interval)
   
+    return () => {
+      clearTimeout(twoInterval.current);
+      clearTimeout(fiveInterval.current);
+
+      if (peerRef.current) peerRef.current.close()
+      if (socketRef.current) socketRef.current.disconnect()
+      if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
+      if (!choice) {
+        const data = roomClose({ roomName, idx })
+        console.log('폐쇄', data)
+      }
+      // 카메라 + 소켓 disconnect
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -250,67 +287,69 @@ const VideoChat = () => {
     setMessages(messages => [...messages, { yours: false, value: e.data}])
   }
 
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   ChannelRef.current.send(text)
-  //   setMessages(messages => [...messages, { yours: true, value: text}])
-  //   setText("");
-  // }
+  const sendMessage = (e) => {
+    e.preventDefault();
+    ChannelRef.current.send(text)
+    setMessages(messages => [...messages, { yours: true, value: text}])
+    setText("");
+  }
 
-  // const showMessages = (message, index) => {
-  //   if (message.yours) {
-  //     return (
-  //         <MyRow key={index}>
-  //             <MyMessage>
-  //                 {message.value}
-  //             </MyMessage>
-  //         </MyRow>
-  //     )
-  //   }
+  const showMessages = (message, index) => {
+    if (message.yours) {
+      return (
+          <MyRow key={index}>
+              <MyMessage>
+                  {message.value}
+              </MyMessage>
+          </MyRow>
+      )
+    }
 
-  //   return (
-  //       <PartnerRow key={index}>
-  //           <PartnerMessage>
-  //               {message.value}
-  //           </PartnerMessage>
-  //       </PartnerRow>
-  //   )
-  // }
+    return (
+        <PartnerRow key={index}>
+            <PartnerMessage>
+                {message.value}
+            </PartnerMessage>
+        </PartnerRow>
+    )
+  }
 
   return (  
-    <div className={styles.topBox}>
-      <div style = {{position : 'absolute'}}>
-        <h1>{parseInt(seconds / 60)} : {seconds % 60 < 10 ? '0' + seconds % 60 : seconds % 60 }</h1>
-      </div>
+    <div className={styles.container}>
       <div style = {{ display : style ? "none" : "block" }}>
-        <Waiting />
+        <Waiting time={twoSeconds}/>
       </div>
       <div style = {{ display : style ? "block" : "none "}} className={styles.videoBox}>
-        <video
-          className={styles.video}
-          ref={localVideoRef}
-          playsInline
-          autoPlay
-          muted
-        />
+        <div style = {{position : 'absolute'}}>
+          <h1>{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
+        </div>
         <video
           id="remotevideo"
-          className={styles.video}
+          className={styles.remoteVideo}
           ref={remoteVideoRef}
           playsInline
           autoPlay
           muted
         />
-        {/* <Messages>
-          {messages.map(showMessages)}
-        </Messages> */}
+        <video
+          className={styles.localVideo}
+          ref={localVideoRef}
+          playsInline
+          autoPlay
+          muted
+        />
+        <div>
+          <Messages>
+            {messages.map(showMessages)}
+          </Messages>
+          <form onSubmit = {sendMessage}>
+            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
+            <button type="submit" disabled={!text}>🕊️</button>
+          </form>
+        </div>
         <button onClick={handleCameraOff}>Camera Off</button>
         <button onClick={handleMicOff}>Mic Off</button>
         <button onClick={handleCamDirection}>Camera Change</button>
-        {/* <form onSubmit = {sendMessage}>
-          <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
-          <button type="submit" disabled={!text}>🕊️</button>
-        </form> */}
       </div>
     </div>
   );
