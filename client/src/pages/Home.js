@@ -13,7 +13,7 @@ const Home = () => {
   };
 
   return (
-    <div className={classes.box}>
+    <div className="box">
       <div>
         <img className={classes.explain} alt="" src="img/meerkat_explain.png" />
         <button className={classes.choiceBtn} onClick={() => clickHandler(true)}>

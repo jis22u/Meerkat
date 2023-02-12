@@ -35,14 +35,14 @@ const RegistModal = (props) => {
 
       if (hourSelect === 24) hour = "00";
 
-      const startAt = moment().format("YYYY-MM-DD kk:mm:ss");
-      let exp_date = moment().format(`YYYY-MM-DD ${hour}:00:00`);
+      const startAt = moment().format("YYYY-MM-DD HH:MM:SS");
+      let exp_date = moment().format(`"YYYY-MM-DD ${hour}:00:00"`);
 
       if (
         date.getHours() >= hourSelect.current.value ||
         hourSelect.current.value === 24
       )
-        exp_date = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
+        exp_date = moment().add(1, "d").format(`"YYYY-MM-DD ${hour}:00:00"`);
 
       const meerkatContent = {
         exp_date: exp_date,
