@@ -7,16 +7,17 @@ import { useSelector } from 'react-redux';
 
 const Layout = () => {
     const { isLogin } = useSelector((state) => state.auth)
+    const pathname = window.location.pathname
 
     return (
         <div>
             <Header />
 
             <main className=''>
-                { !isLogin ? <Navigate to="/login" replace /> : < Outlet /> }
+                { !isLogin ? <Navigate to="/login" replace = { true } state = {{ path : pathname }} /> : < Outlet /> }
             </main>
-
-            {<Footer />}
+            
+            <Footer />
         </div>
     );
 };

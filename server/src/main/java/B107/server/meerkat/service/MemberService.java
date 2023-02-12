@@ -87,4 +87,7 @@ public class MemberService {
         List<Member> MyInfoList = memberRepositoryImpl.findMyProfile(idx);
         return MyInfoList.stream().map(member -> ProfileRes.builder().build().of(member)).collect(Collectors.toList()).get(0);
     }
+
+    public MemPageRESDTO myPage(Long idx) {
+    }
 }

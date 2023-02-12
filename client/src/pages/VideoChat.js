@@ -155,8 +155,10 @@ const VideoChat = () => {
         setStyle(true)
         setTimeout(() => {
           navigate('/')
+        // {replace: true}
         }, 60000)
         
+
         // clearInterval(interval)
 
       } else if (status === "disconnected") {
@@ -180,13 +182,12 @@ const VideoChat = () => {
 
   useEffect(() => {
     console.log('Render');
-
     const initCall = async () => {
       await getMedia();
       await makeConnection();
 
-      socketRef.current = io("http://i8b107.p.ssafy.io:8085",  {
-      query: `roomName=${roomName}`, //
+      socketRef.current = io("http://43.201.72.34:8085", {
+        query: `roomName=${roomName}`, //
       });
     
     socketRef.current.on("welcome", async () => {

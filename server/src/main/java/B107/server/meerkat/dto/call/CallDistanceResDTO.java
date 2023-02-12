@@ -13,15 +13,17 @@ import java.time.LocalDateTime;
 public class CallDistanceResDTO {
     Long idx;
     String location;
-    Double distance;
+    Double lat;
+    Double lng;
     LocalDateTime expDate;
 
     @Builder
     @QueryProjection
-    public CallDistanceResDTO(Long idx, String location, Double distance, LocalDateTime expDate) {
+    public CallDistanceResDTO(Long idx, String location, Double lat, Double lng, LocalDateTime expDate) {
         this.idx = idx;
         this.location = location;
-        this.distance = distance;
+        this.lat = lat;
+        this.lng = lng;
         this.expDate = expDate;
     }
 }

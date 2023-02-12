@@ -13,8 +13,8 @@ public class QCallDistanceResDTO extends ConstructorExpression<CallDistanceResDT
 
     private static final long serialVersionUID = -2092125589L;
 
-    public QCallDistanceResDTO(com.querydsl.core.types.Expression<Long> idx, com.querydsl.core.types.Expression<String> location, com.querydsl.core.types.Expression<Double> distance, com.querydsl.core.types.Expression<java.time.LocalDateTime> expDate) {
-        super(CallDistanceResDTO.class, new Class<?>[]{long.class, String.class, double.class, java.time.LocalDateTime.class}, idx, location, distance, expDate);
+    public QCallDistanceResDTO(com.querydsl.core.types.Expression<Long> idx, com.querydsl.core.types.Expression<String> location, com.querydsl.core.types.Expression<Double> lat, com.querydsl.core.types.Expression<Double> lng, com.querydsl.core.types.Expression<java.time.LocalDateTime> expDate) {
+        super(CallDistanceResDTO.class, new Class<?>[]{long.class, String.class, double.class, double.class, java.time.LocalDateTime.class}, idx, location, lat, lng, expDate);
     }
 
 }
