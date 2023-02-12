@@ -15,8 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RoomService {
 	private final RoomRepository roomRepository;
-
 	private final CallCheckService callCheckService;
+//	private final DealService dealService;
+
+
 	/**
 	 * 처음 방 생성 및 할당이 되면 실행
 	 * */
@@ -46,6 +48,10 @@ public class RoomService {
 		// 해당 방의 요청자 call 제한 풀어주기
 		Long reqIdx = room.getRequestIdx();
 		callCheckService.registCallCheck(reqIdx, false);
+
+		// 거래 서비스 연동
+
+
 	}
 
 	@Transactional

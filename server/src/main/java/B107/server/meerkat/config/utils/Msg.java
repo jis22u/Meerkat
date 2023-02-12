@@ -55,4 +55,7 @@ public interface Msg {
 	// room
 	String SUCCESS_ROOM_JOIN = "입장 가능한 방입니다.";
 	String FAIL_ROOM_CLOSED = "폐쇄된 방입니다.";
+
+	// coin
+	String SUCCESS_COIN_CHARGE = "코인 충전에 성공하였습니다.";
 }
