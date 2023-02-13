@@ -215,7 +215,7 @@ const VideoChat = () => {
       // await을 일단 빼뒀음
       await makeConnection();
 
-      socketRef.current = io("http://i8b107.p.ssafy.io:8085", {
+      socketRef.current = io("https://i8b107.p.ssafy.io/socket", {
         query: `roomName=${roomName}`, //
       });
     
