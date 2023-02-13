@@ -66,11 +66,11 @@ const VideoChat = () => {
   const navigate = useNavigate()
 
   const two = useRef(60);
-  const five = useRef(120);
+  const five = useRef(100000);
   const twoInterval = useRef();
   const fiveInterval = useRef();
   const [twoSeconds, setTwoSeconds] = useState(60);
-  const [fiveSeconds, setFiveSeconds] = useState(120);
+  const [fiveSeconds, setFiveSeconds] = useState(100000);
 
 
   let cameraOptions
@@ -160,7 +160,6 @@ const VideoChat = () => {
         isJoin.current = true
         setStyle(true)
         fiveInterval.current = setInterval(() => {
-          console.log(five.current)
           if (five.current !== 0) {
             five.current -= 1
             setFiveSeconds(seconds => seconds - 1);
@@ -202,11 +201,11 @@ const VideoChat = () => {
         navigate('/')
         return
       }
-      getMedia();
+      await getMedia();
       // await을 일단 빼뒀음
       await makeConnection();
 
-      socketRef.current = io("http://43.201.72.34:8085", {
+      socketRef.current = io("http://192.168.31.154:8085", {
         query: `roomName=${roomName}`, //
       });
     
@@ -259,7 +258,7 @@ const VideoChat = () => {
           two.current -= 1
           setTwoSeconds(seconds => seconds - 1)
         } else {
-          isJoin.current ? console.log('미어캣 입장완료') : navigate('/')
+          isJoin.current ? clearTimeout(twoInterval) : navigate('/')
         }
       }, 1000)
     }
@@ -315,13 +314,13 @@ const VideoChat = () => {
   }
 
   return (  
-    <div className={styles.container}>
+    <div className="box">
       <div style = {{ display : style ? "none" : "block" }}>
         <Waiting time={twoSeconds}/>
       </div>
       <div style = {{ display : style ? "block" : "none "}} className={styles.videoBox}>
-        <div style = {{position : 'absolute'}}>
-          <h1>{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
+        <div>
+          <h1>남은 시간{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
         </div>
         <video
           id="remotevideo"
@@ -339,7 +338,7 @@ const VideoChat = () => {
           muted
         />
         <div>
-          <Messages>
+          <Messages style = {{ display : "none" }}>
             {messages.map(showMessages)}
           </Messages>
           <form onSubmit = {sendMessage}>
