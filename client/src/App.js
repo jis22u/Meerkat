@@ -26,15 +26,17 @@ function App() {
           <Route path="/cash" element={<Cash />} />
           <Route path="/change-account" element={<ChangeAccount/>} />
           <Route path="/registration-detail" element={<RegistrationDetail />} />
+          <Route path="/hangup" element={<HangUp />} />\
           <Route path="/map" element={<Map />} />
           <Route path="/room/:roomName/:idx" element={<Suspense fallback={<div><h1>렌더링 중입니다!!!</h1></div>}><VideoChat /></Suspense>} />
-          <Route path="/hangup" element={<HangUp />} />\
         </Route>
         
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
+
+
     </Routes>
   );
 }
