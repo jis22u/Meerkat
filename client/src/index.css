@@ -13,7 +13,9 @@ html, body, .body, #root{
   width: 100%;
   margin: 0;
   background-color: rgb(255, 249, 228);
+  min-width: 200px;
 }
+
 header {
   position: absolute;
   top: 0;
@@ -25,8 +27,8 @@ header {
 
 main{
   position: absolute;
-  top: 100px;
-  bottom: 80px;
+  top: 94px;
+  bottom: 85px;
   left: 0px;
   right: 0px;
   overflow: auto;
@@ -76,9 +78,9 @@ hr {
 }
 
 .customBox {
-  padding: 5%;
+  margin: 20px;
+  padding: 1.5rem;
   text-align: center;
-  max-width: 500px;
   height: fit-content;
   border-radius: 24px;
   border: 0.5rem solid rgb(75, 31, 15);
@@ -89,7 +91,7 @@ hr {
 .title {
   margin: 0 auto;
   top: 2.5rem;
-  width: 12rem;
+  width: 10rem;
   position: relative;
   text-align: center;
   padding: 0.2rem;
@@ -102,10 +104,18 @@ button {
   color: white;
   border-radius: 16px;
   margin: 1%;
+  font-family: "hyemin";
 }
 
 .box {
   left: 0px;
   right: 0px;
+  width: 100%;
+  height: 100%;
+  max-width: 600px;
   max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }

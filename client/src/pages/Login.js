@@ -12,8 +12,8 @@ import HttpsIcon from "@mui/icons-material/Https";
 
 const schema = yup
   .object({
-    memberId: yup.string().required("비밀번호를 입력해 주세요 😦"),
-    password: yup.string().required("비밀번호를 입력해 주세요 😦"),
+    memberId: yup.string().required("아이디를 입력해 주세요"),
+    password: yup.string().required("비밀번호를 입력해 주세요"),
   })
   .required();
 
@@ -38,7 +38,7 @@ const LoginScreen = () => {
   };
 
   return (
-    <div className="box">
+    <div className={classes.box}>
       <h1 className="title">로그인</h1>
       <div className="customBox">
         <form onSubmit={handleSubmit(submitForm)} className={classes.form}>
@@ -51,8 +51,8 @@ const LoginScreen = () => {
               placeholder="아이디"
               {...register("memberId")}
             />
-            <p>{errors.memberId?.message}</p>
           </div>
+            <p>{errors.memberId?.message}</p>
           <div className={classes.formGroup}>
             <HttpsIcon fontSize="large"></HttpsIcon>
             <input
