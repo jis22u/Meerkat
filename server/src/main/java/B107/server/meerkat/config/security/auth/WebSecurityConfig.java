@@ -39,7 +39,7 @@ public class WebSecurityConfig {
                 .authorizeRequests()
                 .antMatchers(globalFilter.getPermitAll()).permitAll()
                 .and()
-                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
+                .addFilterAfter(globalFilter.corsFilter(), CorsFilter.class)
                 .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

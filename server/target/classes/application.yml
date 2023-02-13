@@ -1,11 +1,11 @@
 socket-server:
   port: 8085
-  host: localhost
+  host: i8b107.p.ssafy.io
 
 server:
   port: 8081
 
-spring:
+spring:r
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://${datasource}/${schema}?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
@@ -52,7 +52,7 @@ jwt:
 
 user:
   url:
-    client: localhost
+    client: i8b107.p.ssafy.io
     logout: /logout
     admin: /admin
     member: /member
