@@ -93,6 +93,7 @@ B107\server\meerkat\exception\MyPageHistoryException.class
 B107\server\meerkat\dto\call\CallDistanceReqDTO.class
 B107\server\meerkat\entity\Token$TokenBuilder.class
 B107\server\meerkat\dto\room\RoomDTO$RoomDTOBuilder.class
+B107\server\meerkat\service\DepositService.class
 B107\server\meerkat\controller\RoomController.class
 B107\server\meerkat\config\security\auth\MemberDTO$MemberDTOBuilder.class
 B107\server\meerkat\entity\QCall.class
