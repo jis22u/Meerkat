@@ -4,6 +4,7 @@ import B107.server.meerkat.dto.member.MemPageDealDTO;
 import B107.server.meerkat.entity.Deal;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -22,4 +23,7 @@ public interface DealRepository extends JpaRepository<Deal, Long> {
             "AND d.resMember.idx = :idx " +
             "ORDER BY d.exitTime DESC")
     List<MemPageDealDTO> findAllMyResHistory(Long idx);
+
+	@Query("select d from Deal d where d.call.idx = :callIdx")
+	Deal findDealByCallIdx(@Param("callIdx") Long callIdx);
 }

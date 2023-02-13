@@ -41,10 +41,12 @@ public class CallService {
 		return roomName.toString();
 	}
 
-//	@Transactional
-//	public Long findIdxByRoomName(String roomName) {
-//		return callRepository.findIdxByRoomName(roomName);
-//	}
+	@Transactional
+	public Long findIdxByRoomName(String roomName) {
+		return callRepository.findIdxByRoomName(roomName);
+	}
+
+
 
     @Transactional
     public List<CallDistanceResDTO> findValidMarkers(CallDistanceReqDTO callDistanceReqDTO, Long idx) {

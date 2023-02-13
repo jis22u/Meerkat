@@ -1,22 +1,29 @@
 package B107.server.meerkat.service;
 
-import B107.server.meerkat.entity.CallCheck;
-import B107.server.meerkat.entity.Marker;
+import B107.server.meerkat.entity.Deal;
 import B107.server.meerkat.entity.Room;
-import B107.server.meerkat.repository.CallCheckRepository;
+import B107.server.meerkat.repository.DealRepository;
 import B107.server.meerkat.repository.RoomRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class RoomService {
+
 	private final RoomRepository roomRepository;
+	private final DealRepository dealRepository;
+
+
+	private final CallService callService;
 	private final CallCheckService callCheckService;
-//	private final DealService dealService;
+	private final DealService dealService;
+
 
 
 	/**
@@ -37,6 +44,8 @@ public class RoomService {
 	/**
 	 * 대기시간 2분이 지나서, 통화가능 시간 5분이 지나서, 둘 중 한명이 연결을 끊어서
 	 * 해당 방은 닫힘
+	 *
+	 * 방이 종료되고, 정보제공자 idx != null 일 경우, 거래 정상 완료로 간주
 	 */
 	@Transactional
 	public void expiredRoom(String roomName) {
@@ -49,7 +58,16 @@ public class RoomService {
 		Long reqIdx = room.getRequestIdx();
 		callCheckService.registCallCheck(reqIdx, false);
 
-		// 거래 서비스 연동
+		// 거래 서비스 연동 - 거래 끝
+		if(room.getResponseIdx() != null) {
+			Long callIdx = callService.findIdxByRoomName(roomName);
+			Deal deal = dealService.findDealByCallIdx(callIdx);
+			deal.setExitTime(LocalDateTime.now());
+			dealRepository.save(deal);
+			
+			// 입출금 내역
+
+		}
 
 
 	}
@@ -59,6 +77,9 @@ public class RoomService {
 		return roomRepository.findValidByIdx(roomIdx);
 	}
 
+	/**
+	 * 정보제공자가 방에 입장하는 순간 거래 시작으로 간주
+	 */
 	@Transactional
 	public void memberToRoom(Long memberIdx, String roomName) {
 		Room room = roomRepository.findRoomByRoomName(roomName);
@@ -66,6 +87,10 @@ public class RoomService {
 		if(!memberIdx.equals(requestIdx)) {
 			room.setResponseIdx(memberIdx);
 			roomRepository.save(room);
+
+			// 거래 시작 - 거래 등록
+			Long callIdx = callService.findIdxByRoomName(roomName);
+			dealService.registDeal(requestIdx, memberIdx, callIdx);
 		}
 	}
 
