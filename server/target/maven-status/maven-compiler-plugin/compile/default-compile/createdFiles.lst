@@ -89,6 +89,7 @@ B107\server\meerkat\repository\ExpiredMarkerRepository.class
 B107\server\meerkat\config\security\handler\UserLogoutSuccessHandler.class
 B107\server\meerkat\config\security\handler\ResponseHandler.class
 B107\server\meerkat\dto\token\CommonTokenDTO$CommonTokenDTOBuilder.class
+B107\server\meerkat\exception\MyPageHistoryException.class
 B107\server\meerkat\dto\call\CallDistanceReqDTO.class
 B107\server\meerkat\entity\Token$TokenBuilder.class
 B107\server\meerkat\dto\room\RoomDTO$RoomDTOBuilder.class
