@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "api/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,6 +8,8 @@ import * as yup from "yup";
 import classes from "./Login.module.css";
 import PersonIcon from "@mui/icons-material/Person";
 import HttpsIcon from "@mui/icons-material/Https";
+import Swal from 'sweetalert2'
+import Spinner from 'components/layout/Spinner'
 // import Error from 'components/layout/Error'
 
 const schema = yup
@@ -33,7 +35,13 @@ const LoginScreen = () => {
     data.memberId = data.memberId.toLowerCase()
     const { payload } = await dispatch(userLogin(data))
     if (payload.status !== "OK"){
-      alert(payload.message)
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: `${payload.message}`,
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 
@@ -63,8 +71,8 @@ const LoginScreen = () => {
             />
           </div>
           <p>{errors.password?.message}</p>
-          <button type="submit" className={classes.loginBtn} disabled={loading}>
-            {loading ? "대기중" : "로그인"}
+          <button type="submit" className={classes.loginBtn} disabled={loading} style = {{display: 'flex', justifyContent: 'center', alignItems : 'center' }}>
+            {loading ? <Spinner /> : "로그인"}
             {/* <Spinner /> */}
           </button>
         </form>

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2'
 
 import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
@@ -238,7 +239,13 @@ const Map = () => {
   const modalHandler = () => {
     if (modalIsOpen === false) {
       if(address === "지도를 움직여 주소를 입력하세요") {
-        alert("지도를 움직여 주소를 입력하세요")
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: "지도를 움직여 주소를 입력하세요",
+          showConfirmButton: false,
+          timer: 1500
+        })
         return;
       }
       setModalIsOpen(true);

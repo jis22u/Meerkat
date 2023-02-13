@@ -5,6 +5,7 @@ import { getMeerkatDetail, modifyMeerkat, deleteMeerkat } from "api/map";
 import { setChoice } from "store/modules/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const RegistrationDetail = () => {
   const [detailContent, setDetailContent] = useState();
@@ -63,7 +64,13 @@ const RegistrationDetail = () => {
 
       // 미어캣 등록 axios 요청
       modifyMeerkat(newDetailContext).then((responce) => {
-        alert(responce.data.message);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${responce.data.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       });
       setModify(false);
     } else {

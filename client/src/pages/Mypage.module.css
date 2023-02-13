@@ -16,6 +16,6 @@
 .linkBox{
     display: flex;
     flex-direction: column;
-    justify-content: end;
+    justify-content: flex-end;
     width: 9rem;
 }

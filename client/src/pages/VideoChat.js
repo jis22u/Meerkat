@@ -6,6 +6,9 @@ import { useSelector } from "react-redux";
 import Waiting from 'components/chat/Waiting'
 import styles from './VideoChat.module.css'
 import { verifyRoom, roomClose } from 'api/user'
+import Swal from 'sweetalert2'
+import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
+import MicIcon from '@mui/icons-material/Mic';
 
 const Messages = styled.div`
 width: 50%;
@@ -75,14 +78,12 @@ const VideoChat = () => {
   const navigate = useNavigate()
 
   const two = useRef(60);
-  const five = useRef(120);
+  const five = useRef(100000);
   const twoInterval = useRef();
   const fiveInterval = useRef();
   const [twoSeconds, setTwoSeconds] = useState(60);
-  const [fiveSeconds, setFiveSeconds] = useState(120);
-
-
-  let cameraOptions
+  const [fiveSeconds, setFiveSeconds] = useState(100000);
+  const cameraOptions = useRef();
 
 
 
@@ -169,19 +170,19 @@ const VideoChat = () => {
         isJoin.current = true
         setStyle(true)
         fiveInterval.current = setInterval(() => {
-          console.log(five.current)
           if (five.current !== 0) {
             five.current -= 1
             setFiveSeconds(seconds => seconds - 1);
           } else {
             clearTimeout(fiveInterval.current)
-            navigate('/hangup', { state : choice , replace : true })
+            navigate('/')
+            // navigate('/hangup', { state : choice , replace : true })
           }
         }, 1000);
         
       } else if (status === "disconnected") {
-        alert('연결이 끊어졌습니다.')
-        navigate('/hangup', { state : choice , replace : true })
+        navigate('/')
+        // navigate('/hangup', { state : choice , replace : true })
       }
     }
 
@@ -211,9 +212,15 @@ const VideoChat = () => {
         navigate('/')
         return
       }
+      window.onbeforeunload = () => { 
+        console.log('새로고침임')
+        if (!choice) roomClose({ roomName, idx }) 
+      }
       await getMedia();
       // await을 일단 빼뒀음
       await makeConnection();
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
       socketRef.current = io("https://i8b107.p.ssafy.io/socket", {
         query: `roomName=${roomName}`, //
@@ -268,7 +275,7 @@ const VideoChat = () => {
           two.current -= 1
           setTwoSeconds(seconds => seconds - 1)
         } else {
-          isJoin.current ? console.log('미어캣 입장완료') : navigate('/')
+          isJoin.current ? clearTimeout(twoInterval) : navigate('/')
         }
       }, 1000)
     }
@@ -276,6 +283,13 @@ const VideoChat = () => {
     initCall()
   
     return () => {
+      Swal.fire({
+        position: 'warning',
+        icon: 'warning',
+        title: '통화가 종료되었습니다.',
+        showConfirmButton: false,
+        timer: 1500
+      })
       clearTimeout(twoInterval.current);
       clearTimeout(fiveInterval.current);
 
@@ -291,6 +305,7 @@ const VideoChat = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
 
   const receiveMessage = (e) => {
     setMessages(messages => [...messages, { yours: false, value: e.data}])
@@ -324,13 +339,13 @@ const VideoChat = () => {
   }
 
   return (  
-    <div className={styles.container}>
+    <div className="box">
       <div style = {{ display : style ? "none" : "block" }}>
         <Waiting time={twoSeconds}/>
       </div>
       <div style = {{ display : style ? "block" : "none "}} className={styles.videoBox}>
-        <div style = {{position : 'absolute'}}>
-          <h1>{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
+        <div>
+          <h1>남은 시간{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
         </div>
         <video
           id="remotevideo"
@@ -348,7 +363,7 @@ const VideoChat = () => {
           muted
         />
         <div>
-          <Messages>
+          <Messages style = {{ display : "none" }}>
             {messages.map(showMessages)}
           </Messages>
           <form onSubmit = {sendMessage}>
@@ -357,8 +372,8 @@ const VideoChat = () => {
           </form>
         </div>
         <button onClick={handleCameraOff}>Camera Off</button>
-        <button onClick={handleMicOff}>Mic Off</button>
-        <button onClick={handleCamDirection}>Camera Change</button>
+        <button onClick={handleMicOff}><MicIcon/></button>
+        <button onClick={handleCamDirection}><FlipCameraIosIcon/></button>
       </div>
     </div>
   );
