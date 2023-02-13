@@ -1,6 +1,8 @@
 socket-server:
-  port: 8085
+  servlet:
+    context-path: /socket 
   host: i8b107.p.ssafy.io
+  port: 8085
 
 server:
   servlet:
