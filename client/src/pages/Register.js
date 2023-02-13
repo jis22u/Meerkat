@@ -75,6 +75,7 @@ const Register = () => {
     data.memberId = data.memberId.toLowerCase()
     const { checkPassword, ...form } = data
     const res = await dispatch(registerUser(form))
+    console.log(res)
     if (res.error?.message) {
       Swal.fire({
         position: 'center',

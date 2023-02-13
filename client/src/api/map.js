@@ -29,6 +29,11 @@ export const getMeerkatDetail = async () => {
   return res.data;
 };
 
+export const getAllMaker = async () => {
+  const res = await api({ method: "get", url: "/marker/findAll" });
+  return res.data;
+};
+
 export const modifyMeerkat = async (meerkatContent) => {
   const res = await api({
     method: "put",
