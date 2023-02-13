@@ -6,13 +6,25 @@ import { useSelector } from "react-redux";
 import Waiting from 'components/chat/Waiting'
 import styles from './VideoChat.module.css'
 import { verifyRoom, roomClose } from 'api/user'
+import Swal from 'sweetalert2'
+import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
+import MicIcon from '@mui/icons-material/Mic';
 
 const Messages = styled.div`
 width: 50%;
 height: 30%;
 border: 1px solid black;
 margin-top: 10px;
+
 overflow: scroll;
+
+&::-webkit-scrollbar {
+  width: 4px;
+}
+&::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #ccc;
+}
 `;
 
 
@@ -58,7 +70,7 @@ const VideoChat = () => {
   const ChannelRef = useRef();
   const myStream = useRef();
   const { roomName, idx } = useParams();
-  const [text ,setText] = useState('');
+  const [text , setText] = useState('');
   const [messages, setMessages] = useState([]);
   const { choice } = useSelector((state) => state.auth)
   const [ style, setStyle ] = useState(choice)
@@ -71,9 +83,7 @@ const VideoChat = () => {
   const fiveInterval = useRef();
   const [twoSeconds, setTwoSeconds] = useState(60);
   const [fiveSeconds, setFiveSeconds] = useState(100000);
-
-
-  let cameraOptions
+  const cameraOptions = useRef();
 
 
 
@@ -165,13 +175,14 @@ const VideoChat = () => {
             setFiveSeconds(seconds => seconds - 1);
           } else {
             clearTimeout(fiveInterval.current)
-            navigate('/hangup', { state : choice , replace : true })
+            navigate('/')
+            // navigate('/hangup', { state : choice , replace : true })
           }
         }, 1000);
         
       } else if (status === "disconnected") {
-        alert('연결이 끊어졌습니다.')
-        navigate('/hangup', { state : choice , replace : true })
+        navigate('/')
+        // navigate('/hangup', { state : choice , replace : true })
       }
     }
 
@@ -201,9 +212,15 @@ const VideoChat = () => {
         navigate('/')
         return
       }
+      window.onbeforeunload = () => { 
+        console.log('새로고침임')
+        if (!choice) roomClose({ roomName, idx }) 
+      }
       await getMedia();
       // await을 일단 빼뒀음
       await makeConnection();
+      const devices = await navigator.mediaDevices.enumerateDevices();
+      cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
       socketRef.current = io("http://192.168.31.154:8085", {
         query: `roomName=${roomName}`, //
@@ -266,6 +283,13 @@ const VideoChat = () => {
     initCall()
   
     return () => {
+      Swal.fire({
+        position: 'warning',
+        icon: 'warning',
+        title: '통화가 종료되었습니다.',
+        showConfirmButton: false,
+        timer: 1500
+      })
       clearTimeout(twoInterval.current);
       clearTimeout(fiveInterval.current);
 
@@ -281,6 +305,7 @@ const VideoChat = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
 
   const receiveMessage = (e) => {
     setMessages(messages => [...messages, { yours: false, value: e.data}])
@@ -347,8 +372,8 @@ const VideoChat = () => {
           </form>
         </div>
         <button onClick={handleCameraOff}>Camera Off</button>
-        <button onClick={handleMicOff}>Mic Off</button>
-        <button onClick={handleCamDirection}>Camera Change</button>
+        <button onClick={handleMicOff}><MicIcon/></button>
+        <button onClick={handleCamDirection}><FlipCameraIosIcon/></button>
       </div>
     </div>
   );

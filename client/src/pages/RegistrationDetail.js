@@ -5,6 +5,7 @@ import { getMeerkatDetail, modifyMeerkat, deleteMeerkat } from "api/map";
 import { setChoice } from "store/modules/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2'
 
 const RegistrationDetail = () => {
   const [detailContent, setDetailContent] = useState();
@@ -63,7 +64,13 @@ const RegistrationDetail = () => {
 
       // 미어캣 등록 axios 요청
       modifyMeerkat(newDetailContext).then((responce) => {
-        alert(responce.data.message);
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: `${responce.data.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       });
       setModify(false);
     } else {
@@ -89,7 +96,7 @@ const RegistrationDetail = () => {
   return (
     <div className="box">
       {detailContent && (
-        <div>
+        <div className={classes.box}>
           <h1 className="title">등록내역</h1>
           <div className="customBox">
             <img
@@ -138,11 +145,12 @@ const RegistrationDetail = () => {
         </div>
       )}
       {!regist && (
-        <div>
-          <div>조회된 등록 내역이 없습니다</div>
-          <button onClick={() => registButtonHandler(true)}>
-            등록하러 가기
+        <div className={classes.notFound}>
+          <h3>조회된 등록 내역이 없습니다</h3>
+          <button className={classes.registBtn} onClick={() => registButtonHandler(true)}>
+            <img className={classes.meerkatImg} src="img/meerkat_profile.png"/>
           </button>
+          미어켓 등록하러 가기
         </div>
       )}
     </div>

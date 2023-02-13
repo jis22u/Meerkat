@@ -1,9 +1,11 @@
 import { useEffect, useRef, useState } from "react";
+import Swal from 'sweetalert2'
 
 import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
+import CurrentCoin from "components/map/CurrentCoin";
 
 const Map = () => {
   const { kakao } = window;
@@ -237,7 +239,13 @@ const Map = () => {
   const modalHandler = () => {
     if (modalIsOpen === false) {
       if(address === "지도를 움직여 주소를 입력하세요") {
-        alert("지도를 움직여 주소를 입력하세요")
+        Swal.fire({
+          position: 'center',
+          icon: 'error',
+          title: "지도를 움직여 주소를 입력하세요",
+          showConfirmButton: false,
+          timer: 1500
+        })
         return;
       }
       setModalIsOpen(true);
@@ -246,10 +254,11 @@ const Map = () => {
   };
 
   return (
-    <div>
+    <div className={classes.box}>
       <div id="map" className={classes.map} />
-      <MeerkatPin></MeerkatPin>
-      <div className={classes.addressBox}>
+      <MeerkatPin/>
+      <CurrentCoin></CurrentCoin>
+      <footer className={classes.addressBox}>
         <div className={classes.address}>
           <h1 className={classes.currentAddressTitle}>현재주소</h1>
           <span>{address}</span>
@@ -257,16 +266,16 @@ const Map = () => {
         <div className={classes.btnBackground}>
           <button onClick={modalHandler} className={classes.btn}>등록</button>
         </div>
-      </div>
-      <SearchInput search={search}></SearchInput>
+      </footer>
+      <SearchInput search={search}/>
       {modalIsOpen && (
         <RegistModal
-          address={address}
-          lat={lat}
-          lng={lng}
-          modalHandler={modalHandler}
+        address={address}
+        lat={lat}
+        lng={lng}
+        modalHandler={modalHandler}
         />
-      )}
+        )}
     </div>
   );
 };

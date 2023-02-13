@@ -3,7 +3,8 @@
   background-color: rgb(255, 249, 228);
   padding: 1rem;
   text-align: center;
-  width: 18rem;
+  width: 80%;
+  max-width: 500px;
   height: fit-content;
   z-index: 10;
 }

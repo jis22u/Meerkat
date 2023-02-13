@@ -1,4 +1,5 @@
 import api from "./customAxios";
+import Swal from 'sweetalert2'
 
 export const getMarkers = async () => {
   const res = await api({method: "get", url: ""})
@@ -13,7 +14,13 @@ export const setMeerkat = async (meerkatContent) => {
     data: meerkatContent,
   });
   console.log(res);
-  alert(res.data.message);
+  Swal.fire({
+    position: 'center',
+    icon: 'error',
+    title: `${res.data.message}`,
+    showConfirmButton: false,
+    timer: 1500
+  })
 };
 
 export const getMeerkatDetail = async () => {

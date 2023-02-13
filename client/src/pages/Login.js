@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "api/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -8,12 +8,14 @@ import * as yup from "yup";
 import classes from "./Login.module.css";
 import PersonIcon from "@mui/icons-material/Person";
 import HttpsIcon from "@mui/icons-material/Https";
+import Swal from 'sweetalert2'
+import Spinner from 'components/layout/Spinner'
 // import Error from 'components/layout/Error'
 
 const schema = yup
   .object({
-    memberId: yup.string().required("비밀번호를 입력해 주세요 😦"),
-    password: yup.string().required("비밀번호를 입력해 주세요 😦"),
+    memberId: yup.string().required("아이디를 입력해 주세요"),
+    password: yup.string().required("비밀번호를 입력해 주세요"),
   })
   .required();
 
@@ -33,12 +35,18 @@ const LoginScreen = () => {
     data.memberId = data.memberId.toLowerCase()
     const { payload } = await dispatch(userLogin(data))
     if (payload.status !== "OK"){
-      alert(payload.message)
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: `${payload.message}`,
+        showConfirmButton: false,
+        timer: 1500
+      })
     }
   };
 
   return (
-    <div className="box">
+    <div className={classes.box}>
       <h1 className="title">로그인</h1>
       <div className="customBox">
         <form onSubmit={handleSubmit(submitForm)} className={classes.form}>
@@ -51,8 +59,8 @@ const LoginScreen = () => {
               placeholder="아이디"
               {...register("memberId")}
             />
-            <p>{errors.memberId?.message}</p>
           </div>
+            <p>{errors.memberId?.message}</p>
           <div className={classes.formGroup}>
             <HttpsIcon fontSize="large"></HttpsIcon>
             <input
@@ -63,8 +71,8 @@ const LoginScreen = () => {
             />
           </div>
           <p>{errors.password?.message}</p>
-          <button type="submit" className={classes.loginBtn} disabled={loading}>
-            {loading ? "대기중" : "로그인"}
+          <button type="submit" className={classes.loginBtn} disabled={loading} style = {{display: 'flex', justifyContent: 'center', alignItems : 'center' }}>
+            {loading ? <Spinner /> : "로그인"}
             {/* <Spinner /> */}
           </button>
         </form>
