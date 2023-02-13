@@ -4,6 +4,7 @@ import classes from "./Map.module.css";
 import MeerkatPin from "components/map/MeerkatPin";
 import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
+import CurrentCoin from "components/map/CurrentCoin";
 
 const Map = () => {
   const { kakao } = window;
@@ -246,10 +247,11 @@ const Map = () => {
   };
 
   return (
-    <div>
+    <div className={classes.box}>
       <div id="map" className={classes.map} />
-      <MeerkatPin></MeerkatPin>
-      <div className={classes.addressBox}>
+      <MeerkatPin/>
+      <CurrentCoin></CurrentCoin>
+      <footer className={classes.addressBox}>
         <div className={classes.address}>
           <h1 className={classes.currentAddressTitle}>현재주소</h1>
           <span>{address}</span>
@@ -257,16 +259,16 @@ const Map = () => {
         <div className={classes.btnBackground}>
           <button onClick={modalHandler} className={classes.btn}>등록</button>
         </div>
-      </div>
-      <SearchInput search={search}></SearchInput>
+      </footer>
+      <SearchInput search={search}/>
       {modalIsOpen && (
         <RegistModal
-          address={address}
-          lat={lat}
-          lng={lng}
-          modalHandler={modalHandler}
+        address={address}
+        lat={lat}
+        lng={lng}
+        modalHandler={modalHandler}
         />
-      )}
+        )}
     </div>
   );
 };

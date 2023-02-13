@@ -5,7 +5,9 @@ const Header = () => {
   return (
     <header>
       <div className={classes.brown}></div>
+      <Link to="/">
       <img src= {process.env.PUBLIC_URL + "/img/logo.png"} alt="logo" className={classes.img}></img>
+      </Link>
       <div className={classes.brown}></div>
     </header>
   );

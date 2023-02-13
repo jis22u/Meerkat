@@ -1,6 +1,7 @@
 .form {
-padding: 10%;
-  margin-top: 16%;
+  padding: 20px;
+  margin-top: 15px;
+  margin-right: 4px;
   display: flex;
   flex-flow: column;
   justify-items: center;
@@ -9,7 +10,7 @@ padding: 10%;
 
 .input {
   width: 100%;
-  margin-left: 2%;
+  margin-left: 0.5rem;
   height: 2.5rem;
 }
 
@@ -18,7 +19,6 @@ padding: 10%;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 4%;
 }
 
 .loginBtn {
@@ -32,4 +32,13 @@ padding: 10%;
   justify-content: center;
 }
 
-
+.box {
+  left: 0px;
+  right: 0px;
+  width: 90%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
