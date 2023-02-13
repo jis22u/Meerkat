@@ -12,7 +12,16 @@ width: 50%;
 height: 30%;
 border: 1px solid black;
 margin-top: 10px;
+
 overflow: scroll;
+
+&::-webkit-scrollbar {
+  width: 4px;
+}
+&::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #ccc;
+}
 `;
 
 
@@ -58,7 +67,7 @@ const VideoChat = () => {
   const ChannelRef = useRef();
   const myStream = useRef();
   const { roomName, idx } = useParams();
-  const [text ,setText] = useState('');
+  const [text , setText] = useState('');
   const [messages, setMessages] = useState([]);
   const { choice } = useSelector((state) => state.auth)
   const [ style, setStyle ] = useState(choice)
@@ -202,11 +211,11 @@ const VideoChat = () => {
         navigate('/')
         return
       }
-      getMedia();
+      await getMedia();
       // await을 일단 빼뒀음
       await makeConnection();
 
-      socketRef.current = io("http://43.201.72.34:8085", {
+      socketRef.current = io("http://localhost:8085", {
         query: `roomName=${roomName}`, //
       });
     
