@@ -14,7 +14,6 @@ B107\server\meerkat\dto\token\ReIssuanceTokenDTO$ReIssuanceTokenDTOBuilder.class
 B107\server\meerkat\entity\MarkerCheck$MarkerCheckBuilder.class
 B107\server\meerkat\config\utils\ResponseDTO$ResponseDTOBuilder.class
 B107\server\meerkat\repository\querydsl\MemberRepositoryImpl.class
-B107\server\meerkat\config\security\auth\WebSecurityConfig.class
 B107\server\meerkat\entity\Report$ReportBuilder.class
 B107\server\meerkat\repository\DepositRepository.class
 B107\server\meerkat\service\MarkerCheckService.class
@@ -136,6 +135,7 @@ B107\server\meerkat\config\security\auth\PrincipalDetails.class
 B107\server\meerkat\controller\MemberController.class
 B107\server\meerkat\config\socket\ServerCommandLineRunner.class
 B107\server\meerkat\service\CallCheckService.class
+B107\server\meerkat\config\security\WebSecurityConfig.class
 B107\server\meerkat\dto\member\MemPageResDTO.class
 B107\server\meerkat\entity\Deal$DealBuilder.class
 B107\server\meerkat\config\security\filter\UserAuthenticationFilter.class

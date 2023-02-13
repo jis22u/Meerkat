@@ -1,4 +1,4 @@
-package B107.server.meerkat.config.security.auth;
+package B107.server.meerkat.config.security;
 
 import B107.server.meerkat.config.security.filter.GlobalFilter;
 import lombok.RequiredArgsConstructor;
@@ -29,20 +29,21 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().csrf().disable().formLogin().disable()
+        http.httpBasic().disable().csrf().disable().cors().disable().formLogin().disable()
                 .logout()
                 .logoutUrl(globalFilter.getLogoutURL())
                 .deleteCookies(globalFilter.getSessionId())
                 .addLogoutHandler(globalFilter.logoutHandler())
                 .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
                 .and()
-                .authorizeRequests()
-                .antMatchers(globalFilter.getPermitAll()).permitAll()
-                .and()
-                .addFilterAfter(globalFilter.corsFilter(), CorsFilter.class)
+                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
                 .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers(globalFilter.getPermitAll()).permitAll()
+                .antMatchers("/api/**").authenticated();
         return http.build();
     }
 }
