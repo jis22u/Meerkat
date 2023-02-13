@@ -11,10 +11,14 @@ const SearchInput = (props) => {
 
     const inputValue = useRef();
 
-    return <div className={classes.input}> 
-        <input type="text" ref={inputValue} ></input>
-        <button onClick={buttonHandler}>검색</button>
-    </div>
+    return (
+      <div className={classes.input}>
+        <input type="text" ref={inputValue} className={classes.inputWindow} placeholder="장소를 구체적으로 입력해주세요."></input>
+        <button onClick={buttonHandler} className={classes.searchBtn}>
+          검색
+        </button>
+      </div>
+    );
 }
 
 export default SearchInput;

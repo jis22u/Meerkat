@@ -1,0 +1,35 @@
+.form {
+padding: 10%;
+  margin-top: 16%;
+  display: flex;
+  flex-flow: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  margin-left: 2%;
+  height: 2.5rem;
+}
+
+.formGroup {
+  width: 120%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4%;
+}
+
+.loginBtn {
+  width: 120%;
+  height: 3rem;
+}
+
+.registerLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+

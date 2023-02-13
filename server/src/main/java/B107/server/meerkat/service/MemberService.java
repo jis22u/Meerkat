@@ -1,28 +1,27 @@
 package B107.server.meerkat.service;
 
-import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
-import B107.server.meerkat.config.utils.Msg;
-import B107.server.meerkat.config.utils.ResponseDTO;
+import B107.server.meerkat.controller.MemberController;
 import B107.server.meerkat.dto.member.*;
+import B107.server.meerkat.entity.Coin;
 import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.exception.ErrorCode;
 import B107.server.meerkat.exception.MemberNotFoundException;
+import B107.server.meerkat.exception.MyPageHistoryException;
 import B107.server.meerkat.exception.PasswordNotMatchException;
+import B107.server.meerkat.repository.CallRepository;
+import B107.server.meerkat.repository.CoinRepository;
+import B107.server.meerkat.repository.DealRepository;
 import B107.server.meerkat.repository.MemberRepository;
 import B107.server.meerkat.repository.querydsl.MemberRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -32,10 +31,15 @@ import java.util.stream.Collectors;
 @Transactional(readOnly = true)
 public class MemberService {
 
+    private static final String METHOD_NAME = MemberController.class.getName();
+
     private final MemberRepositoryImpl memberRepositoryImpl;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
     private final DecodeEncodeHandler decodeEncodeHandler;
     private final MemberRepository memberRepository;
+    private final DealRepository dealRepository;
+    private final CallRepository callRepository;
+    private final CoinRepository coinRepository;
 
     /**
      * 회원 정보 수정
@@ -85,6 +89,23 @@ public class MemberService {
         return MyInfoList.stream().map(member -> ProfileRes.builder().build().of(member)).collect(Collectors.toList()).get(0);
     }
 
-//    public MemPageResDTO myPage(Long idx) {
-//    }
+    @Transactional
+    public MemPageResDTO readMyPage(Long idx) {
+        log.info(METHOD_NAME + "- readMyPage");
+
+        Optional<Coin> optionalCoin = coinRepository.findById(idx);
+        if (!optionalCoin.isPresent()) {
+            throw new MyPageHistoryException(ErrorCode.MYPAGE_HISTORY_ERROR);
+        }
+
+        Integer myCoin = optionalCoin.get().getCoin();
+        List<MemPageDealDTO> reqList = dealRepository.findAllMyReqHistory(idx);
+        List<MemPageDealDTO> resList = dealRepository.findAllMyResHistory(idx);
+
+        return MemPageResDTO.builder()
+                .coin(myCoin)
+                .memPageDealDTOReqList(reqList != null ? reqList : Collections.emptyList())
+                .memPageDealDTOResList(resList != null ? resList : Collections.emptyList())
+                .build();
+    }
 }

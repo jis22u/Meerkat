@@ -1,5 +1,6 @@
 package B107.server.meerkat.service;
 
+import B107.server.meerkat.dto.marker.MarkerDTO;
 import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.repository.MarkerRepository;
 import B107.server.meerkat.repository.MemberRepository;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -23,6 +25,14 @@ public class MarkerService {
 		marker.setMember(memberRepository.findById(memberIdx).orElse(null));
 		markerRepository.save(marker);
 		return marker;
+	}
+
+	/**
+	 * 프론트에서 맵에 쏴주기 위해 넘겨줄 데이터
+	 */
+	@Transactional
+	public List<MarkerDTO> getValidAllMarkers() {
+		return markerRepository.findValidAllMarkers();
 	}
 
 	@Transactional
@@ -48,5 +58,4 @@ public class MarkerService {
 		}
 		return -1L;
 	}
-
 }

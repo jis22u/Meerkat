@@ -7,20 +7,24 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 public class MemPageResDTO {
     private Integer coin;
-    private MemPageDealDTO memPageDealDTO;
+    private List<MemPageDealDTO> memPageDealDTOReqList;
+    private List<MemPageDealDTO> memPageDealDTOResList;
 
     @Builder
-    public MemPageResDTO(Integer coin, MemPageDealDTO memPageDealDTO) {
+    public MemPageResDTO(Integer coin, List<MemPageDealDTO> memPageDealDTOReqList, List<MemPageDealDTO> memPageDealDTOResList) {
         this.coin = coin;
-        this.memPageDealDTO = memPageDealDTO;
+        this.memPageDealDTOResList = memPageDealDTOReqList;
+        this.memPageDealDTOReqList = memPageDealDTOResList;
     }
 
-    public MemPageResDTO of(Coin coin, MemPageDealDTO memPageDealDTO) {
-        return MemPageResDTO.builder().coin(coin.getCoin()).memPageDealDTO(memPageDealDTO).build();
+    public MemPageResDTO of(Coin coin, List<MemPageDealDTO> memPageDealDTOReqList, List<MemPageDealDTO> memPageDealDTOResList) {
+        return MemPageResDTO.builder().coin(coin.getCoin()).memPageDealDTOReqList(memPageDealDTOReqList).memPageDealDTOResList(memPageDealDTOResList).build();
     }
 }
