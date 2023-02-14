@@ -108,7 +108,7 @@ const RegistModal = (props) => {
       certification = true;
       Swal.fire({
         position: 'center',
-        icon: 'error',
+        icon: 'success',
         title: "위치 인증이 완료 되었습니다.",
         showConfirmButton: false,
         timer: 1500
