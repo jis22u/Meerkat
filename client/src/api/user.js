@@ -16,4 +16,9 @@ export const roomClose = async (body) => {
     return result
 }
 
+export const getCoin = async () => {
+    const result = await api({ method: 'get', url: '/coin/' })
+    return result
+}
+
 

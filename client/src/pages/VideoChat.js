@@ -222,7 +222,7 @@ const VideoChat = () => {
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
-      socketRef.current = io("https://192.168.35.54:8085", {
+      socketRef.current = io("https://192.168.31.200:8085", {
         query: `roomName=${roomName}`, //
       });
     

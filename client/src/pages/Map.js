@@ -7,6 +7,8 @@ import SearchInput from "components/map/SearchInput";
 import RegistModal from "components/map/RegistModal";
 import CurrentCoin from "components/map/CurrentCoin";
 import { getAllMaker } from "api/map" 
+import { getCoin } from "api/user" 
+
 
 const Map = () => {
   const { kakao } = window;
@@ -15,6 +17,7 @@ const Map = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
+  const [coin, setCoin] = useState();
 
   //스크립트 파일 읽어오기
   const new_script = (src) => {
@@ -35,85 +38,87 @@ const Map = () => {
     // 마커를 표시할 위치 객체 배열입니다
     const init = async () => {
       const { data } = await getAllMaker()
-      console.log(data)
-      const positions = [
-        {
-          lat: 37.27943075229118,
-          lng: 127.01763998406159,
-        },
-        {
-          lat: 37.55915668706214,
-          lng: 126.92536526611102,
-        },
-        {
-          lat: 35.13854258261161,
-          lng: 129.1014781294671,
-        },
-        {
-          lat: 37.55518388656961,
-          lng: 126.92926237742505,
-        },
-        {
-          lat: 35.20618517638034,
-          lng: 129.07944301057026,
-        },
-        {
-          lat: 37.561110808242056,
-          lng: 126.9831268386891,
-        },
-        {
-          lat: 37.86187129655063,
-          lng: 127.7410250820423,
-        },
-        {
-          lat: 37.47160156778542,
-          lng: 126.62818064142286,
-        },
-        {
-          lat: 35.10233410927457,
-          lng: 129.02611815856181,
-        },
-        {
-          lat: 35.10215562270429,
-          lng: 129.02579793018205,
-        },
-        {
-          lat: 35.475423012251106,
-          lng: 128.76666923366042,
-        },
-        {
-          lat: 35.93282824693927,
-          lng: 126.95307628834287,
-        },
-        {
-          lat: 36.33884892276137,
-          lng: 127.393666019664,
-        },
-        {
-          lat: 37.520412849636,
-          lng: 126.9742764161581,
-        },
-        {
-          lat: 35.155139675209675,
-          lng: 129.06154773758374,
-        },
-        {
-          lat: 35.816041994696576,
-          lng: 127.11046706211324,
-        },
-        {
-          lat: 38.20441110638504,
-          lng: 128.59038671285234,
-        },
-        {
-          lat: 37.586112739308916,
-          lng: 127.02949148517999,
-        },
-        {
-          lat: 37.50380641844987,
-          lng: 127.02130716617751,
-        },
-      ];
+      const res = await getCoin()
+      setCoin(res.data.value)
+      const positions = data.value
+      // const positions = [
+      //   {
+      //     lat: 37.27943075229118,
+      //     lng: 127.01763998406159,
+      //   },
+      //   {
+      //     lat: 37.55915668706214,
+      //     lng: 126.92536526611102,
+      //   },
+      //   {
+      //     lat: 35.13854258261161,
+      //     lng: 129.1014781294671,
+      //   },
+      //   {
+      //     lat: 37.55518388656961,
+      //     lng: 126.92926237742505,
+      //   },
+      //   {
+      //     lat: 35.20618517638034,
+      //     lng: 129.07944301057026,
+      //   },
+      //   {
+      //     lat: 37.561110808242056,
+      //     lng: 126.9831268386891,
+      //   },
+      //   {
+      //     lat: 37.86187129655063,
+      //     lng: 127.7410250820423,
+      //   },
+      //   {
+      //     lat: 37.47160156778542,
+      //     lng: 126.62818064142286,
+      //   },
+      //   {
+      //     lat: 35.10233410927457,
+      //     lng: 129.02611815856181,
+      //   },
+      //   {
+      //     lat: 35.10215562270429,
+      //     lng: 129.02579793018205,
+      //   },
+      //   {
+      //     lat: 35.475423012251106,
+      //     lng: 128.76666923366042,
+      //   },
+      //   {
+      //     lat: 35.93282824693927,
+      //     lng: 126.95307628834287,
+      //   },
+      //   {
+      //     lat: 36.33884892276137,
+      //     lng: 127.393666019664,
+      //   },
+      //   {
+      //     lat: 37.520412849636,
+      //     lng: 126.9742764161581,
+      //   },
+      //   {
+      //     lat: 35.155139675209675,
+      //     lng: 129.06154773758374,
+      //   },
+      //   {
+      //     lat: 35.816041994696576,
+      //     lng: 127.11046706211324,
+      //   },
+      //   {
+      //     lat: 38.20441110638504,
+      //     lng: 128.59038671285234,
+      //   },
+      //   {
+      //     lat: 37.586112739308916,
+      //     lng: 127.02949148517999,
+      //   },
+      //   {
+      //     lat: 37.50380641844987,
+      //     lng: 127.02130716617751,
+      //   },
+      // ];
   
       //카카오맵 스크립트 읽어오기
       const my_script = new_script(
@@ -165,8 +170,8 @@ const Map = () => {
           addListener();
         });
       }); 
-      init()
     }
+    init()
     // eslint-disable-next-line
   }, []);
 
@@ -263,7 +268,7 @@ const Map = () => {
     <div className={classes.box}>
       <div id="map" className={classes.map} />
       <MeerkatPin/>
-      <CurrentCoin></CurrentCoin>
+      <CurrentCoin coin={coin}></CurrentCoin>
       <footer className={classes.addressBox}>
         <div className={classes.address}>
           <h1 className={classes.currentAddressTitle}>현재주소</h1>

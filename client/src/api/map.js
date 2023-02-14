@@ -16,7 +16,7 @@ export const setMeerkat = async (meerkatContent) => {
   console.log(res);
   Swal.fire({
     position: 'center',
-    icon: 'error',
+    icon: 'success',
     title: `${res.data.message}`,
     showConfirmButton: false,
     timer: 1500
@@ -31,7 +31,7 @@ export const getMeerkatDetail = async () => {
 
 export const getAllMaker = async () => {
   const res = await api({ method: "get", url: "/marker/findAll" });
-  return res.data;
+  return res
 };
 
 export const modifyMeerkat = async (meerkatContent) => {
