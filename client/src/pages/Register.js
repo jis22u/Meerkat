@@ -74,12 +74,12 @@ const Register = () => {
     data.email = data.email.toLowerCase()
     data.memberId = data.memberId.toLowerCase()
     const { checkPassword, ...form } = data
-    const res = await dispatch(registerUser(form))
-    if (res.error?.message) {
+    const { payload } = await dispatch(registerUser(form))
+    if (payload.status !== 'OK') {
       Swal.fire({
         position: 'center',
         icon: 'error',
-        title: `${res.payload}`,
+        title: `${ payload }`,
         showConfirmButton: false,
         timer: 1500
       })
