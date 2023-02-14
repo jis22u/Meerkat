@@ -16,4 +16,16 @@ export const roomClose = async (body) => {
     return result
 }
 
+export const getMypage = async () => {
+    // const result = await api({method: 'get', url: '/member/mypage'});
+    const value = {coin: 30, memPageDealDTOReqList: [
+        { location: "여기여기 dkgdl gldldggl adgdg", coin: -30, exit_time: "211tl124425"  },
+        { location: "저기저기 dkgdl gldldggl agsg", coin: -20, exit_time: "211tl124425"  },
+      ], memPageDealDTOResList: [
+        { location: "여기여기 dkgdl gldldggl adga", coin: 30, exit_time: "211tl124425" },
+        { location: "저기저기 dkgdl gldldggl adga", coin: 20, exit_time: "211tl124425"  },
+      ]}
+    return value;
+}
+
 
