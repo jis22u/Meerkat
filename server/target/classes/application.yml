@@ -6,6 +6,15 @@ server:
   servlet:
     context-path: /api
   port: 8081
+  tomcat:
+    accesslog:
+      enabled: true
+      basedir: .
+      directory: logs
+      suffix: .log
+      prefix: access_log
+      file-date-format: .yyyy-MM-dd
+      pattern: '%{yyyy-MM-dd HH:mm:ss}t %s %r %{User-Agent}i %{Referer}i %a %b %D'
 
 spring:
   datasource:
