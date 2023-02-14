@@ -1,5 +1,6 @@
 package B107.server.meerkat.service;
 
+import B107.server.meerkat.entity.Call;
 import B107.server.meerkat.entity.Deal;
 import B107.server.meerkat.entity.Room;
 import B107.server.meerkat.repository.DealRepository;
@@ -23,6 +24,7 @@ public class RoomService {
 	private final CallService callService;
 	private final CallCheckService callCheckService;
 	private final DealService dealService;
+	private final DepositService depositService;
 
 
 
@@ -60,16 +62,14 @@ public class RoomService {
 
 		// 거래 서비스 연동 - 거래 끝
 		if(room.getResponseIdx() != null) {
-			Long callIdx = callService.findIdxByRoomName(roomName);
-			Deal deal = dealService.findDealByCallIdx(callIdx);
+			Call call = callService.findCallByRoomName(roomName);
+			Deal deal = dealService.findDealByCallIdx(call.getIdx());
 			deal.setExitTime(LocalDateTime.now());
 			dealRepository.save(deal);
 			
 			// 입출금 내역
-
-
+			depositService.registDeposit(deal.getReqMember().getIdx(), deal.getReqMember().getIdx(), call.getCoin());
 		}
-
 
 	}
 
@@ -90,7 +90,7 @@ public class RoomService {
 			roomRepository.save(room);
 
 			// 거래 시작 - 거래 등록
-			Long callIdx = callService.findIdxByRoomName(roomName);
+			Long callIdx = callService.findCallByRoomName(roomName).getIdx();
 			dealService.registDeal(requestIdx, memberIdx, callIdx);
 		}
 	}

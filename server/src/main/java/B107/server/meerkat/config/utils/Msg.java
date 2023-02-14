@@ -59,4 +59,6 @@ public interface Msg {
 
 	// coin
 	String SUCCESS_COIN_CHARGE = "코인 충전에 성공하였습니다.";
+	String SUCCESS_COIN_EXCHANGE = "코인 환전에 성공하였습니다.";
+	String SUCCESS_COIN_READ = "코인 조회에 성공하였습니다.";
 }
