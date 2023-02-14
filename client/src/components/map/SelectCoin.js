@@ -8,7 +8,7 @@ const SelectCoin = (props) => {
     props.setCoin(value);
   }
   return (
-    <Box sx={{ width: 250, ml: 2 }} id="coinBox">
+    <Box sx={{mx:3}}>
       <div className={classes.coinView}>
         <h3>금액</h3>
         <h3>{props.coin}</h3>

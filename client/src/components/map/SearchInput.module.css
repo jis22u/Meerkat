@@ -2,11 +2,13 @@
 position: relative;
 display: flex;
 align-items: center;
+margin-top: 4px;
 }
 
 .searchBtn{
     width: 4rem;
     padding: 0.5rem;
+    margin: 0;
 }
 
 .inputWindow{

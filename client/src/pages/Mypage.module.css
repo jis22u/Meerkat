@@ -49,9 +49,9 @@
   border-radius: 3rem;
   margin-top: 1rem;
   margin-bottom: 10px;
-  padding:  5px 32px 5px 32px;
+  padding: 5px 32px 5px 32px;
   height: fit-content;
-  min-height: 400px;
+  min-height: 500px;
   display: flex;
   justify-content: center;
   box-shadow: 5px 5px 4px 4px rgb(150, 144, 119);
@@ -59,6 +59,10 @@
 
 .box {
   width: 90%;
+}
+
+.coinNum {
+  padding-top: 4px;
 }
 
 .coinText {
