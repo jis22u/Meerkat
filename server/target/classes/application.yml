@@ -37,7 +37,7 @@ spring:
     allow-circular-references: true
   web:
     resources:
-     add-mappings: false
+      add-mappings: false
 
 jwt:
   header:
@@ -54,14 +54,14 @@ jwt:
 
 user:
   url:
-    client: i8b107.p.ssafy.io
+    client: https://i8b107.p.ssafy.io
     logout: /logout
-    admin: /admin
-    member: /member
-    marker: /marker
-    call: /call
-    room: /room
-    coin: /coin
+    admin: /api/admin
+    member: /api/member
+    marker: /api/marker
+    call: /api/call
+    room: /api/room
+    coin: /api/coin
   role:
     admin: ROLE_ADMIN
     member: ROLE_MEMBER

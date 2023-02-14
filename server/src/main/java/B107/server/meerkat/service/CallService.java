@@ -42,8 +42,8 @@ public class CallService {
 	}
 
 	@Transactional
-	public Long findIdxByRoomName(String roomName) {
-		return callRepository.findIdxByRoomName(roomName);
+	public Call findCallByRoomName(String roomName) {
+		return callRepository.findCallByRoomName(roomName);
 	}
 
 
