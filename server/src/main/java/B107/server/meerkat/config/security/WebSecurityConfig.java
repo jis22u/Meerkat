@@ -29,14 +29,14 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityConfig(HttpSecurity http) throws Exception {
-        http.httpBasic().disable().csrf().disable().cors().disable().formLogin().disable()
+        http.httpBasic().disable().csrf().disable().cors().and().formLogin().disable()
                 .logout()
                 .logoutUrl(globalFilter.getLogoutURL())
                 .deleteCookies(globalFilter.getSessionId())
                 .addLogoutHandler(globalFilter.logoutHandler())
                 .logoutSuccessHandler(globalFilter.logoutSuccessHandler())
                 .and()
-                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
+//                .addFilterBefore(globalFilter.corsFilter(), CorsFilter.class)
                 .addFilterBefore(globalFilter.authenticationFilter(), UsernamePasswordAuthenticationFilter.class)
                 .addFilterBefore(globalFilter.authorizationFilter(), BasicAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
