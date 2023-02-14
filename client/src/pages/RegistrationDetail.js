@@ -25,13 +25,12 @@ const RegistrationDetail = () => {
   useEffect(() => {
     //데이터 받아와서 데이터 객체로 만들기
     getMeerkatDetail()
-      .then((responce) => {
-        setDetailContent(responce.value);
-        if (responce.message === "받은 정보가 비어있습니다.") {
+      .then((response) => {
+        setDetailContent(response.value);
+        if (response.message === "받은 정보가 비어있습니다.") {
           setRegist(false);
         }
       })
-      .catch((error) => setRegist(false));
   }, []);
 
   const modifyButtonHandler = async () => {
@@ -47,20 +46,20 @@ const RegistrationDetail = () => {
       }
 
       console.log("미어캣 요청 axios");
-      let exp_date = moment().format(`YYYY-MM-DDT${hour}:00:00`);
+      let exp_date = moment().format(`YYYY-MM-DD ${hour}:00:00`);
       if (date.getHours() > hourSelect) {
-        exp_date = moment().add(1, "d").format(`YYYY-MM-DDT${hour}:00:00`);
+        exp_date = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
       }
       console.log(exp_date);
 
       newDetailContext = {
-        exp_data: exp_date,
-        reg_date: detailContent.reg_date,
+        expData: exp_date,
+        regDate: detailContent.reg_date,
         lat: detailContent.lat,
         lng: detailContent.lng,
         location: detailContent.location,
       };
-      newDetailContext.exp_date = exp_date;
+      newDetailContext.expDate = exp_date;
 
       // 미어캣 등록 axios 요청
       modifyMeerkat(newDetailContext).then((responce) => {
@@ -148,7 +147,7 @@ const RegistrationDetail = () => {
         <div className={classes.notFound}>
           <h3>조회된 등록 내역이 없습니다</h3>
           <button className={classes.registBtn} onClick={() => registButtonHandler(true)}>
-            <img className={classes.meerkatImg} src="img/meerkat_profile.png"/>
+            <img alt="" className={classes.meerkatImg} src="img/meerkat_profile.png"/>
           </button>
           미어켓 등록하러 가기
         </div>
