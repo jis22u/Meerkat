@@ -13,26 +13,13 @@ const MyPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [data, setData] = useState();
-  const [requestList, setRequestList] = useState();
-  const [responseList, setResponseList] = useState();
 
   useEffect(() => {
     getMypage().then((response) => {
       setData(response);
       console.log(response);
-      setRequestList(response.memPageDealDTOReqList);
-      setResponseList(response.memPageDealDTOResList);
     });
   }, []);
-
-  //   getMypage().then(response => {
-  //     setData(response.data.value);
-  //   })
-
-  //   requestList =  data.memPageDealDTOReqList;
-  //   responseList = data.memPageDealDTOResList;
-
-  //   console.log(data);
 
   const logoutHandler = () => {
     dispatch(logout());
@@ -62,15 +49,15 @@ const MyPage = () => {
           <div className={classes.coinBox}>
             <div className={classes.coinText}>
             <AttachMoneyOutlinedIcon fontSize="large" />
-            <h2>160</h2>
+            <h2 className={classes.coinNum}>{data.coin}</h2>
             </div>
             <div className={classes.coinBtn}>
-              <button onClick={() => navigate("/cash")}>충전</button>
-              <button>환전</button>
+              <button className="btn" onClick={() => navigate("/cash")}>충전</button>
+              <button className="btn">환전</button>
             </div>
           </div>
           <div className={classes.history}>
-            <History requestList={requestList} responseList={responseList} />
+            <History requestList={data.memPageDealDTOReqList} responseList={data.memPageDealDTOResList} />
           </div>
         </div>
       )}
