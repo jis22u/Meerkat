@@ -6,7 +6,7 @@ import Layout from 'pages/Layout';
 import AuthLayout from 'pages/AuthLayout';
 import MyPage from 'pages/MyPage'
 import Cash from 'pages/Cash'
-// import Map from 'pages/Map'
+import Map from 'pages/Map'
 import Login from 'pages/Login';
 import ChangeAccount from 'pages/ChangeAccount';
 // import VideoChat from "pages/VideoChat";
@@ -18,8 +18,6 @@ import BigSpinner from 'components/layout/BigSpinner'
 
 const Home = lazy(() => import('pages/Home'));
 const VideoChat = lazy(() => import('pages/VideoChat'));
-const Map = lazy(() => import('pages/Map'));
-
 
 function App() {
   return (
