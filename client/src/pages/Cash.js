@@ -6,7 +6,7 @@ import { getCoin } from 'api/user'
 const Cash = () => {
   const [cash , setCash] = useState(0);
   const [mycoin , setMyCoin] = useState(0); // 받아온 코인 데이터를 초기값으로
-  const [coin, setCoin] = useState();
+  const [coin, setCoin] = useState(null);
   
 
   
@@ -43,7 +43,7 @@ const Cash = () => {
 
     return (
       <div>
-        {coin && 
+        {coin !== null && 
                 <div>
                 cash 충전입니다.
                 <h1> 코인 충전 </h1>
