@@ -1,21 +1,67 @@
 .mypageTopBox {
   display: flex;
-  width: 100%;
-  justify-content: space-evenly;
+  padding: 10px;
+  justify-content: space-between;
   align-items: center;
 }
 
-.mypageTopBtn{
-    background-color: rgb(255, 249, 228);
-    border: 0;
-    color: rgb(75, 31, 15);
-    cursor: pointer;
-    text-decoration: underline;
+.mypageTopBtn {
+  background-color: rgb(255, 249, 228);
+  border: 0;
+  color: rgb(75, 31, 15);
+  cursor: pointer;
+  text-decoration: underline;
+  text-align: end;
 }
 
-.linkBox{
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    width: 9rem;
+.linkBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  width: 9rem;
+}
+
+.modifyInfo {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.coinBox {
+  background-color: rgb(229, 180, 127);
+  display: flex;
+  align-items: center;
+  border-radius: 30rem;
+  height: 3rem;
+  justify-content: space-between;
+  padding: 20px;
+  box-shadow: 5px 5px 2px rgb(150, 144, 119);
+}
+
+.coinBtn {
+  display: flex;
+  width: 10rem;
+  justify-content: end;
+}
+
+.history {
+  background-color: rgb(255, 252, 243);
+  border-radius: 3rem;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+  padding:  5px 32px 5px 32px;
+  height: fit-content;
+  min-height: 400px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 5px 5px 4px 4px rgb(150, 144, 119);
+}
+
+.box {
+  width: 90%;
+}
+
+.coinText {
+  display: flex;
+  align-items: center;
 }

@@ -15,21 +15,6 @@ const Map = () => {
   const [lat, setLat] = useState();
   const [lng, setLng] = useState();
 
-  //스크립트 파일 읽어오기
-  const new_script = (src) => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.addEventListener("load", () => {
-        resolve();
-      });
-      script.addEventListener("error", (e) => {
-        reject(e);
-      });
-      document.head.appendChild(script);
-    });
-  };
-
   useEffect(() => {
     // 마커를 표시할 위치 객체 배열입니다
     const positions = [
@@ -111,56 +96,46 @@ const Map = () => {
       },
     ];
 
-    //카카오맵 스크립트 읽어오기
-    const my_script = new_script(
-      "https://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=1513fbd7b2e51d56bf0f68466f776122&libraries=services,clusterer,drawing"
-    );
+    const mapContainer = document.getElementById("map");
+    const options = {
+      center: new kakao.maps.LatLng(36.32232501935818, 127.29547145868312), //좌표설정
+      level: 7,
+    };
+    //맵생성
+    map.current = new kakao.maps.Map(mapContainer, options);
 
-    //스크립트 읽기 완료 후 카카오맵 설정
-    my_script.then(() => {
-      console.log("script loaded!!!");
-      kakao.maps.load(() => {
-        const mapContainer = document.getElementById("map");
-        const options = {
-          center: new kakao.maps.LatLng(36.32232501935818, 127.29547145868312), //좌표설정
-          level: 7,
-        };
-        //맵생성
-        map.current = new kakao.maps.Map(mapContainer, options);
+    // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
+    var zoomControl = new kakao.maps.ZoomControl();
+    map.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
 
-        // 지도 확대 축소를 제어할 수 있는  줌 컨트롤을 생성합니다
-        var zoomControl = new kakao.maps.ZoomControl();
-        map.current.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+    // 마커 클러스터러를 생성합니다
+    var clusterer = new kakao.maps.MarkerClusterer({
+      map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
+      averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
+      minLevel: 10, // 클러스터 할 최소 지도 레벨
+    });
 
-        // 마커 클러스터러를 생성합니다
-        var clusterer = new kakao.maps.MarkerClusterer({
-          map: map.current, // 마커들을 클러스터로 관리하고 표시할 지도 객체
-          averageCenter: true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정
-          minLevel: 10, // 클러스터 할 최소 지도 레벨
-        });
+    //마커 이미지의 이미지 주소입니다
+    var imageSrc = "img/meerkat.png";
 
-        //마커 이미지의 이미지 주소입니다
-        var imageSrc = "img/meerkat.png";
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(80, 80);
 
-        // 마커 이미지의 이미지 크기 입니다
-        var imageSize = new kakao.maps.Size(80, 80);
+    // 마커 이미지를 생성합니다
+    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
 
-        // 마커 이미지를 생성합니다
-        var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize);
-
-        var markers = positions.map((position) => {
-          return new kakao.maps.Marker({
-            position: new kakao.maps.LatLng(position.lat, position.lng),
-            image: markerImage,
-          });
-        });
-
-        // 클러스터러에 마커들을 추가합니다
-        clusterer.addMarkers(markers);
-
-        addListener();
+    var markers = positions.map((position) => {
+      return new kakao.maps.Marker({
+        position: new kakao.maps.LatLng(position.lat, position.lng),
+        image: markerImage,
       });
     });
+
+    // 클러스터러에 마커들을 추가합니다
+    clusterer.addMarkers(markers);
+
+    addListener();
+
     // eslint-disable-next-line
   }, []);
 
@@ -256,7 +231,7 @@ const Map = () => {
   return (
     <div className={classes.box}>
       <div id="map" className={classes.map} />
-      <MeerkatPin/>
+      <MeerkatPin />
       <CurrentCoin></CurrentCoin>
       <footer className={classes.addressBox}>
         <div className={classes.address}>
@@ -264,18 +239,20 @@ const Map = () => {
           <span>{address}</span>
         </div>
         <div className={classes.btnBackground}>
-          <button onClick={modalHandler} className={classes.btn}>등록</button>
+          <button onClick={modalHandler} className={classes.btn}>
+            등록
+          </button>
         </div>
       </footer>
-      <SearchInput search={search}/>
+      <SearchInput search={search} />
       {modalIsOpen && (
         <RegistModal
-        address={address}
-        lat={lat}
-        lng={lng}
-        modalHandler={modalHandler}
+          address={address}
+          lat={lat}
+          lng={lng}
+          modalHandler={modalHandler}
         />
-        )}
+      )}
     </div>
   );
 };
