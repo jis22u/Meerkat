@@ -37,14 +37,17 @@ margin-top: 10px;
 
 const MyMessage = styled.div`
 width: 45%;
-background-color: blue;
-color: white;
+background-color: #CEBEAA;
+color: #3A3A3A;
 padding: 10px;
 margin-right: 5px;
 text-align: center;
-border-top-right-radius: 10%;
-border-bottom-right-radius: 10%;
+border-radius: 20%
+
 `;
+
+// border-top-right-radius: 10%;
+// border-bottom-right-radius: 10%;
 
 const PartnerRow = styled(MyRow)`
 justify-content: flex-start;
@@ -52,14 +55,12 @@ justify-content: flex-start;
 
 const PartnerMessage = styled.div`
 width: 45%;
-background-color: grey;
-color: white;
-border: 1px solid lightgray;
+background-color: #CEBEAA;
+color: #3A3A3A;
 padding: 10px;
 margin-left: 5px;
 text-align: center;
-border-top-left-radius: 10%;
-border-bottom-left-radius: 10%;
+border-radius: 20%
 `;
 
 const VideoChat = () => {
@@ -133,6 +134,11 @@ const VideoChat = () => {
         deviceId ? cameraConstraints : initialConstrains
       )
       localVideoRef.current.srcObject = myStream.current;
+      myStream.current
+      .getTracks()
+      .forEach((track) => {
+        peerRef.current.addTrack(track, myStream.current)
+      })
     } catch (e) {
       console.error(e, "getMedia를 실행할 수 없습니다.");
     }
@@ -190,14 +196,14 @@ const VideoChat = () => {
       remoteVideoRef.current.srcObject = e.streams[0];
     }
 
-    if (myStream.current) {
-      console.log('myStream 있어')
-      myStream.current
-      .getTracks()
-      .forEach((track) => {
-        peerRef.current.addTrack(track, myStream.current)
-      })
-    } else (console.log('myStream 없어'))
+    // if (myStream.current) {
+    //   console.log('myStream 있어')
+    //   myStream.current
+    //   .getTracks()
+    //   .forEach((track) => {
+    //     peerRef.current.addTrack(track, myStream.current)
+    //   })
+    // } else (console.log('myStream 없어'))
     }
 
 
@@ -216,9 +222,9 @@ const VideoChat = () => {
         console.log('새로고침임')
         if (!choice) roomClose({ roomName, idx }) 
       }
-      await getMedia();
       // await을 일단 빼뒀음
       await makeConnection();
+      getMedia();
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
@@ -297,6 +303,7 @@ const VideoChat = () => {
       if (socketRef.current) socketRef.current.disconnect()
       if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
       if (!choice) {
+        console.log('방폐쇄 요청합니다!')
         const data = roomClose({ roomName, idx })
         console.log('폐쇄', data)
       }
@@ -363,7 +370,7 @@ const VideoChat = () => {
           muted
         />
         <div>
-          <Messages style = {{ display : "none" }}>
+          <Messages>
             {messages.map(showMessages)}
           </Messages>
           <form onSubmit = {sendMessage}>
