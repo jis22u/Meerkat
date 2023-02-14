@@ -28,39 +28,41 @@ public class DepositService {
 	 */
 	@Transactional
 	public void registDeposit(Long reqIdx, Long resIdx, Integer coin) {
+		int coinInt = coin;
+
 		// 요청자 --
-		Coin reqCoin = coinService.findCoinById(reqIdx);
+		int reqCoin = coinService.findCoinById(reqIdx).getCoin();
 		Deposit reqDeposit = Deposit.builder()
 				.member(memberRepository.findById(reqIdx).orElse(null))
 				.regDate(LocalDateTime.now())
-				.coin(coin)
-				.balance((reqCoin.getCoin())-coin)
+				.coin(-coin)
+				.balance(reqCoin-coinInt)
 				.transactionCode(3)
 				.build();
 		depositRepository.save(reqDeposit);
 		// 코인 내역 업데이트
-		coinService.updateCoin(reqIdx, (reqCoin.getCoin())-coin);
+		coinService.updateCoin(reqIdx, (reqCoin - coinInt));
 
 		// 응답자 ++
-		Coin resCoin = coinService.findCoinById(resIdx);
+		int resCoin = coinService.findCoinById(resIdx).getCoin();
 		Deposit resDeposit = Deposit.builder()
 				.member(memberRepository.findById(resIdx).orElse(null))
 				.regDate(LocalDateTime.now())
-				.coin(coin)
-				.balance((resCoin.getCoin())+coin)
+				.coin(+coin)
+				.balance(resCoin + coinInt)
 				.transactionCode(3)
 				.build();
 		depositRepository.save(resDeposit);
 		// 코인 내역 업데이트
-		coinService.updateCoin(resIdx, (resCoin.getCoin())+coin);
+		coinService.updateCoin(resIdx, (resCoin + coinInt));
 	}
 
 	/**
 	 * 코인 충전 및 환전에 의한 입출금 내역
 	 */
 	@Transactional
-	public void coinDeposit(Long memberIdx, Integer ori, Integer coin, int code) {
-		Integer balance = 0;
+	public void coinDeposit(Long memberIdx, int ori, int coin, int code) {
+		int balance = 0;
 		if(code == 1) {
 			balance = ori + coin;
 		} else if(code == 2) {
