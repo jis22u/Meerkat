@@ -230,7 +230,6 @@ const VideoChat = () => {
 
       socketRef.current = io("https://i8b107.p.ssafy.io", {
         query: `roomName=${roomName}`,
-        path: '/open/socket.io'
       });
     
     socketRef.current.on("welcome", async () => {
