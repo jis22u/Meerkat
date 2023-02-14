@@ -120,7 +120,7 @@ button {
   left: 0px;
   right: 0px;
   width: 100%;
-  height: 100%;
+  height: fit-content;
   max-width: 600px;
   max-height: 100%;
   display: flex;
@@ -134,4 +134,11 @@ button {
 display: flex;
 align-items: center;  
 justify-content: center;
+justify-content: space-evenly;
+
+}
+
+.btn{
+  width:5rem;
+  height:2rem;
 }

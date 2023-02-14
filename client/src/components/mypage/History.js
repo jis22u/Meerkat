@@ -16,17 +16,17 @@ const History = (props) => {
     <div className="box">
       <h2>거래내역</h2>
       <div className="hBox">
-        <button onClick={meerkatButtonHandler}>미어캣</button>
-        <button onClick={requestButtonHandler}>요청</button>
+        <button className="btn" onClick={meerkatButtonHandler}>미어캣</button>
+        <button className="btn" onClick={requestButtonHandler}>요청</button>
       </div>
-      {IsMeerkat && props.responseList&&(
+      {IsMeerkat &&(
         <div className="box">
           {props.responseList.map((Info) => (
             <HistoryComponent key={Info.location} Info={Info} IsMeerkat={IsMeerkat}/>
           ))}
         </div>
       )}
-      {!IsMeerkat && props.requestList && (
+      {!IsMeerkat && (
         <div className="box">
           {props.requestList.map((Info) => (
             <HistoryComponent key={Info.location}  Info={Info} IsMeerkat={IsMeerkat}/>
