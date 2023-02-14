@@ -5,7 +5,7 @@ import { registerUser, userLogin } from 'api/auth'
 const initialState = {
   loading: false,
   error: null,
-  isLogin: false,
+  isLogin: true,
   choice: true,
   selected: 0,
 }

@@ -19,21 +19,6 @@ const Map = () => {
   const [lng, setLng] = useState();
   const [coin, setCoin] = useState();
 
-  //스크립트 파일 읽어오기
-  const new_script = (src) => {
-    return new Promise((resolve, reject) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.addEventListener("load", () => {
-        resolve();
-      });
-      script.addEventListener("error", (e) => {
-        reject(e);
-      });
-      document.head.appendChild(script);
-    });
-  };
-
   useEffect(() => {
     // 마커를 표시할 위치 객체 배열입니다
     const init = async () => {
@@ -275,18 +260,20 @@ const Map = () => {
           <span>{address}</span>
         </div>
         <div className={classes.btnBackground}>
-          <button onClick={modalHandler} className={classes.btn}>등록</button>
+          <button onClick={modalHandler} className={classes.btn}>
+            등록
+          </button>
         </div>
       </footer>
-      <SearchInput search={search}/>
+      <SearchInput search={search} />
       {modalIsOpen && (
         <RegistModal
-        address={address}
-        lat={lat}
-        lng={lng}
-        modalHandler={modalHandler}
+          address={address}
+          lat={lat}
+          lng={lng}
+          modalHandler={modalHandler}
         />
-        )}
+      )}
     </div>
   );
 };

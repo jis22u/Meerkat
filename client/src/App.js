@@ -30,8 +30,8 @@ function App() {
           <Route path="/cash" element={<Cash />} />
           <Route path="/change-account" element={<ChangeAccount/>} />
           <Route path="/registration-detail" element={<RegistrationDetail />} />
-          <Route path="/hangup" element={<HangUp />} />\
-          <Route path="/map" element={<Suspense fallback={<BigSpinner/>}><Map /></Suspense>}/>
+          <Route path="/hangup" element={<HangUp />} />
+          <Route path="/map" element={<Map />} />
           <Route path="/room/:roomName/:idx" element={<Suspense fallback={<BigSpinner/>}><VideoChat /></Suspense>} />
         </Route>
         
