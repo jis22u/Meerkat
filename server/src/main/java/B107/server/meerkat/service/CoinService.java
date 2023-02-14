@@ -15,9 +15,14 @@ public class CoinService {
 	private final CoinRepository coinRepository;
 
 	@Transactional
-	public void chargeCoin(Long memberIdx, Integer coinN) {
-		Coin coin = coinRepository.findCoinById(memberIdx);
-		coin.setCoin(coinN);
-		coinRepository.save(coin);
+	public void updateCoin(Long memIdx, Integer coin) {
+		Coin memCoin = coinRepository.findCoinById(memIdx);
+		memCoin.setCoin(coin);
+		coinRepository.save(memCoin);
+	}
+
+	@Transactional
+	public Coin findCoinById(Long memIdx) {
+		return coinRepository.findCoinById(memIdx);
 	}
 }

@@ -23,7 +23,7 @@ const Footer = () => {
   return (
     <footer>
       <BottomNavigation
-        sx={{ height: 80}}
+        sx={{ height: 80 }}
         theme={meerkat}
         showLabels
         value={selected}
@@ -42,7 +42,7 @@ const Footer = () => {
         <BottomNavigationAction
         
           label="마이페이지"
-          icon={<ContactPageIcon sx={{ width: 30}}/>}
+          icon={<ContactPageIcon />}
           component={Link}
           to="/mypage"
           value = "/mypage"

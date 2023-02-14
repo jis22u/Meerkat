@@ -4,8 +4,9 @@ import { registerUser } from 'api/auth'
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
+import Spinner from 'components/layout/Spinner'
 
-// import Error from 'components/layout/Error'
 
 const schema = yup
   .object({
@@ -75,7 +76,13 @@ const Register = () => {
     const { checkPassword, ...form } = data
     const res = await dispatch(registerUser(form))
     if (res.error?.message) {
-      alert(res.payload)
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: `${res.payload}`,
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else {
       navigate('/login')
     }
@@ -128,9 +135,8 @@ const Register = () => {
         />
       </div>
       <p>{errors.tel?.message}</p>
-      <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : '회원가입'}
-        {/* <Spinner /> */}
+      <button type='submit' className='button' disabled={loading} style = {{display: 'flex', justifyContent: 'center', alignItems : 'center' }}>
+        {loading ? <Spinner /> : '회원가입'}
       </button>
     </form>
   )

@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
+import Swal from 'sweetalert2'
 
 const RegistModal = (props) => {
   const navigate = useNavigate();
@@ -29,7 +30,13 @@ const RegistModal = (props) => {
     let hour = hourSelect.current.value;
 
     if (choice && certification === false) {
-      alert("위치인증을 해주세요");
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: "위치인증을 해주세요",
+        showConfirmButton: false,
+        timer: 1500
+      })
     } else if (choice) {
       if (hourSelect.current.value < 10) hour = `0${hour}`;
 
@@ -68,7 +75,13 @@ const RegistModal = (props) => {
       if (data.status === "OK") {
         navigate(`/room/${data.value.roomName}/${data.value.idx}`); 
       } else {
-        alert(data.message)
+        Swal.fire({
+          position: 'center',
+          icon: 'warning',
+          title: `${data.message}`,
+          showConfirmButton: false,
+          timer: 1500
+        })
       }
     }
   };
@@ -93,11 +106,31 @@ const RegistModal = (props) => {
 
     if (distance < 50900090909090) {
       certification = true;
-      alert("위치 인증이 완료 되었습니다.");
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: "위치 인증이 완료 되었습니다.",
+        showConfirmButton: false,
+        timer: 1500
+      })
       certification = true;
     } else if (distance >= 50900090909090)
-      alert("등록 위치에서 멀리 떨어져잇습니다.");
-    else alert("위치 인증에 실패했습니다.");
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: "등록 위치에서 멀리 떨어져 있습니다.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+    else {
+      Swal.fire({
+        position: 'center',
+        icon: 'error',
+        title: "위치 인증에 실패했습니다.",
+        showConfirmButton: false,
+        timer: 1500
+      })
+    }
 
     console.log(distance);
   };

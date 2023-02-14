@@ -11,6 +11,6 @@ import java.util.List;
 public interface CallRepository extends JpaRepository<Call, Long> {
 
 
-	@Query("select c.idx from Call c where c.roomName like :roomName")
-	Long findIdxByRoomName(@Param("roomName") String roomName);
+	@Query("select c from Call c where c.roomName like :roomName")
+	Call findCallByRoomName(@Param("roomName") String roomName);
 }
