@@ -21,6 +21,12 @@ export const getCoin = async () => {
     return result
 }
 
+export const chargeCoin = async ( data ) => {
+    const result = await api({ method: 'put', url: '/coin/charge', data: data})
+    console.log(result)
+    return result
+}
+
 export const getMypage = async () => {
     // const result = await api({method: 'get', url: '/member/mypage'});
     const value = {coin: 30, memPageDealDTOReqList: [

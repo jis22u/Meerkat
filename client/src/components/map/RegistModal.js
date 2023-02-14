@@ -64,7 +64,7 @@ const RegistModal = (props) => {
       navigate("/registration-detail");
     } else {
       const requestContent = {
-        coin: 5,
+        coin: coin,
         content: content.current.value,
         lat: lat,
         lng: lng,

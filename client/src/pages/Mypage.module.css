@@ -11,20 +11,20 @@
   color: rgb(75, 31, 15);
   cursor: pointer;
   text-decoration: underline;
-  text-align: end;
+  text-align: flex-flex-end;
 }
 
 .linkBox {
   display: flex;
   flex-direction: column;
-  justify-content: end;
+  justify-content: flex-flex-end;
   width: 9rem;
 }
 
 .modifyInfo {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-flex-end;
 }
 
 .coinBox {
@@ -41,7 +41,7 @@
 .coinBtn {
   display: flex;
   width: 10rem;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .history {
