@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useCallback, useState, useDispatch } from "react";
+import React, { useEffect, useRef, useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
@@ -80,6 +81,7 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
+  const dispatch = useDispatch
 
   const two = useRef(60);
   const five = useRef(100000);
@@ -309,7 +311,7 @@ const VideoChat = () => {
         const data = roomClose({ roomName, idx })
         setChoice(true)
         console.log('폐쇄합니다!')
-        useDispatch(setChoice(true))
+        dispatch(setChoice(true))
       }
       // 카메라 + 소켓 disconnect
     }
