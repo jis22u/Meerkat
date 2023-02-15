@@ -37,7 +37,7 @@ const LoginScreen = () => {
     if (payload.status !== "OK"){
       Swal.fire({
         position: 'center',
-        icon: 'error',
+        icon: 'warning',
         title: `${payload.message}`,
         showConfirmButton: false,
         timer: 1500
@@ -47,6 +47,7 @@ const LoginScreen = () => {
 
   return (
     <div className={classes.box}>
+      <br/>
       <h1 className="title">로그인</h1>
       <div className="customBox">
         <form onSubmit={handleSubmit(submitForm)} className={classes.form}>

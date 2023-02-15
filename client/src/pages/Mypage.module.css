@@ -1,4 +1,5 @@
 .mypageTopBox {
+  width: 100%;
   display: flex;
   padding: 10px;
   justify-content: space-between;
@@ -6,28 +7,30 @@
 }
 
 .mypageTopBtn {
+  width: 8rem;
+  text-align: end;
   background-color: rgb(255, 249, 228);
   border: 0;
   color: rgb(75, 31, 15);
   cursor: pointer;
   text-decoration: underline;
-  text-align: flex-flex-end;
 }
 
 .linkBox {
   display: flex;
   flex-direction: column;
-  justify-content: flex-flex-end;
+  align-items: end;
   width: 9rem;
 }
 
 .modifyInfo {
   display: flex;
   align-items: center;
-  justify-content: flex-flex-end;
+  justify-content: end;
 }
 
 .coinBox {
+  width: 90%;
   background-color: rgb(229, 180, 127);
   display: flex;
   align-items: center;
@@ -39,9 +42,9 @@
 }
 
 .coinBtn {
-  display: flex;
-  width: 10rem;
-  justify-content: flex-end;
+  width: 4rem;
+  height: 2rem;
+  margin-left: 10px;
 }
 
 .history {
@@ -49,16 +52,12 @@
   border-radius: 3rem;
   margin-top: 1rem;
   margin-bottom: 10px;
-  padding: 5px 32px 5px 32px;
   height: fit-content;
-  min-height: 500px;
+  width: 100%;
+  min-height: 400px;
   display: flex;
   justify-content: center;
   box-shadow: 5px 5px 4px 4px rgb(150, 144, 119);
-}
-
-.box {
-  width: 90%;
 }
 
 .coinNum {

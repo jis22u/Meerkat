@@ -37,7 +37,7 @@ const Exchange = () => {
   };
 
   return (
-    <div className="box">
+    <div className="extendBox2">
       {coin !== null && (
         <div className={classes.box}>
           <h1 className="title"> 코인 환전 </h1>

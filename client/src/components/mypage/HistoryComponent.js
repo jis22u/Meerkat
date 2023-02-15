@@ -6,7 +6,7 @@ const HistoryComponent = (props) => {
     return(
         <div className={classes.item}>
             <img className={classes.img} alt="" src={meerkat ? "img/meerkat_profile.png" : "img/request_profile.png"} />
-            <div>{props.Info.location}</div>
+            <div className={classes.location}>{props.Info.location}</div>
             <h3>{props.Info.coin}</h3>
         </div>
     )

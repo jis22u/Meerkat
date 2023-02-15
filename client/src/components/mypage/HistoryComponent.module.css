@@ -1,9 +1,9 @@
 .item{
-    width: 100%;
+    width: 80%;
     justify-content: space-between;
     display: flex;
     align-items: center;
-    margin: 5px 10px 5px 10px;
+    margin: 12px 10px 0px 10px;
     text-align: center;
     background-color: rgba(106, 64, 53, 0.446);
     border-radius: 20rem;
@@ -12,4 +12,8 @@
 
 .img{
     width: 4rem;
+}
+
+.location{
+    margin: 8px;
 }

@@ -11,7 +11,7 @@ import classes from "./RegistModal.module.css";
 import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
 
 const RegistModal = (props) => {
   const dispatch = useDispatch();
@@ -33,12 +33,12 @@ const RegistModal = (props) => {
     //미어캣인데 위치인증을 하지 않은 경우
     if (props.check && certification === false) {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
+        position: "center",
+        icon: "error",
         title: "위치인증을 해주세요",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       // 위치인증을 했고 미어캣일 때
     } else if (props.check) {
       dispatch(setChoice(props.check));
@@ -53,7 +53,7 @@ const RegistModal = (props) => {
         date.getHours() >= hourSelect.current.value ||
         hourSelect.current.value === 24
       )
-      expDate = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
+        expDate = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
 
       const meerkatContent = {
         expDate: expDate,
@@ -77,15 +77,15 @@ const RegistModal = (props) => {
       };
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
-        navigate(`/room/${data.value.roomName}/${data.value.idx}`); 
+        navigate(`/room/${data.value.roomName}/${data.value.idx}`);
       } else {
         Swal.fire({
-          position: 'center',
-          icon: 'warning',
+          position: "center",
+          icon: "warning",
           title: `${data.message}`,
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
       }
     }
   };
@@ -111,29 +111,29 @@ const RegistModal = (props) => {
     if (distance < 50900090909090) {
       certification = true;
       Swal.fire({
-        position: 'center',
-        icon: 'success',
+        position: "center",
+        icon: "success",
         title: "위치 인증이 완료 되었습니다.",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
       certification = true;
     } else if (distance >= 50900090909090)
       Swal.fire({
-        position: 'center',
-        icon: 'error',
+        position: "center",
+        icon: "error",
         title: "등록 위치에서 멀리 떨어져 있습니다.",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
     else {
       Swal.fire({
-        position: 'center',
-        icon: 'error',
+        position: "center",
+        icon: "error",
         title: "위치 인증에 실패했습니다.",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
     }
 
     console.log(distance);
@@ -180,12 +180,19 @@ const RegistModal = (props) => {
         {!props.check && (
           <div className={classes.requestBox}>
             <h3>요청내용</h3>
-            <textarea rows={5} cols={30} ref={content}></textarea>
+            <textarea
+              className={classes.textarea}
+              rows={5}
+              cols={30}
+              ref={content}
+            ></textarea>
           </div>
         )}
         <br></br>
-        <button onClick={props.modalHandler}>취소</button>
-        <button onClick={registButtonHandler}>등록</button>
+        <div className="hBtn">
+          <button onClick={props.modalHandler}>취소</button>
+          <button onClick={registButtonHandler}>등록</button>
+        </div>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ const History = (props) => {
   };
 
   return (
-    <div className="box">
+    <div className="extendBox">
       <h2>거래내역</h2>
       <div className="hBox">
         <button className="btn" onClick={meerkatButtonHandler}>미어캣</button>
