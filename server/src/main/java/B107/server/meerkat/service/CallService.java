@@ -3,11 +3,8 @@ package B107.server.meerkat.service;
 
 import B107.server.meerkat.config.utils.RandomNumber;
 import B107.server.meerkat.dto.call.CallDistanceReqDTO;
-import B107.server.meerkat.dto.call.CallDistanceResDTO;
 import B107.server.meerkat.entity.Call;
-import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.exception.ErrorCode;
-import B107.server.meerkat.exception.MemberAlreadyExistException;
 import B107.server.meerkat.exception.MemberNotFoundException;
 import B107.server.meerkat.repository.CallRepository;
 import B107.server.meerkat.repository.MarkerRepository;
@@ -49,7 +46,7 @@ public class CallService {
 
 
     @Transactional
-    public List<CallDistanceResDTO> findValidMarkers(CallDistanceReqDTO callDistanceReqDTO, Long idx) {
+    public List<Long> findValidMarkers(CallDistanceReqDTO callDistanceReqDTO, Long idx) {
 
         if (idx == null) {
             throw new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND);
@@ -58,7 +55,6 @@ public class CallService {
         Double lng = callDistanceReqDTO.getLng();
         Double range = 0.005; // 500m 거리, 예시입니다. 경도 기준으로 500m이 얼마나 되는지는 위도에 따라 다릅니다.
         return markerRepository.findValidMarkers(lat, lng, range);
-//        return callRepositoryImpl.findValidMarkers(lat, lng);
     }
 
 

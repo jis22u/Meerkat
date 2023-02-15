@@ -4,7 +4,6 @@ import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
 import B107.server.meerkat.entity.Coin;
-import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.service.CoinService;
 import B107.server.meerkat.service.DepositService;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j

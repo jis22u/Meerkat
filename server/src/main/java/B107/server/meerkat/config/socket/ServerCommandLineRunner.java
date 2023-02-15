@@ -15,9 +15,6 @@ public class ServerCommandLineRunner implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
-
-		System.out.println("4. ServerCommandLineRunner");
-
 		server.start();
 	}
 

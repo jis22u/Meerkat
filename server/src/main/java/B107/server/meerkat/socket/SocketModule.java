@@ -11,10 +11,7 @@ import com.corundumstudio.socketio.listener.DisconnectListener;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 
-
-// 3
 
 
 @Component
@@ -47,22 +44,24 @@ public class SocketModule {
 	프론트한테 welcome 하라고 명령~~~~~
 	 */
 	private ConnectListener onConnected() {
-		log.info("SocketModule - onConnected()");
-
 
 		return (client) -> {
-			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
-			log.info("temp@@@@@@@@@@@@@@");
-			client.joinRoom(roomName);
+			int size = client.getNamespace().getAllClients().size();
+			if(size <=2) {
+				String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
+				client.joinRoom(roomName);
 
-
-			for (SocketIOClient first : client.getNamespace().getRoomOperations(roomName).getClients()) {
-				if (!first.getSessionId().equals(client.getSessionId())) {
-					first.sendEvent("welcome");
+				for (SocketIOClient first : client.getNamespace().getRoomOperations(roomName).getClients()) {
+					if (!first.getSessionId().equals(client.getSessionId())) {
+						first.sendEvent("welcome");
+					}
 				}
-			}
 
-			log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
+				log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
+			} else {
+				client.sendEvent("over");
+				onDisconnected();
+			}
 		};
 	}
 
@@ -70,8 +69,6 @@ public class SocketModule {
 
 	//    ---------------- offer & answer & ice ------------------------
 	private DataListener<Message> getOffer() {
-		System.out.println("SocketModule - getOffer()");
-
 		return (senderClient, data, ackSender) -> {
 			log.info(data.toString());
 			socketService.sendSocketOffer(senderClient, data);
@@ -79,8 +76,6 @@ public class SocketModule {
 	}
 
 	private DataListener<Message> getAnswer() {
-		System.out.println("SocketModule - getAnswer()");
-
 		return (senderClient, data, ackSender) -> {
 			log.info(data.toString());
 			socketService.sendSocketAnswer(senderClient, data);
@@ -88,14 +83,11 @@ public class SocketModule {
 	}
 
 	private DataListener<Message> getIce() {
-		System.out.println("SocketModule - getIce()");
-
 		return (senderClient, data, ackSender) -> {
 			log.info(data.toString());
 			socketService.sendSocketIce(senderClient, data);
 		};
 	}
-
     //  ---------------- offer & answer & ice ------------------------
 
 
@@ -104,14 +96,11 @@ public class SocketModule {
 	 누군가 소켓에서 연결을 끊을 때 트리거
 	 */
 	private DisconnectListener onDisconnected() {
-		System.out.println("SocketModule - onDisconnected()");
-
 		return client -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
 
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};
 	}
-
 
 }

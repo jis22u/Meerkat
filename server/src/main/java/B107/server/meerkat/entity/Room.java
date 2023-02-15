@@ -2,7 +2,6 @@ package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 

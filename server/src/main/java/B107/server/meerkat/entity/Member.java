@@ -3,17 +3,13 @@ package B107.server.meerkat.entity;
 import B107.server.meerkat.config.utils.BaseAtTime;
 import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import B107.server.meerkat.dto.member.SignModReqDTO;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -21,6 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "member")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

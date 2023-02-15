@@ -1,6 +1,5 @@
 package B107.server.meerkat.entity;
 
-import B107.server.meerkat.config.utils.BaseAtTime;
 import B107.server.meerkat.config.utils.BooleanToYNConverter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +10,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @DynamicInsert
 @DynamicUpdate
