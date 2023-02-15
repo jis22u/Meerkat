@@ -51,11 +51,12 @@ public class SocketModule {
 	프론트한테 welcome 하라고 명령~~~~~
 	 */
 	private ConnectListener onConnected() {
-		System.out.println("SocketModule - onConnected()");
+		log.info("SocketModule - onConnected()");
 
 
 		return (client) -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
+			log.info("temp@@@@@@@@@@@@@@");
 			client.joinRoom(roomName);
 
 
