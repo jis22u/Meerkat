@@ -8,8 +8,11 @@ import RegistModal from "components/map/RegistModal";
 import CurrentCoin from "components/map/CurrentCoin";
 import { getAllMaker } from "api/map";
 import { getCoin } from "api/user";
+import { useLocation } from "react-router";
 
 const Map = () => {
+  const  params  = useLocation();
+  const check = params.state.check;
   const { kakao } = window;
   const map = useRef();
   const [address, setAddress] = useState("지도를 움직여 주소를 입력하세요");
@@ -19,13 +22,13 @@ const Map = () => {
   const [coin, setCoin] = useState();
 
   useEffect(() => {
+    console.log(check)
     // 마커를 표시할 위치 객체 배열입니다
     const init = async () => {
       const { data } = await getAllMaker();
       const res = await getCoin();
       setCoin(res.data.value);
       const positions = data.value;
-
 
       console.log("script loaded!!!");
       const mapContainer = document.getElementById("map");
@@ -164,7 +167,7 @@ const Map = () => {
   return (
     <div className={classes.box}>
       <div id="map" className={classes.map} />
-      <MeerkatPin />
+      <MeerkatPin check={check} />
       <CurrentCoin coin={coin}></CurrentCoin>
       <footer className={classes.addressBox}>
         <div className={classes.address}>
@@ -184,6 +187,7 @@ const Map = () => {
           lat={lat}
           lng={lng}
           modalHandler={modalHandler}
+          check={check}
         />
       )}
     </div>

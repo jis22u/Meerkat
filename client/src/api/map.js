@@ -25,7 +25,7 @@ export const setMeerkat = async (meerkatContent) => {
 
 export const getMeerkatDetail = async () => {
   const res = await api({ method: "get", url: "/marker/" });
-  console.log(res);
+  console.log(res.data);
   return res.data;
 };
 

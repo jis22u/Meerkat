@@ -1,21 +1,22 @@
 import { useState, useRef } from "react";
 import { setMeerkat, sendRequest } from "api/map";
+import { setChoice } from "store/modules/authSlice";
+import { useDispatch } from "react-redux";
 
 import haversine from "haversine-distance";
 import moment from "moment";
 
 import classes from "./RegistModal.module.css";
 
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
 import Swal from 'sweetalert2'
 
 const RegistModal = (props) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   let date = new Date();
-  const { choice } = useSelector((state) => state.auth);
   let certification = false;
   const lat = props.lat;
   const lng = props.lng;
@@ -29,7 +30,8 @@ const RegistModal = (props) => {
   const registButtonHandler = async () => {
     let hour = hourSelect.current.value;
 
-    if (choice && certification === false) {
+    //미어캣인데 위치인증을 하지 않은 경우
+    if (props.check && certification === false) {
       Swal.fire({
         position: 'center',
         icon: 'error',
@@ -37,7 +39,9 @@ const RegistModal = (props) => {
         showConfirmButton: false,
         timer: 1500
       })
-    } else if (choice) {
+      // 위치인증을 했고 미어캣일 때
+    } else if (props.check) {
+      dispatch(setChoice(props.check));
       if (hourSelect.current.value < 10) hour = `0${hour}`;
 
       if (hourSelect === 24) hour = "00";
@@ -59,10 +63,11 @@ const RegistModal = (props) => {
         location: location,
       };
 
-      // 미어캣 등록 axios 요청
       await setMeerkat(meerkatContent);
       navigate("/registration-detail");
+      //요청일 때
     } else {
+      dispatch(setChoice(props.check));
       const requestContent = {
         coin: coin,
         content: content.current.value,
@@ -70,7 +75,6 @@ const RegistModal = (props) => {
         lng: lng,
         location: location,
       };
-      // 요청 axios 요청
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
         navigate(`/room/${data.value.roomName}/${data.value.idx}`); 
@@ -148,14 +152,14 @@ const RegistModal = (props) => {
   return (
     <div className={classes.modalBox}>
       <div className={classes.modal}>
-        {choice && (
+        {props.check && (
           <img
             className={classes.img}
             alt="meerkat"
             src="img/meerkat_profile.png"
           ></img>
         )}
-        {!choice && (
+        {!props.check && (
           <img
             className={classes.img}
             alt="request"
@@ -166,14 +170,14 @@ const RegistModal = (props) => {
         <hr></hr>
         <h3>선택 위치</h3>
         <p>{props.address}</p>
-        {choice && (
+        {props.check && (
           <button className="cBtn" onClick={confirmBtnHandler}>
             위치인증
           </button>
         )}
-        {choice && <ExpiredDate hourSelect={hourSelect} />}
-        {!choice && <SelectCoin coin={coin} setCoin={setCoin} />}
-        {!choice && (
+        {props.check && <ExpiredDate hourSelect={hourSelect} />}
+        {!props.check && <SelectCoin coin={coin} setCoin={setCoin} />}
+        {!props.check && (
           <div className={classes.requestBox}>
             <h3>요청내용</h3>
             <textarea rows={5} cols={30} ref={content}></textarea>

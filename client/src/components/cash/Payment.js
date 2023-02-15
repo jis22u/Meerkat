@@ -1,6 +1,7 @@
 import React from 'react';
 import { chargeCoin } from 'api/user'
 import Swal from 'sweetalert2'
+import classes from "./Payment.module.css"
 
 // 결제 API
 const  Payment = ({cash, mycoin})=> {
@@ -83,7 +84,7 @@ const  Payment = ({cash, mycoin})=> {
 
 
   return (
-    <button onClick={onClickPayment}>결제하기</button>
+    <button className={classes.btn} onClick={onClickPayment}>결제하기</button>
   );
 }
 
