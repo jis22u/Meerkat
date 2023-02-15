@@ -228,9 +228,8 @@ const VideoChat = () => {
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
-      socketRef.current = io("https://i8b107.p.ssafy.io", {
-        query: `roomName=${roomName}`,
-        path: "/open"
+      socketRef.current = io("https://i8b107.p.ssafy.io/open", {
+        query: `roomName=${roomName}`
       });
     
     socketRef.current.on("welcome", async () => {
