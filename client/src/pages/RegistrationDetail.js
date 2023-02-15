@@ -80,9 +80,13 @@ const RegistrationDetail = () => {
   };
 
   const deletButtonHandler = async () => {
-    setRegist(false);
-    setDetailContent();
-    await deleteMeerkat();
+    const { data } = await deleteMeerkat()
+    if (data.status === "OK") {
+      setRegist(false);
+      setDetailContent(); 
+    }
+
+    
   };
 
   return (
