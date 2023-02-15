@@ -46,6 +46,10 @@ pipeline {
                 sh "docker rm common-b107-meerkat-develop-client-1"
                 sh "docker stop common-b107-meerkat-develop-api-1"
                 sh "docker rm common-b107-meerkat-develop-api-1"
+<<<<<<< HEAD
+
+=======
+>>>>>>> c0d8d45d095014e2da75ec97c76a46bc1b1b358f
                 sh "docker-compose up -d --build"
                 sh "docker-compose ps"
             }

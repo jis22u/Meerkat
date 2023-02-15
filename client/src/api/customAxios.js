@@ -1,15 +1,16 @@
 import axios from 'axios';
 
 // const BASE_URL = process.env.REACT_APP_URL;
-const BASE_URL = 'https://i8b107.p.ssafy.io/api'
+// const BASE_URL = 'http://192.168.31.200:8081/api'
 
 const api = axios.create({
-    baseURL: BASE_URL,
+    // baseURL: BASE_URL,
     headers: {
         'Content-Type': 'application/json',
     },
     withCredentials: true
 });
+
 
 api.interceptors.request.use(function (config) {
     const accessToken = localStorage.getItem('userToken');
