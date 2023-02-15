@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 
-const BASE_URL = 'https://i8b107.p.ssafy.io/api'
+// const BASE_URL = 'https://i8b107.p.ssafy.io/api'
 
 
 export const userLogin = createAsyncThunk(
@@ -14,7 +14,7 @@ export const userLogin = createAsyncThunk(
         },
       }
       const { data , headers } = await axios.post(
-        `${BASE_URL}/login`,
+        `/login`,
         form,
         config
       )
@@ -45,7 +45,7 @@ export const registerUser = createAsyncThunk(
         },
       }
       const { data } = await axios.post(
-        `${BASE_URL}/sign`,  
+        `/sign`,  
         form,
         config
       )

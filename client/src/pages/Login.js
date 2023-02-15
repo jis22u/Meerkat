@@ -10,6 +10,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import HttpsIcon from "@mui/icons-material/Https";
 import Swal from 'sweetalert2'
 import Spinner from 'components/layout/Spinner'
+import { fetchToken } from 'api/firebase';
+import {sendToken} from 'api/user';
 // import Error from 'components/layout/Error'
 
 const schema = yup
@@ -42,6 +44,12 @@ const LoginScreen = () => {
         showConfirmButton: false,
         timer: 1500
       })
+    } else {
+      fetchToken().then((res) => {
+        console.log(res)
+        const payload = {fcmToken : res.currentToken}
+        sendToken(payload)
+      });
     }
   };
 

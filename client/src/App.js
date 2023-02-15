@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import Register from "pages/Register";
-
 import 'App.css';
 import Layout from 'pages/Layout';
 import AuthLayout from 'pages/AuthLayout';
@@ -15,13 +14,31 @@ import RegistrationDetail from "pages/RegistrationDetail";
 import HangUp from "pages/HangUp"
 import React, { lazy, Suspense } from 'react';
 import BigSpinner from 'components/layout/BigSpinner'
+import { onMessageListener } from './api/firebase';
+import { Toast } from 'react-bootstrap';
+import { useState } from 'react'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const Home = lazy(() => import('pages/Home'));
 const VideoChat = lazy(() => import('pages/VideoChat'));
 
 function App() {
 
+  const [show, setShow] = useState(false);
+  const [notification, setNotification] = useState({title: '', body: ''});
+  const [isTokenFound, setTokenFound] = useState(false);
+  // 
+
+  onMessageListener().then(payload => {
+    setNotification({title: payload.notification.title, body: payload.notification.body})
+    setShow(true);
+    console.log(show, 'show끝은없는고야')
+    console.log(payload);
+  }).catch(err => console.log('failed: ', err));
+
   return (
+    <div>
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Suspense fallback={<BigSpinner/>}><Home /></Suspense>}/>
@@ -38,9 +55,21 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
         </Route>
-
-
-    </Routes>
+      </Routes>
+      <Toast onClose={() => setShow(false)} show={show} delay={10000} autohide animation style={{
+                position: 'absolute',
+                top: '50%',
+                right: '50%',
+                minWidth: 200
+              }}>
+                <Toast.Header>
+                  <strong className="mr-auto">{notification.title}</strong>
+                  <small>just now</small>
+                  <button>가는 버튼</button>
+                </Toast.Header>
+                <Toast.Body>{notification.body}</Toast.Body>
+      </Toast>
+    </div>
   );
 }
 
