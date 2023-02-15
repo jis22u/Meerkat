@@ -9,7 +9,7 @@ const Home = () => {
 
   const clickHandler = (choice) => {
     dispatch(setChoice(choice));
-    navigate("/map");
+    navigate("/map", { state : choice });
   };
 
   return (

@@ -1,8 +1,8 @@
 import classes from "./MeerkatPin.module.css";
-import { useSelector } from "react-redux";
 
-const MeerkatPin = () => {
-  const { choice } = useSelector((state) => state.auth);
+const MeerkatPin = ({role}) => {
+  const choice = role
+  console.log(choice, 'pin')
 
   return (
     <div className={classes.pin}>

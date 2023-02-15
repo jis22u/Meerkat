@@ -20,6 +20,7 @@ const Home = lazy(() => import('pages/Home'));
 const VideoChat = lazy(() => import('pages/VideoChat'));
 
 function App() {
+
   return (
       <Routes>
         <Route element={<Layout />}>

@@ -2,37 +2,60 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    width: 100vw;
+    margin-top: 0;
+    text-align: center;
+    /* height: 100vh;
+    width: 100vw; */
 }
 
-/* .timer {
-    position : 'absolute';
-} */
+.timer {
+    margin-top: 10px;
+}
 
 .localVideo {
-    width: 40%;
+    width: 30%;
     height: 30%;
     margin: 5;
     background-color: "black";
     position: absolute;
-    top: 110%;
-    left: 80%;
-    transform: translate(-50%, -50%);
-    object-fit: fill;
+    top: 30.5%;
+    left: 70%;
+    /* transform: translate(-50%, -50%); */
+    /* object-fit: fill; */
 }
 
 .remoteVideo {
     width: 100%;
-    height: 100%;
+    height: 50%;
     margin: 5;
     background-color: "black";
     position: relative;
-    object-fit: fill;
+    /* object-fit: fill; */
 }
 
 .videoBox {
     width: 100vw;
     height: 80vh;
 }
+
+.messageBox {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    /* position: absolute; */
+}
+
+.formBox {
+    display: flex !important;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.inputBox {
+    width: 100%;
+    background-color : #FAE9C8;
+}
+
+
 

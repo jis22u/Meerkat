@@ -6,7 +6,6 @@ import moment from "moment";
 
 import classes from "./RegistModal.module.css";
 
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
@@ -15,7 +14,8 @@ import Swal from 'sweetalert2'
 const RegistModal = (props) => {
   const navigate = useNavigate();
   let date = new Date();
-  const { choice } = useSelector((state) => state.auth);
+  const choice = props.role;
+  console.log(choice, '모달')
   let certification = false;
   const lat = props.lat;
   const lng = props.lng;
