@@ -1,19 +1,19 @@
 import classes from "./RegistrationDetail.module.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import { getMeerkatDetail, modifyMeerkat, deleteMeerkat } from "api/map";
 import { setChoice } from "store/modules/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import Swal from 'sweetalert2'
+import ExpiredDate from "components/map/ExpiredDate";
+import Swal from "sweetalert2";
 
 const RegistrationDetail = () => {
   const [detailContent, setDetailContent] = useState();
   const [modify, setModify] = useState(false);
-  const [hourSelect, setHourSelect] = useState(1);
   const [regist, setRegist] = useState(true);
   let date = new Date();
-  let newDetailContext = {};
+  let hourSelect = useRef(1);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -24,61 +24,52 @@ const RegistrationDetail = () => {
 
   useEffect(() => {
     //데이터 받아와서 데이터 객체로 만들기
-    getMeerkatDetail()
-      .then((response) => {
-        setDetailContent(response.value);
-        if (response.message === "받은 정보가 비어있습니다.") {
-          setRegist(false);
-        }
-      })
+    getMeerkatDetail().then((response) => {
+      setDetailContent(response.value);
+      if (response.message === "받은 정보가 비어있습니다.") {
+        setRegist(false);
+      }
+    });
   }, []);
 
   const modifyButtonHandler = async () => {
     if (modify === true) {
-      let hour = hourSelect;
+      let hour = hourSelect.current.value;
 
-      if (hourSelect < 10) {
-        hour = `0${hour}`;
-      }
-      // eslint-disable-next-line
-      if (hourSelect == 24) {
-        hour = "00";
-      }
+      if (hourSelect.current.value < 10) hour = `0${hour}`;
 
-      console.log("미어캣 요청 axios");
-      let exp_date = moment().format(`YYYY-MM-DD ${hour}:00:00`);
-      if (date.getHours() > hourSelect) {
-        exp_date = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
-      }
-      console.log(exp_date);
+      if (hourSelect === 24) hour = "00";
 
-      newDetailContext = {
-        expData: exp_date,
-        regDate: detailContent.reg_date,
+      console.log("미어캣 수정 axios");
+      let expDate = moment().format(`YYYY-MM-DD ${hour}:00:00`);
+      if (
+        date.getHours() >= hourSelect.current.value ||
+        hourSelect.current.value === 24
+      )
+        expDate = moment().add(1, "d").format(`YYYY-MM-DD ${hour}:00:00`);
+
+      let newDetailContext = {
+        expDate: expDate,
+        regDate: moment(detailContent.regDate).format("YYYY-MM-DD HH:MM:SS"),
         lat: detailContent.lat,
         lng: detailContent.lng,
         location: detailContent.location,
       };
-      newDetailContext.expDate = exp_date;
-
+      console.log(newDetailContext);
       // 미어캣 등록 axios 요청
-      modifyMeerkat(newDetailContext).then((responce) => {
+      await modifyMeerkat(newDetailContext).then((responce) => {
         Swal.fire({
-          position: 'center',
-          icon: 'error',
+          position: "center",
+          icon: "error",
           title: `${responce.data.message}`,
           showConfirmButton: false,
-          timer: 1500
-        })
+          timer: 1500,
+        });
       });
       setModify(false);
     } else {
       setModify(true);
     }
-  };
-
-  const handleHourSelect = (e) => {
-    setHourSelect(e.target.value);
   };
 
   const deletButtonHandler = async () => {
@@ -108,27 +99,15 @@ const RegistrationDetail = () => {
             <h3>선택위치</h3>
             <p>{detailContent.location}</p>
             <h3>시작시간</h3>
-            <p>{detailContent.reg_date}</p>
+            <p>{detailContent.regDate}</p>
             {!modify && (
               <div>
                 <h3>종료시간</h3>
-                <p>{detailContent.exp_date}</p>
+                <p>{detailContent.expDate}</p>
               </div>
             )}
             {modify && (
-              <div>
-                <h3>종료시간</h3>
-                {detailContent && <p>{detailContent.exp_date}</p>}
-                {modify && (
-                  <select onChange={handleHourSelect} value={hourSelect}>
-                    {array.map((item) => (
-                      <option value={item} key={item}>
-                        {item}:00시까지
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
+              <div>{modify && <ExpiredDate hourSelect={hourSelect} />}</div>
             )}
           </div>
           <div className={classes.buttons}>
@@ -146,8 +125,15 @@ const RegistrationDetail = () => {
       {!regist && (
         <div className={classes.notFound}>
           <h3>조회된 등록 내역이 없습니다</h3>
-          <button className={classes.registBtn} onClick={() => registButtonHandler(true)}>
-            <img alt="" className={classes.meerkatImg} src="img/meerkat_profile.png"/>
+          <button
+            className={classes.registBtn}
+            onClick={() => registButtonHandler(true)}
+          >
+            <img
+              alt=""
+              className={classes.meerkatImg}
+              src="img/meerkat_profile.png"
+            />
           </button>
           미어켓 등록하러 가기
         </div>

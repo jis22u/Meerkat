@@ -68,7 +68,7 @@ public class RoomService {
 			dealRepository.save(deal);
 			
 			// 입출금 내역
-			depositService.registDeposit(deal.getReqMember().getIdx(), deal.getReqMember().getIdx(), call.getCoin());
+			depositService.registDeposit(deal.getReqMember().getIdx(), deal.getResMember().getIdx(), call.getCoin());
 		}
 
 	}

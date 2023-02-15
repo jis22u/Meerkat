@@ -1,15 +1,13 @@
 import classes from "./MeerkatPin.module.css";
 
-const MeerkatPin = ({role}) => {
-  const choice = role
-  console.log(choice, 'pin')
+const MeerkatPin = (props) => {
 
   return (
     <div className={classes.pin}>
-      {choice && (
+      {props.check && (
         <img alt="" src="img/meerkat_pin.png" className={classes.meerkatPinImg}></img>
       )}
-      {!choice && (
+      {!props.check && (
         <img alt="" src="img/request_pin.png" className={classes.requestPinImg}></img>
       )}
     </div>

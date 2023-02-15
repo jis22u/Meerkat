@@ -21,17 +21,11 @@ import java.time.LocalDateTime;
 @Slf4j
 public class SocketModule {
 
-
-	private final SocketIOServer server;
 	private final SocketService socketService;
-	private final RoomRepository roomRepository;
-
 
 	public SocketModule(SocketIOServer server, SocketService socketService, RoomRepository roomRepository) {
 		System.out.println("3 SocketModule. (1)");
 
-		this.roomRepository = roomRepository;
-		this.server = server;
 		this.socketService = socketService;
 
 		// 1. 누군가 소켓에 연결할 때 트리거
@@ -53,11 +47,12 @@ public class SocketModule {
 	프론트한테 welcome 하라고 명령~~~~~
 	 */
 	private ConnectListener onConnected() {
-		System.out.println("SocketModule - onConnected()");
+		log.info("SocketModule - onConnected()");
 
 
 		return (client) -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
+			log.info("temp@@@@@@@@@@@@@@");
 			client.joinRoom(roomName);
 
 
@@ -65,19 +60,6 @@ public class SocketModule {
 				if (!first.getSessionId().equals(client.getSessionId())) {
 					first.sendEvent("welcome");
 				}
-			}
-
-
-
-			int size = client.getNamespace().getAllClients().size();
-			if(size == 1) {
-				// 요청자가 먼저 들어와있다
-				System.out.println("요청자      "+11111);
-			} else if(size == 2) {
-				// 미어캣 들어왔다
-				// 시작 시간 찍어주기
-				System.out.println("미어캣       "+ 2222);
-				System.out.println(LocalDateTime.now());
 			}
 
 			log.info("Socket ID[{}] - roomName[{}]  Connected to chat module through", client.getSessionId().toString(), roomName);
@@ -126,15 +108,6 @@ public class SocketModule {
 
 		return client -> {
 			String roomName = client.getHandshakeData().getSingleUrlParam("roomName");
-
-//			int size = client.getNamespace().getAllClients().size();
-//			if(size == 1) {
-//
-//			}
-
-//			client.leaveRoom(client.getSessionId().toString());
-//			client.disconnect();
-
 
 			log.info("Socket ID[{}] - roomName[{}]  discnnected to chat module through", client.getSessionId().toString(), roomName);
 		};

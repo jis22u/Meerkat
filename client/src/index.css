@@ -114,6 +114,7 @@ button {
   border-radius: 16px;
   margin: 1%;
   font-family: "hyemin";
+  border: 0;
 }
 
 .box {
@@ -135,10 +136,9 @@ display: flex;
 align-items: center;  
 justify-content: center;
 justify-content: space-evenly;
-
 }
 
 .btn{
   width:5rem;
-  height:2rem;
+  height:2.2rem;
 }
