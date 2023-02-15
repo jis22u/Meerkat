@@ -48,6 +48,7 @@ const LoginScreen = () => {
       fetchToken().then((res) => {
         console.log(res)
         const payload = {fcmToken : res.currentToken}
+        alert(`fcm 토큰: ${res.currentToken}`)
         sendToken(payload)
       });
     }
