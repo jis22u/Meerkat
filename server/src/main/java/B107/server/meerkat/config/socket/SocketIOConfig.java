@@ -28,6 +28,8 @@ public class SocketIOConfig {
 		config.setOrigin("https://i8b107.p.ssafy.io");
 //		config.setOrigin("https://i8b107.p.ssafy.io/open");
 		config.setOrigin("http://i8b107.p.ssafy.io:8085");
+		config.setOrigin("http://i8b107.p.ssafy.io:3000");
+
 //		config.setContext("/open");
 		return new SocketIOServer(config);
 	}
