@@ -52,8 +52,8 @@ const MyPage = () => {
             <h2 className={classes.coinNum}>{data.coin}</h2>
             </div>
             <div className={classes.coinBtn}>
-              <button className="btn" onClick={() => navigate("/cash")}>충전</button>
-              <button className="btn">환전</button>
+              <button className="btn" onClick={() => navigate("/cash", {state:{check:true}})}>충전</button>
+              <button className="btn" onClick={() => navigate("/cash", {state:{check:false}})}>환전</button>
             </div>
           </div>
           <div className={classes.history}>

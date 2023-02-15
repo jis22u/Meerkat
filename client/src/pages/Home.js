@@ -1,15 +1,11 @@
-import { setChoice } from "store/modules/authSlice";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import classes from "./Home.module.css";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const clickHandler = (choice) => {
-    dispatch(setChoice(choice));
-    navigate("/map");
+    navigate("/map", {state:{check:choice}});
   };
 
   return (
