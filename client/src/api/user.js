@@ -27,6 +27,11 @@ export const chargeCoin = async ( data ) => {
     return result
 }
 
+export const sendToken = async ( data ) => {
+    const result = await api({ method: 'put', url: '/member/fcm', data: data})
+    return result
+}
+
 export const getMypage = async () => {
     // const result = await api({method: 'get', url: '/member/mypage'});
     const value = {coin: 30, memPageDealDTOReqList: [

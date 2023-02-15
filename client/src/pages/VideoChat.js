@@ -11,6 +11,7 @@ import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
 import MicIcon from '@mui/icons-material/Mic';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import {setChoice} from 'store/modules/authSlice'
 
 const Messages = styled.div`
 width: 95%;
@@ -215,23 +216,22 @@ const VideoChat = () => {
 
     // 7006237/8
     const initCall = async () => {
-      // const { data } = await verifyRoom({roomName, idx})
-      // console.log(data)
-      // if (data.status !== "OK") {
-      //   navigate('/')
-      //   return
-      // }
+      const { data } = await verifyRoom({roomName, idx})
+      console.log(data)
+      if (data.status !== "OK") {
+        navigate('/')
+        return
+      }
       window.onbeforeunload = () => { 
         console.log('새로고침임')
-        if (!choice) roomClose({ roomName, idx }) 
+        return
       }
-      // await을 일단 빼뒀음
       await getMedia();
       await makeConnection();
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
-      socketRef.current = io("https://i8b107.p.ssafy.io", {
+      socketRef.current = io('https://i8b107.p.ssafy.io', {
         query: `roomName=${roomName}`
       });
     
@@ -306,8 +306,8 @@ const VideoChat = () => {
       if (socketRef.current) socketRef.current.disconnect()
       if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
       if (!choice) {
-        console.log('방폐쇄 요청합니다!')
         const data = roomClose({ roomName, idx })
+        setChoice(true)
         console.log('폐쇄', data)
       }
       // 카메라 + 소켓 disconnect

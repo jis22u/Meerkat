@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
 import Swal from "sweetalert2";
+import {sendFcm} from 'api/map'
 
 const RegistModal = (props) => {
   const dispatch = useDispatch();
@@ -77,6 +78,10 @@ const RegistModal = (props) => {
       };
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
+        const roomName = data.value.roomName
+        data.value.fcmTokenList.forEach((token) => {
+          sendFcm({token, roomName})
+        })
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
       } else {
         Swal.fire({

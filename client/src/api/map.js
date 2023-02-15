@@ -1,5 +1,6 @@
 import api from "./customAxios";
 import Swal from 'sweetalert2'
+import axios from 'axios';
 
 export const getMarkers = async () => {
   const res = await api({method: "get", url: ""})
@@ -48,6 +49,29 @@ export const deleteMeerkat = async () => {
   const res = await api({ method: "delete", url: "/marker/delete" });
   console.log(res);
 };
+
+export const sendFcm = ({token, url}) => {
+  console.log(token)
+  const option = {
+    method: 'POST',
+    url: 'https://fcm.googleapis.com/fcm/send',
+    data: {
+      'to': `${token}`,
+      'notification': {
+        'title': 'ewfjklfe;efjwefl;',
+        'body': 'eqwfwfewfewfwef??',
+      }
+    },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'key=AAAAo4aUHSc:APA91bFblK-xj0b-GUtgtFGaK2UvRKJvlglwQNFGBjvsxbIwUv5fQZ_uHlaNR-z-WrjEnyNBZ-GVQg8bELDNVv1xhR9qVphygcNj9yebM53QjtY1vZY57ESE6DisWOv3zGb-UoSzk4li' 
+    }
+  }
+  const res = axios(option)
+  console.log(res)
+  // request(option, (err, res, body) => {console.log(err,res,body)})
+};
+
 
 export const sendRequest = async (requestContext) => {
 
