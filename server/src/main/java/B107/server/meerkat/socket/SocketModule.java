@@ -21,15 +21,11 @@ import java.time.LocalDateTime;
 @Slf4j
 public class SocketModule {
 
-
-	private final SocketIOServer server;
 	private final SocketService socketService;
-
 
 	public SocketModule(SocketIOServer server, SocketService socketService, RoomRepository roomRepository) {
 		System.out.println("3 SocketModule. (1)");
 
-		this.server = server;
 		this.socketService = socketService;
 
 		// 1. 누군가 소켓에 연결할 때 트리거

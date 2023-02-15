@@ -1,5 +1,5 @@
 socket-server:
-  host: localhost
+  host: 43.201.72.34
   port: 8085
 
 server:
