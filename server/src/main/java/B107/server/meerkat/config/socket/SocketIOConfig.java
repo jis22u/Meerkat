@@ -25,7 +25,9 @@ public class SocketIOConfig {
 		com.corundumstudio.socketio.Configuration config = new com.corundumstudio.socketio.Configuration();
 		config.setHostname(host);
 		config.setPort(port);
+		config.setOrigin("https://i8b107.p.ssafy.io");
 //		config.setOrigin("https://i8b107.p.ssafy.io/open");
+		config.setOrigin("http://i8b107.p.ssafy.io:8085");
 //		config.setContext("/open");
 		return new SocketIOServer(config);
 	}
