@@ -86,8 +86,8 @@ const ChangeAccount = () => {
 
     return (
         <div>
-            <h1>회원정보 수정</h1>
-                <form onSubmit={handleSubmit(submitForm)}>
+            <h1 className='title'>회원정보 수정</h1>
+                <form className='customBox's onSubmit={handleSubmit(submitForm)}>
                     {/* {error && <Error>{error}</Error>} */}
                     <div className='form-group'>
                       <label htmlFor='memberId'>아이디</label>

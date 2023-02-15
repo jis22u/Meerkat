@@ -17,7 +17,7 @@
   }
   
   .btn{
-      width: 5rem;
+      width: fit-content;
       height: 2rem;
   }
 

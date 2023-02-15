@@ -28,7 +28,7 @@ const MyPage = () => {
   return (
     <div className="box">
       {data && (
-        <div className={classes.box}>
+        <div className="extendBox2">
           <div className={classes.mypageTopBox}>
             <h1>마이페이지</h1>
             <div className={classes.linkBox}>
@@ -51,9 +51,9 @@ const MyPage = () => {
             <AttachMoneyOutlinedIcon fontSize="large" />
             <h2 className={classes.coinNum}>{data.coin}</h2>
             </div>
-            <div className={classes.coinBtn}>
-              <button className="btn" onClick={() => navigate("/cash", {state:{check:true}})}>충전</button>
-              <button className="btn" onClick={() => navigate("/cash", {state:{check:false}})}>환전</button>
+            <div>
+              <button className={classes.coinBtn} onClick={() => navigate("/cash", {state:{check:true}})}>충전</button>
+              <button className={classes.coinBtn} onClick={() => navigate("/cash", {state:{check:false}})}>환전</button>
             </div>
           </div>
           <div className={classes.history}>

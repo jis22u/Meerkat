@@ -39,7 +39,7 @@ const Charge = () => {
   };
 
   return (
-    <div className="box">
+    <div className="extendBox2">
       {coin !== null && (
         <div className={classes.box}>
           <h1 className="title"> 코인 충전 </h1>

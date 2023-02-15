@@ -2,8 +2,6 @@ import classes from "./RegistrationDetail.module.css";
 import { useEffect, useState, useRef } from "react";
 import moment from "moment";
 import { getMeerkatDetail, modifyMeerkat, deleteMeerkat } from "api/map";
-import { setChoice } from "store/modules/authSlice";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import ExpiredDate from "components/map/ExpiredDate";
 import Swal from "sweetalert2";
@@ -12,9 +10,10 @@ const RegistrationDetail = () => {
   const [detailContent, setDetailContent] = useState();
   const [modify, setModify] = useState(false);
   const [regist, setRegist] = useState(true);
+  const [startTime, setStartTime] = useState();
+  const [endTime, setEndTime] = useState();
   let date = new Date();
   let hourSelect = useRef(1);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   let array = [
@@ -24,12 +23,20 @@ const RegistrationDetail = () => {
 
   useEffect(() => {
     //데이터 받아와서 데이터 객체로 만들기
-    getMeerkatDetail().then((response) => {
-      setDetailContent(response.value);
-      if (response.message === "받은 정보가 비어있습니다.") {
-        setRegist(false);
-      }
-    });
+    getMeerkatDetail()
+      .then((response) => {
+        if (response.message === "받은 정보가 비어있습니다.") {
+          setRegist(false);
+          return;
+        }
+        setDetailContent(response.value);
+        return response;
+      })
+      .then((response) => {
+        if(response === undefined ) return;
+        setEndTime(moment(response.value.expDate).format('YYYY년 MM월 DD일  HH시 mm분'));
+        setStartTime(moment(response.value.regDate).format('YYYY년 MM월 DD일  HH시 mm분'));
+      });
   }, []);
 
   const modifyButtonHandler = async () => {
@@ -78,11 +85,6 @@ const RegistrationDetail = () => {
     await deleteMeerkat();
   };
 
-  const registButtonHandler = (choice) => {
-    dispatch(setChoice(choice));
-    navigate("/map");
-  };
-
   return (
     <div className="box">
       {detailContent && (
@@ -99,11 +101,11 @@ const RegistrationDetail = () => {
             <h3>선택위치</h3>
             <p>{detailContent.location}</p>
             <h3>시작시간</h3>
-            <p>{detailContent.regDate}</p>
+            <p>{startTime}</p>
             {!modify && (
               <div>
                 <h3>종료시간</h3>
-                <p>{detailContent.expDate}</p>
+                <p>{endTime}</p>
               </div>
             )}
             {modify && (
@@ -127,7 +129,7 @@ const RegistrationDetail = () => {
           <h3>조회된 등록 내역이 없습니다</h3>
           <button
             className={classes.registBtn}
-            onClick={() => registButtonHandler(true)}
+            onClick={() => navigate("/map", { state: { check: true } })}
           >
             <img
               alt=""

@@ -21,13 +21,12 @@
 }
 
 .btnBackground {
-  margin: 0;
-  text-align: csenter;
   background-color: rgb(228, 202, 170);
+  height: 5rem;
 }
 
 .btn{
-  margin: 5px;
+  margin: 6px;
   padding: 10px 20px;
 }
 
