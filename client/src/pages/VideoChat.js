@@ -212,23 +212,23 @@ const VideoChat = () => {
 
     // 7006237/8
     const initCall = async () => {
-      const { data } = await verifyRoom({roomName, idx})
-      console.log(data)
-      if (data.status !== "OK") {
-        navigate('/')
-        return
-      }
-      window.onbeforeunload = () => { 
-        console.log('새로고침임')
-        if (!choice) roomClose({ roomName, idx }) 
-      }
+      // const { data } = await verifyRoom({roomName, idx})
+      // console.log(data)
+      // if (data.status !== "OK") {
+      //   navigate('/')
+      //   return
+      // }
+      // window.onbeforeunload = () => { 
+      //   console.log('새로고침임')
+      //   if (!choice) roomClose({ roomName, idx }) 
+      // }
       // await을 일단 빼뒀음
       await makeConnection();
       getMedia();
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
-      socketRef.current = io("https://i8b107.p.ssafy.io", {
+      socketRef.current = io("http://192.168.31.200:8085", {
         query: `roomName=${roomName}`,
       });
     
