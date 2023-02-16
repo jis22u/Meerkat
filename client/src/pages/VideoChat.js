@@ -224,7 +224,7 @@ const VideoChat = () => {
         (device) => device.kind === "videoinput"
       );
 
-      socketRef.current = io("'https://i8b107.p.ssafy.io", {
+      socketRef.current = io("https://i8b107.p.ssafy.io", {
         query: `roomName=${roomName}`,
       });
 

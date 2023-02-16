@@ -124,7 +124,7 @@ const RegistModal = (props) => {
 
     const distance = haversine(start, end);
 
-    if (distance < 1000) {
+    if (distance < 1000000) {
       certification = true;
       Swal.fire({
         position: "center",
@@ -134,7 +134,7 @@ const RegistModal = (props) => {
         timer: 1500,
       });
       certification = true;
-    } else if (distance >= 1000)
+    } else if (distance >= 1000000)
       Swal.fire({
         position: "center",
         icon: "warning",
