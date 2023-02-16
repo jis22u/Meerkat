@@ -23,7 +23,7 @@ const Exchange = () => {
     if (balance - coin < 0) {
       Swal.fire({
         position: "center",
-        icon: "error",
+        icon: "warning",
         title: "보유코인이 모자랍니다.",
         showConfirmButton: false,
         timer: 1500,
@@ -33,6 +33,16 @@ const Exchange = () => {
     setBalance((prev) => prev - coin);
     setMyMoney((prev) => prev + (180*coin));
   };
+
+  const exchangeButtonHandler = () => {
+    Swal.fire({
+      position: "center",
+      icon: "warning",
+      title: "서비스 준비중입니다.",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 
   return (
     <div className="extendBox2">
@@ -80,7 +90,7 @@ const Exchange = () => {
             <div>* 수익 분배 비율은 사용자 8, 거기어때 2로 측정됩니다.</div>
             <br />
             <div>
-                <button className={classes.exchangeBtn}>환전하기</button>
+                <button className={classes.exchangeBtn} onClick={exchangeButtonHandler} >환전하기</button>
             </div>
           </div>
           <br></br>
