@@ -19,14 +19,14 @@
 .linkBox {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   width: 9rem;
 }
 
 .modifyInfo {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .coinBox {

@@ -203,8 +203,7 @@ const VideoChat = () => {
 
     // 7006237/8
     const initCall = async () => {
-      const { data } = await verifyRoom({ roomName, idx });
-      console.log(data);
+      const { data } = await verifyRoom({roomName, idx})
       if (data.status !== "OK") {
         navigate('/')
         return
@@ -301,7 +300,7 @@ const VideoChat = () => {
       if (myStream.current)
         myStream.current.getTracks().forEach((track) => track.stop());
       if (!choice) {
-        const data = roomClose({ roomName, idx })
+        roomClose({ roomName, idx })
         console.log('폐쇄합니다!')
         dispatch(setChoice(true))
       }
@@ -373,6 +372,7 @@ const VideoChat = () => {
           ref={localVideoRef}
           playsInline
           autoPlay
+          muted
         />
         <div></div>
         <div className={styles.btns}>

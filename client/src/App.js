@@ -9,8 +9,6 @@ import Map from 'pages/Map'
 import Login from 'pages/Login';
 import VideoLayout from 'pages/VideoLayout';
 import ChangeAccount from 'pages/ChangeAccount';
-// import VideoChat from "pages/VideoChat";
-// import Home from 'pages/Home';
 import RegistrationDetail from "pages/RegistrationDetail";
 import HangUp from "pages/HangUp"
 import React, { lazy, Suspense } from 'react';
@@ -27,11 +25,10 @@ function App() {
 
   const [show, setShow] = useState(false);
   const [notification, setNotification] = useState({title: '', body: '', url: ''});
-  const [isTokenFound, setTokenFound] = useState(false);
   // 
 
   onMessageListener().then(payload => {
-    setNotification({title: payload.notification.title, body: payload.notification.body.content, url: payload.data.url})
+    setNotification({title: payload.notification.title, body: payload.notification.body, url: payload.data.url})
     setShow(true);
     console.log(payload);
   }).catch(err => console.log('failed: ', err));
@@ -57,17 +54,22 @@ function App() {
           <Route path="/room/:roomName/:idx" element={<Suspense fallback={<BigSpinner/>}><VideoChat /></Suspense>} />
         </Route>
       </Routes>
-      <Toast onClose={() => setShow(false)} show={show} delay={400000} className="rounded me-2" autohide animation style={{
+      <Toast onClose={() => setShow(false)} show={show} delay={400000} autohide animation style={{
                 position: 'absolute',
-                top: '15%',
-                right: '20%',
-                minWidth: 200, 
+                top: '10%',
+                right: '6%',
               }}>
-                <Toast.Header>
+                <Toast.Header
+                style = {{
+                  marginTop: '10px',
+                  color: '#6c757d',
+                  backgroundColor: 'rgba(255, 255, 255, 0.85)',
+                  borderColor: 'rgba(0, 0, 0, 0.05)'}}
+                >
                   <strong className="mr-auto">{notification.title}</strong>
                 </Toast.Header>
-                <Toast.Body>{notification.body}</Toast.Body>
-                <button><Link to={notification.url}>이동하기</Link></button>
+                {notification.body && <Toast.Body style = {{minHeight : '50px', color: '#6c757d'}}>요청내용 : {notification.body}</Toast.Body>}
+                <Link to={notification.url}>이동하기</Link>
       </Toast>
     </div>
   );

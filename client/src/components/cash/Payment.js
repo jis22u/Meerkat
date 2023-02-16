@@ -2,9 +2,11 @@ import React from 'react';
 import { chargeCoin } from 'api/user'
 import Swal from 'sweetalert2'
 import classes from "./Payment.module.css"
+import { useNavigate } from 'react-router';
 
 // 결제 API
-const  Payment = ({cash, mycoin, setCoin})=> {
+const  Payment = ({cash, mycoin})=> {
+  const navigate = useNavigate()
   function guid() {
     const s4 = () => {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -59,18 +61,25 @@ const  Payment = ({cash, mycoin, setCoin})=> {
         const { success, error_msg } = response;
    
         if (success) {
-          Swal.fire({
-            position: 'center',
-            icon: 'success',
-            title: "결제 성공!",
-            showConfirmButton: false,
-            timer: 1500
-          })
-          console.log(cash)
           chargeCoin({ coin : mycoin })
             .then(({data}) => {
               if (data.status === 'OK'){
-                setCoin(prev => prev + cash / 220)
+                navigate('/mypage')
+                Swal.fire({
+                  position: 'center',
+                  icon: 'success',
+                  title: '결제가 처리 되었습니다.',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
+              } else {
+                Swal.fire({
+                  position: 'center',
+                  icon: data.status,
+                  title: '결제가 실패 되었습니다.',
+                  showConfirmButton: false,
+                  timer: 1500
+                })
               }
             })
           
