@@ -1,7 +1,6 @@
 package B107.server.meerkat.service;
 
 import B107.server.meerkat.entity.CallCheck;
-import B107.server.meerkat.entity.MarkerCheck;
 import B107.server.meerkat.repository.CallCheckRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

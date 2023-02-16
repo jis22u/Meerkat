@@ -1,27 +1,19 @@
 package B107.server.meerkat.controller;
 
-import B107.server.meerkat.config.jwt.JwtTokenProvider;
 import B107.server.meerkat.config.security.auth.PrincipalDetails;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
 import B107.server.meerkat.dto.marker.MarkerDTO;
-import B107.server.meerkat.dto.member.SignModReqDTO;
-import B107.server.meerkat.dto.member.mod;
 import B107.server.meerkat.entity.Marker;
 import B107.server.meerkat.service.MarkerCheckService;
 import B107.server.meerkat.service.MarkerService;
-import antlr.MakeGrammar;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Slf4j
 @RestController

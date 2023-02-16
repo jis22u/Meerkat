@@ -5,7 +5,6 @@ import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
 import B107.server.meerkat.dto.room.RoomDTO;
 import B107.server.meerkat.service.RoomService;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

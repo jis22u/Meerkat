@@ -1,15 +1,12 @@
 package B107.server.meerkat.service;
 
-import B107.server.meerkat.entity.Coin;
 import B107.server.meerkat.entity.Deposit;
-import B107.server.meerkat.repository.CoinRepository;
 import B107.server.meerkat.repository.DepositRepository;
 import B107.server.meerkat.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import scala.Int;
 
 import java.time.LocalDateTime;
 

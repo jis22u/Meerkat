@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
+import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
@@ -9,13 +10,15 @@ import { verifyRoom, roomClose } from 'api/user'
 import Swal from 'sweetalert2'
 import FlipCameraIosIcon from '@mui/icons-material/FlipCameraIos';
 import MicIcon from '@mui/icons-material/Mic';
+import VideocamIcon from '@mui/icons-material/Videocam';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { setChoice } from "store/modules/authSlice";
 
 const Messages = styled.div`
-width: 50%;
-height: 30%;
-border: 1px solid black;
+width: 95%;
 margin-top: 10px;
-
+border: solid 1px;
+height: 200px;
 overflow: scroll;
 
 &::-webkit-scrollbar {
@@ -33,17 +36,17 @@ width: 100%;
 display: flex;
 justify-content: flex-end;
 margin-top: 10px;
+margin-bottom: 10px;
 `;
 
 const MyMessage = styled.div`
-width: 45%;
+
 background-color: #CEBEAA;
 color: #3A3A3A;
 padding: 10px;
 margin-right: 5px;
 text-align: center;
-border-radius: 20%
-
+margin-left: 5px;
 `;
 
 // border-top-right-radius: 10%;
@@ -54,13 +57,14 @@ justify-content: flex-start;
 `;
 
 const PartnerMessage = styled.div`
-width: 45%;
+
 background-color: #CEBEAA;
 color: #3A3A3A;
 padding: 10px;
 margin-left: 5px;
 text-align: center;
-border-radius: 20%
+
+
 `;
 
 const VideoChat = () => {
@@ -77,6 +81,7 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
+  const dispatch = useDispatch
 
   const two = useRef(60);
   const five = useRef(100000);
@@ -84,6 +89,7 @@ const VideoChat = () => {
   const fiveInterval = useRef();
   const [twoSeconds, setTwoSeconds] = useState(60);
   const [fiveSeconds, setFiveSeconds] = useState(100000);
+  const [chat, setChat] = useState(false);
   const cameraOptions = useRef();
 
 
@@ -134,11 +140,11 @@ const VideoChat = () => {
         deviceId ? cameraConstraints : initialConstrains
       )
       localVideoRef.current.srcObject = myStream.current;
-      myStream.current
-      .getTracks()
-      .forEach((track) => {
-        peerRef.current.addTrack(track, myStream.current)
-      })
+      // myStream.current
+      // .getTracks()
+      // .forEach((track) => {
+      //   peerRef.current.addTrack(track, myStream.current)
+      // })
     } catch (e) {
       console.error(e, "getMedia를 실행할 수 없습니다.");
     }
@@ -196,14 +202,14 @@ const VideoChat = () => {
       remoteVideoRef.current.srcObject = e.streams[0];
     }
 
-    // if (myStream.current) {
-    //   console.log('myStream 있어')
-    //   myStream.current
-    //   .getTracks()
-    //   .forEach((track) => {
-    //     peerRef.current.addTrack(track, myStream.current)
-    //   })
-    // } else (console.log('myStream 없어'))
+    if (myStream.current) {
+      console.log('myStream 있어')
+      myStream.current
+      .getTracks()
+      .forEach((track) => {
+        peerRef.current.addTrack(track, myStream.current)
+      })
+    } else (console.log('myStream 없어'))
     }
 
 
@@ -212,24 +218,23 @@ const VideoChat = () => {
 
     // 7006237/8
     const initCall = async () => {
-      // const { data } = await verifyRoom({roomName, idx})
-      // console.log(data)
-      // if (data.status !== "OK") {
-      //   navigate('/')
-      //   return
-      // }
-      // window.onbeforeunload = () => { 
-      //   console.log('새로고침임')
-      //   if (!choice) roomClose({ roomName, idx }) 
-      // }
-      // await을 일단 빼뒀음
+      const { data } = await verifyRoom({roomName, idx})
+      console.log(data)
+      if (data.status !== "OK") {
+        navigate('/')
+        return
+      }
+      window.onbeforeunload = () => { 
+        console.log('새로고침임')
+        return
+      }
+      await getMedia();
       await makeConnection();
-      getMedia();
       const devices = await navigator.mediaDevices.enumerateDevices();
       cameraOptions.current = devices.filter((device) => device.kind === "videoinput");
 
-      socketRef.current = io("http://192.168.31.200:8085", {
-        query: `roomName=${roomName}`,
+      socketRef.current = io('https://i8b107.p.ssafy.io', {
+        query: `roomName=${roomName}`
       });
     
     socketRef.current.on("welcome", async () => {
@@ -303,9 +308,10 @@ const VideoChat = () => {
       if (socketRef.current) socketRef.current.disconnect()
       if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
       if (!choice) {
-        console.log('방폐쇄 요청합니다!')
         const data = roomClose({ roomName, idx })
-        console.log('폐쇄', data)
+        setChoice(true)
+        console.log('폐쇄합니다!')
+        dispatch(setChoice(true))
       }
       // 카메라 + 소켓 disconnect
     }
@@ -345,14 +351,18 @@ const VideoChat = () => {
     )
   }
 
+  const handleShowChat = () => {
+    setChat(prev => !prev)
+  }
+
   return (  
-    <div className="box">
+    <div>
       <div style = {{ display : style ? "none" : "block" }}>
         <Waiting time={twoSeconds}/>
       </div>
-      <div style = {{ display : style ? "block" : "none "}} className={styles.videoBox}>
-        <div>
-          <h1>남은 시간{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h1>
+      <div style = {{ display : style ? "block" : "none"}} className ={styles.container}>
+        <div className={styles.timer}>
+          <h5>남은 시간{parseInt(fiveSeconds / 60)} : {fiveSeconds % 60 < 10 ? '0' + fiveSeconds % 60 : fiveSeconds % 60 }</h5>
         </div>
         <video
           id="remotevideo"
@@ -370,17 +380,20 @@ const VideoChat = () => {
           muted
         />
         <div>
-          <Messages>
-            {messages.map(showMessages)}
-          </Messages>
-          <form onSubmit = {sendMessage}>
-            <input value={text} onChange={(e) => setText(e.target.value)} placeholder="메시지를 입력하세요."></input>
-            <button type="submit" disabled={!text}>🕊️</button>
-          </form>
-        </div>
-        <button onClick={handleCameraOff}>Camera Off</button>
+        <button onClick={handleCameraOff}><VideocamIcon/></button>
         <button onClick={handleMicOff}><MicIcon/></button>
         <button onClick={handleCamDirection}><FlipCameraIosIcon/></button>
+        <button onClick={handleShowChat}><ChatBubbleOutlineIcon/></button>
+        </div>
+        <div className ={styles.messageBox} style = {{display : chat ? "flex" : "none"}}>
+            <Messages>
+              {messages.map(showMessages)}
+            </Messages>
+            <form onSubmit = {sendMessage} className ={styles.formBox}>
+              <input value={text} className ={styles.inputBox} onChange={(e) => setText(e.target.value)} placeholder="채팅 입력하기"></input>
+              <button type="submit" disabled={!text}>🕊️</button>
+            </form>
+        </div>
       </div>
     </div>
   );

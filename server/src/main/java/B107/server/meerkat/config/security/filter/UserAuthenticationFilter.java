@@ -82,6 +82,7 @@ public class UserAuthenticationFilter extends UsernamePasswordAuthenticationFilt
 		log.info(METHOD_NAME + "- successfulAuthentication() ...");
 
 		try {
+
 			String principal = String.valueOf(authResult.getPrincipal());
 			Token token = tokenRepository.findByMemberId(principal);
 			if (token != null) {
