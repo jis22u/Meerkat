@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = "http://192.168.31.200:8081/api"
+// const BASE_URL = "http://192.168.31.200:8081/api"
 // const BASE_URL = 'https://i8b107.p.ssafy.io/api'
 
 const api = axios.create({
