@@ -84,6 +84,7 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
+  const dispatch = useDispatch
 
   const two = useRef(120);
   const five = useRef(300);

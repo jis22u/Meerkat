@@ -11,9 +11,13 @@ const SearchInput = (props) => {
 
     const inputValue = useRef();
 
+    const onKeyPress = () => {
+      buttonHandler();
+    }
+
     return (
       <div className={classes.input}>
-        <input type="text" ref={inputValue} className={classes.inputWindow} placeholder="장소를 구체적으로 입력해주세요."></input>
+        <input type="text" ref={inputValue} className={classes.inputWindow} onKeyPress={onKeyPress} placeholder="장소를 구체적으로 입력해주세요."></input>
         <button onClick={buttonHandler} className={classes.searchBtn}>
           검색
         </button>
