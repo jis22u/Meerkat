@@ -33,7 +33,6 @@ function App() {
   onMessageListener().then(payload => {
     setNotification({title: payload.notification.title, body: payload.notification.body})
     setShow(true);
-    console.log(show, 'show끝은없는고야')
     console.log(payload);
   }).catch(err => console.log('failed: ', err));
 

@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useCallback, useState } from "react";
-import { useDispatch } from "react-redux";
 import io from "socket.io-client";
 import { useParams, useNavigate } from 'react-router-dom';
 import styled from "styled-components";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Waiting from 'components/chat/Waiting'
 import styles from './VideoChat.module.css'
 import { verifyRoom, roomClose } from 'api/user'
@@ -13,6 +12,10 @@ import MicIcon from '@mui/icons-material/Mic';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { setChoice } from "store/modules/authSlice";
+import MicOffIcon from '@mui/icons-material/MicOff';
+import VideocamOffIcon from '@mui/icons-material/VideocamOff';
+import ChatIcon from '@mui/icons-material/Chat';
+
 
 const Messages = styled.div`
 width: 95%;
@@ -83,31 +86,34 @@ const VideoChat = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch
 
-  const two = useRef(60);
-  const five = useRef(100000);
+  const two = useRef(120);
+  const five = useRef(300);
   const twoInterval = useRef();
   const fiveInterval = useRef();
-  const [twoSeconds, setTwoSeconds] = useState(60);
-  const [fiveSeconds, setFiveSeconds] = useState(100000);
+  const [twoSeconds, setTwoSeconds] = useState(120);
+  const [fiveSeconds, setFiveSeconds] = useState(300);
   const [chat, setChat] = useState(false);
   const cameraOptions = useRef();
-
+  const dispatch = useDispatch()
+  const [cameraOn, setCameraOn] = useState(true)
+  const [micOn, setMicOn] = useState(true)
 
 
   const handleMicOff = () => {
+    setMicOn(prev => !prev)
     myStream.current.getAudioTracks()[0].enabled = !myStream.current.getAudioTracks()[0].enabled
   }
 
 
   const handleCameraOff = () => {
+    setCameraOn(prev => !prev)
     myStream.current.getVideoTracks()[0].enabled = !myStream.current.getVideoTracks()[0].enabled
   }
   
 
   const handleCamDirection = async () => {
     const currentCamera = myStream.current.getVideoTracks()[0];
-
-    cameraOptions.forEach((camera) => {
+    cameraOptions.current.forEach((camera) => {
       if (camera.label !== currentCamera.label) {
         getMedia(camera.deviceId)
         return false
@@ -146,7 +152,9 @@ const VideoChat = () => {
       //   peerRef.current.addTrack(track, myStream.current)
       // })
     } catch (e) {
-      console.error(e, "getMedia를 실행할 수 없습니다.");
+      console.error("getMedia를 실행할 수 없습니다.");
+      setCameraOn(false)
+      setMicOn(false)
     }
 
   }, [])
@@ -380,10 +388,10 @@ const VideoChat = () => {
           muted
         />
         <div>
-        <button onClick={handleCameraOff}><VideocamIcon/></button>
-        <button onClick={handleMicOff}><MicIcon/></button>
+        <button onClick={handleCameraOff}>{cameraOn ? <VideocamIcon/> : <VideocamOffIcon/>}</button>
+        <button onClick={handleMicOff}>{micOn ? <MicIcon/> : <MicOffIcon/>}</button>
         <button onClick={handleCamDirection}><FlipCameraIosIcon/></button>
-        <button onClick={handleShowChat}><ChatBubbleOutlineIcon/></button>
+        <button onClick={handleShowChat}>{ chat ? <ChatBubbleOutlineIcon/> : <ChatIcon/>}</button>
         </div>
         <div className ={styles.messageBox} style = {{display : chat ? "flex" : "none"}}>
             <Messages>
