@@ -23,7 +23,6 @@ export const getCoin = async () => {
 
 export const chargeCoin = async ( data ) => {
     const result = await api({ method: 'put', url: '/coin/charge', data: data})
-    console.log(result)
     return result
 }
 

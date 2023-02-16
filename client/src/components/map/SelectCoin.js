@@ -3,7 +3,6 @@ import Slider from "@mui/material/Slider";
 import classes from "./SelectCoin.module.css";
 
 const SelectCoin = (props) => {
-  //설정된 코인 값 바꾸기
   function valuetext(value) {
     props.setCoin(value);
   }

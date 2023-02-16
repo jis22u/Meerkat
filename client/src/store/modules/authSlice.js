@@ -23,7 +23,6 @@ const authSlice = createSlice({
     },
     setSelected: (state, {payload}) => {
       state.selected = payload
-      console.log(state.selected, '어디?')
     }
   },
   extraReducers: {

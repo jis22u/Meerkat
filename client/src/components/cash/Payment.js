@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import classes from "./Payment.module.css"
 import { useNavigate } from 'react-router';
 
-// 결제 API
+
 const  Payment = ({cash, mycoin})=> {
   const navigate = useNavigate()
   function guid() {
@@ -30,32 +30,27 @@ const  Payment = ({cash, mycoin})=> {
 
   function onClickPayment() {
     let uuid = guid();
-    console.log(uuid);
 
-    /* 가맹점 식별하기 */
+
     const { IMP } = window;
     IMP.init('imp21887438');
 
-    /* 결제 데이터 정의하기 */
+
     const data = {
-        // pg : 'kakaopay.TC0ONETIME',
         pg : 'html5_inicis.INIpayTest',
-        pay_method : 'card',  //생략가
-        merchant_uid: uuid,   //상점에서 생성한 고유 주문번호
+        pay_method : 'card', 
+        merchant_uid: uuid,   
         name : '코인 충전',
         amount : cash,
         buyer_email : 'test@portone.io',
-        buyer_name : '구매자이름',                  // 사용자 id 넣어주세요
-        buyer_tel : '010-1234-5678',               // 사용자 전화번호 넣어주세요
+        buyer_name : '구매자이름',               
+        buyer_tel : '010-1234-5678',             
         buyer_addr : '대전 유성구 동서대로 98-39 (덕명동)',     
         buyer_postcode : '123-456',               
         
     };
 
-    console.log(IMP);
-    console.log(data);
-    
-    /* 결제 창 호출하기 */
+
     IMP.request_pay(data, (response) => {
         
         const { success, error_msg } = response;

@@ -26,7 +26,6 @@ export const setMeerkat = async (meerkatContent) => {
 
 export const getMeerkatDetail = async () => {
   const res = await api({ method: "get", url: "/marker/" });
-  console.log(res.data);
   return res.data;
 };
 
@@ -41,7 +40,6 @@ export const modifyMeerkat = async (meerkatContent) => {
     url: "/marker/update",
     data: meerkatContent,
   });
-  console.log(res);
   return res;
 };
 
@@ -51,7 +49,6 @@ export const deleteMeerkat = async () => {
 };
 
 export const sendFcm = ({idx, roomName, content, name, fcmTokenList}) => {
-  console.log(fcmTokenList, '에 알림을 보냈습니다.')
   const option = {
     method: "POST",
     url: "https://fcm.googleapis.com/fcm/send",
@@ -83,8 +80,6 @@ export const sendRequest = async (requestContext) => {
     url: "/call/regist",
     data: requestContext,
   });
-  console.log(requestContext);
-  console.log(res);
-  //방번호 리턴
+
   return res;
 };

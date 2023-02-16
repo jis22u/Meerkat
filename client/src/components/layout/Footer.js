@@ -1,19 +1,9 @@
 import { Link } from "react-router-dom";
-import { useState} from "react";
-import { createTheme } from "@mui/system";
 import classes from "./Footer.module.css";
 import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const navigate = useNavigate();
-
-  const meerkat = createTheme({
-    palette: {
-      background: {
-        default: "#F2E6C7"
-      }
-    }
-  });
   
   return (
     <footer className="hBox">

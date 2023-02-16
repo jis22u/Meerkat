@@ -12,21 +12,15 @@
   margin-top: 10px;
 }
 
-/* .videoBox {
-    width: 100vw;
-    height: 80vh;
-} */
 
 .messageBox {
   flex-direction: column;
   justify-content: center;
   align-items: center;
   display: flex;
-  /* position: absolute; */
 }
 
 .formBox {
-    position: absolute;
   display: flex !important;
   margin-top: 10px;
   width: 95%;
@@ -47,8 +41,6 @@
   background-color: "black";
   position: absolute;
   left: 70%;
-  /* transform: translate(-50%, -50%); */
-  /* object-fit: fill; */
 }
 
 .remoteVideo {

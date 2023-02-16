@@ -22,15 +22,11 @@ const Map = () => {
   const [coin, setCoin] = useState();
 
   useEffect(() => {
-    console.log(check)
-    // 마커를 표시할 위치 객체 배열입니다
     const init = async () => {
       const { data } = await getAllMaker();
       const res = await getCoin();
       setCoin(res.data.value);
       const positions = data.value;
-
-      console.log("script loaded!!!");
       const mapContainer = document.getElementById("map");
       const options = {
         center: new kakao.maps.LatLng(36.32232501935818, 127.29547145868312), //좌표설정

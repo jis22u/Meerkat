@@ -65,7 +65,6 @@ const RegistrationDetail = () => {
         lng: detailContent.lng,
         location: detailContent.location,
       };
-      console.log(newDetailContext);
       // 미어캣 등록 axios 요청
       modifyMeerkat(newDetailContext)
         .then((responce) => {

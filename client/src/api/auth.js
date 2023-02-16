@@ -36,7 +36,6 @@ export const userLogin = createAsyncThunk(
 export const registerUser = createAsyncThunk(
   'auth/register',
   async ( form, { rejectWithValue }) => {
-    console.log(form)
     try {
       const config = {
         headers: {

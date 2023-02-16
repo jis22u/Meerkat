@@ -60,13 +60,10 @@ const ChangeAccount = () => {
   const submitForm = (data) => {
     data.email = data.email.toLowerCase();
     const { checkPassword, memberId, ...form } = data;
-    console.log(form);
     const res = api({ method: "post", url: "/member/updateInfo", data: form });
-    console.log(res);
   };
 
   const deleteHandler = async () => {
-    console.log("삭제 요청");
   };
 
   useEffect(() => {

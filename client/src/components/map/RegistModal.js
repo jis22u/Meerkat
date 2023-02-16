@@ -93,7 +93,6 @@ const RegistModal = (props) => {
           sendFcm(data.value)
         })
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
-        console.log(`/room/${data.value.roomName}/${data.value.idx}`);
       } else {
         Swal.fire({
           position: "center",
@@ -119,12 +118,10 @@ const RegistModal = (props) => {
       lng: lng,
     };
 
-    console.log(myLat + " " + myLng);
-    console.log(lat + " " + lng);
 
     const distance = haversine(start, end);
 
-    if (distance < 1000000) {
+    if (distance < 1000) {
       certification = true;
       Swal.fire({
         position: "center",
@@ -134,7 +131,7 @@ const RegistModal = (props) => {
         timer: 1500,
       });
       certification = true;
-    } else if (distance >= 1000000)
+    } else if (distance >= 1000)
       Swal.fire({
         position: "center",
         icon: "warning",
@@ -152,7 +149,6 @@ const RegistModal = (props) => {
       });
     }
 
-    console.log(distance);
   };
 
   const getLocation = () => {

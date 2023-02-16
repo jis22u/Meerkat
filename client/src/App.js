@@ -30,8 +30,7 @@ function App() {
   onMessageListener().then(payload => {
     setNotification({title: payload.notification.title, body: payload.notification.body, url: payload.data.url})
     setShow(true);
-    console.log(payload);
-  }).catch(err => console.log('failed: ', err));
+  }).catch(err => console.log(err));
 
   return (
     <div>

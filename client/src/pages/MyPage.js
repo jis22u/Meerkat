@@ -17,7 +17,6 @@ const MyPage = () => {
   useEffect(() => {
     getMypage().then((response) => {
       setData(response);
-      console.log(response);
     });
   }, []);
 

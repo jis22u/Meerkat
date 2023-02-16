@@ -6,7 +6,7 @@ import classes from "./Charge.module.css";
 
 const Charge = () => {
   const [cash, setCash] = useState(0);
-  const [mycoin, setMyCoin] = useState(0); // 받아온 코인 데이터를 초기값으로
+  const [mycoin, setMyCoin] = useState(0); 
   const [coin, setCoin] = useState(null);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const Charge = () => {
     };
     init();
   });
-  // 1. API로 사용자의 보유 코인 데이터 받아오기
+
 
   const handleCashUpdate_1000 = () => {
     setCash((prev) => prev + 1100);

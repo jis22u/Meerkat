@@ -4,7 +4,6 @@ import classes from "./SearchInput.module.css";
 const SearchInput = (props) => {
 
     const buttonHandler = () => {
-      console.log(inputValue.current.value + "를 검색할거야");
       props.search(inputValue.current.value);
       inputValue.current.value = "";
     };

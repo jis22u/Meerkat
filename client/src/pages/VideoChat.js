@@ -165,7 +165,6 @@ const VideoChat = () => {
     peerRef.current.oniceconnectionstatechange = (e) => {
       const status = peerRef.current.iceConnectionState;
 
-      console.log("현재 연결 상태:", status);
       if (status === "connected") {
         isJoin.current = true;
         setStyle(true);
@@ -190,17 +189,13 @@ const VideoChat = () => {
     };
 
     if (myStream.current) {
-      console.log("myStream 있어");
       myStream.current.getTracks().forEach((track) => {
         peerRef.current.addTrack(track, myStream.current);
       });
-    } else console.log("myStream 없어");
+    }
   };
 
   useEffect(() => {
-    console.log("Render");
-
-    // 7006237/8
     const initCall = async () => {
       const { data } = await verifyRoom({roomName, idx})
       if (data.status !== "OK") {
@@ -208,7 +203,6 @@ const VideoChat = () => {
         return
       }
       window.onbeforeunload = () => { 
-        console.log('새로고침임')
         if (!choice) roomClose({ roomName, idx })
         return
       }
@@ -233,7 +227,7 @@ const VideoChat = () => {
 
         const offer = await peerRef.current.createOffer();
         peerRef.current.setLocalDescription(offer);
-        console.log("sent the offer");
+
 
         socketRef.current.emit("offer", {
           datas: JSON.stringify(offer),
@@ -247,7 +241,7 @@ const VideoChat = () => {
           ChannelRef.current.onmessage = (event) => receiveMessage(event);
         };
 
-        console.log("received the offer");
+
         peerRef.current.setRemoteDescription(JSON.parse(offer));
         const answer = await peerRef.current.createAnswer();
         peerRef.current.setLocalDescription(answer);
@@ -255,17 +249,17 @@ const VideoChat = () => {
           datas: JSON.stringify(answer),
           roomName: roomName,
         });
-        console.log("sent the answer");
+
       });
 
       socketRef.current.on("answer", (answer) => {
-        console.log("received the answer");
+
         peerRef.current.setRemoteDescription(JSON.parse(answer));
       });
 
       socketRef.current.on("ice", (ice) => {
         peerRef.current.addIceCandidate(JSON.parse(ice));
-        console.log("received candidate");
+
       });
     };
 
@@ -299,10 +293,8 @@ const VideoChat = () => {
         myStream.current.getTracks().forEach((track) => track.stop());
       if (!choice) {
         roomClose({ roomName, idx })
-        console.log('폐쇄합니다!')
         dispatch(setChoice(true))
       }
-      // 카메라 + 소켓 disconnect
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

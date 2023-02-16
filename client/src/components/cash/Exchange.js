@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const Exchange = () => {
   const [balance, setBalance] = useState(0);
-  const [myMoney, setMyMoney] = useState(0); // 받아온 코인 데이터를 초기값으로
+  const [myMoney, setMyMoney] = useState(0);
   const [coin, setCoin] = useState(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const Exchange = () => {
     };
     init();
   },[]);
-  // 1. API로 사용자의 보유 코인 데이터 받아오기
+
 
   const handlebalanceUpdate = (coin) => {
     if (balance - coin < 0) {
