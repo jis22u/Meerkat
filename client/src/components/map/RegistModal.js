@@ -83,6 +83,7 @@ const RegistModal = (props) => {
           sendFcm({token, roomName})
         })
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
+        console.log(`/room/${data.value.roomName}/${data.value.idx}`)
       } else {
         Swal.fire({
           position: "center",
@@ -176,7 +177,7 @@ const RegistModal = (props) => {
         <h3>선택 위치</h3>
         <p>{props.address}</p>
         {props.check && (
-          <button className="cBtn" onClick={confirmBtnHandler}>
+          <button className="btn" onClick={confirmBtnHandler}>
             위치인증
           </button>
         )}
@@ -194,9 +195,9 @@ const RegistModal = (props) => {
           </div>
         )}
         <br></br>
-        <div className="hBtn">
-          <button onClick={props.modalHandler}>취소</button>
-          <button onClick={registButtonHandler}>등록</button>
+        <div className="hBox">
+          <button className={classes.btn} onClick={props.modalHandler}>취소</button>
+          <button className={classes.btn} onClick={registButtonHandler}>등록</button>
         </div>
       </div>
     </div>
