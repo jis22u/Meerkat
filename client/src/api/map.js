@@ -53,24 +53,25 @@ export const deleteMeerkat = async () => {
 export const sendFcm = ({idx, roomName, content, name, fcmTokenList}) => {
   console.log(fcmTokenList, '에 알림을 보냈습니다.')
   const option = {
-    method: 'POST',
-    url: 'https://fcm.googleapis.com/fcm/send',
+    method: "POST",
+    url: "https://fcm.googleapis.com/fcm/send",
     data: {
-      to : `${fcmTokenList}`,
+      to: `${fcmTokenList}`,
       notification: {
         title: `${name}으로부터 요청이 도착했습니다!`,
         body: content,
-        click_action: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`
+        click_action: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`,
       },
       data: {
-        url: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`
-      }
+        url: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`,
+      },
     },
     headers: {
-      'Content-Type': 'application/json',
-      'Authorization': 'key=AAAAo4aUHSc:APA91bFblK-xj0b-GUtgtFGaK2UvRKJvlglwQNFGBjvsxbIwUv5fQZ_uHlaNR-z-WrjEnyNBZ-GVQg8bELDNVv1xhR9qVphygcNj9yebM53QjtY1vZY57ESE6DisWOv3zGb-UoSzk4li' 
-    }
-  }
+      "Content-Type": "application/json",
+      Authorization:
+        "key=AAAAo4aUHSc:APA91bFblK-xj0b-GUtgtFGaK2UvRKJvlglwQNFGBjvsxbIwUv5fQZ_uHlaNR-z-WrjEnyNBZ-GVQg8bELDNVv1xhR9qVphygcNj9yebM53QjtY1vZY57ESE6DisWOv3zGb-UoSzk4li",
+    },
+  };
   axios(option)
 };
 
