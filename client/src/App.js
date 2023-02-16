@@ -69,7 +69,7 @@ function App() {
                   <strong className="mr-auto">{notification.title}</strong>
                 </Toast.Header>
                 {notification.body && <Toast.Body style = {{minHeight : '50px', color: '#6c757d'}}>요청내용 : {notification.body}</Toast.Body>}
-                <Link to={notification.url}>이동하기</Link>
+                <Link to={notification.url} onClick = {() => setShow(false)}>이동하기</Link>
       </Toast>
     </div>
   );
