@@ -94,7 +94,6 @@ const VideoChat = () => {
   const [fiveSeconds, setFiveSeconds] = useState(300);
   const [chat, setChat] = useState(false);
   const cameraOptions = useRef();
-  const dispatch = useDispatch()
   const [cameraOn, setCameraOn] = useState(true)
   const [micOn, setMicOn] = useState(true)
 

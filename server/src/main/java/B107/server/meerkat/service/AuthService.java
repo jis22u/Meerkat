@@ -2,7 +2,6 @@ package B107.server.meerkat.service;
 
 import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
 import B107.server.meerkat.dto.member.SignModReqDTO;
-import B107.server.meerkat.entity.CallCheck;
 import B107.server.meerkat.entity.Coin;
 import B107.server.meerkat.entity.MarkerCheck;
 import B107.server.meerkat.exception.ErrorCode;
@@ -24,7 +23,6 @@ public class AuthService {
     private final DecodeEncodeHandler decodeEncodeHandler;
     private final MemberRepository memberRepository;
     private final MarkerCheckRepository markerCheckRepository;
-    private final CallCheckRepository callCheckRepository;
     private final CoinRepository coinRepository;
 
 
@@ -49,11 +47,11 @@ public class AuthService {
                 .build();
         markerCheckRepository.save(markerCheck);
 
-        CallCheck callCheck = CallCheck.builder()
-                .memberIdx(memberIdx)
-                .ccCheck(false)
-                .build();
-        callCheckRepository.save(callCheck);
+//        CallCheck callCheck = CallCheck.builder()
+//                .memberIdx(memberIdx)
+//                .ccCheck(false)
+//                .build();
+//        callCheckRepository.save(callCheck);
 
         Coin coin = Coin.builder()
                 .memberIdx(memberIdx)

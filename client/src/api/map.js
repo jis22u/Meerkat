@@ -58,8 +58,9 @@ export const sendFcm = ({token, url}) => {
     data: {
       'to': `${token}`,
       'notification': {
-        'title': 'ewfjklfe;efjwefl;',
-        'body': 'eqwfwfewfewfwef??',
+        'title': '알림이 왔어요',
+        'body': '클릭해 보세요!',
+        'click_action' : 'https://i8b107.p.ssafy.io'
       }
     },
     headers: {

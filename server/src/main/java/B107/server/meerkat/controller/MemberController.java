@@ -35,7 +35,6 @@ public class MemberController {
     public ResponseEntity<ResponseDTO> updateFcm(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody Map<String, String> requestBody) {
         Long memberIdx = principalDetails.getMember().getIdx();
         String fcmToken = requestBody.get("fcmToken");
-        System.out.println(">>>>>>>>>>>>>>    "+fcmToken);
         memberService.updateFcm(memberIdx, fcmToken);
         return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ACCESS));
     }

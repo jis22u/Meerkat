@@ -22,7 +22,6 @@ public class RoomService {
 
 
 	private final CallService callService;
-	private final CallCheckService callCheckService;
 	private final DealService dealService;
 	private final DepositService depositService;
 
@@ -57,8 +56,8 @@ public class RoomService {
 		roomRepository.save(room);
 
 		// 해당 방의 요청자 call 제한 풀어주기
-		Long reqIdx = room.getRequestIdx();
-		callCheckService.registCallCheck(reqIdx, false);
+//		Long reqIdx = room.getRequestIdx();
+//		callCheckService.registCallCheck(reqIdx, false);
 
 		// 거래 서비스 연동 - 거래 끝
 		if(room.getResponseIdx() != null) {

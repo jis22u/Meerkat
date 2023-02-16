@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -52,10 +53,7 @@ public class MarkerService {
 	public Long deleteMarker(Long memberIdx) {
 		Marker marker = markerRepository.findValidByMemberIdx(memberIdx);
 
-
-		log.info("[service delete - member idx]" + memberIdx);
-		if(marker.getMember().getIdx() == memberIdx) {
-			log.info("[service delete - if - member idx]" + marker.getMember().getIdx());
+		if(Objects.equals(marker.getMember().getIdx(), memberIdx)) {
 			markerRepository.deleteById(marker.getIdx());
 			return marker.getIdx();
 		}
