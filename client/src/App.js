@@ -54,7 +54,7 @@ function App() {
           <Route path="/room/:roomName/:idx" element={<Suspense fallback={<BigSpinner/>}><VideoChat /></Suspense>} />
         </Route>
       </Routes>
-      <Toast onClose={() => setShow(false)} show={show} delay={400000} autohide animation style={{
+      <Toast onClose={() => setShow(false)} show={show} delay={8000} autohide animation style={{
                 position: 'absolute',
                 top: '10%',
                 right: '6%',
