@@ -93,6 +93,7 @@ const ChangeAccount = () => {
       <h1 className="title">회원정보 수정</h1>
       <form className="customBox" s onSubmit={handleSubmit(submitForm)}>
         {/* {error && <Error>{error}</Error>} */}
+        <br/>
         <div className={classes.formGroup}>
           <label htmlFor="memberId">아이디</label>
           <input
@@ -148,11 +149,15 @@ const ChangeAccount = () => {
           />
         </div>
         <p>{errors.tel?.message}</p>
-        <button type="submit" className="btn" disabled={loading}>
-          {loading ? "대기중" : "수정"}
-          {/* <Spinner /> */}
-        </button>
-        <button className="vigBtn" type="button" onClick={deleteHandler}>탈퇴</button>
+        <div className="">
+          <button type="submit" className="bigBtn" disabled={loading}>
+            {loading ? "대기중" : "수정"}
+            {/* <Spinner /> */}
+          </button>
+          <button className="bigBtn" type="button" onClick={deleteHandler}>
+            탈퇴
+          </button>
+        </div>
       </form>
     </div>
   );

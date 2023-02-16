@@ -3,7 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 
 const BASE_URL = 'https://i8b107.p.ssafy.io/api'
 
-
 export const userLogin = createAsyncThunk(
   'auth/login',
   async ( form , { rejectWithValue }) => {
@@ -13,11 +12,11 @@ export const userLogin = createAsyncThunk(
           'Content-Type': 'application/json',
         },
       }
-      const { data , headers } = await axios.post(
+      const { data, headers } = await axios.post(
         `${BASE_URL}/login`,
         form,
         config
-      )
+      );
 
       localStorage.setItem('userToken', headers.authorization)
 

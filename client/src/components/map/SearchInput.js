@@ -11,7 +11,8 @@ const SearchInput = (props) => {
 
     const inputValue = useRef();
 
-    const onKeyPress = () => {
+    const onKeyPress = (e) => {
+      if(e.key=='Enter')
       buttonHandler();
     }
 

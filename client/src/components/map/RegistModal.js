@@ -47,7 +47,7 @@ const RegistModal = (props) => {
 
       if (hourSelect === 24) hour = "00";
 
-      const startAt = moment().format("YYYY-MM-DD HH:MM:SS");
+      const startAt = moment().format("YYYY-MM-DD HH:MM:00");
       let expDate = moment().format(`YYYY-MM-DD ${hour}:00:00`);
 
       if (

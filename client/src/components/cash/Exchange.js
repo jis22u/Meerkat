@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Payment from "./Payment";
 import { useEffect } from "react";
 import { getCoin } from "api/user";
 import classes from "./Charge.module.css";
@@ -14,14 +13,14 @@ const Exchange = () => {
     const init = async () => {
       const { data } = await getCoin();
       setCoin(data.value);
-      setMyMoney(data.value);
+      setBalance(data.value);
     };
     init();
-  });
+  },[]);
   // 1. API로 사용자의 보유 코인 데이터 받아오기
 
   const handlebalanceUpdate = (coin) => {
-    if (myMoney - coin < 0) {
+    if (balance - coin < 0) {
       Swal.fire({
         position: "center",
         icon: "error",
@@ -31,9 +30,8 @@ const Exchange = () => {
       });
       return;
     }
-
-    setBalance((prev) => prev + (180*coin));
-    setMyMoney((prev) => prev - coin);
+    setBalance((prev) => prev - coin);
+    setMyMoney((prev) => prev + (180*coin));
   };
 
   return (
@@ -47,25 +45,25 @@ const Exchange = () => {
             <div className="hBox">
               <button
                 className={classes.btn}
-                onClick={handlebalanceUpdate(5)}
+                onClick={(e) => {handlebalanceUpdate(5)}}
               >
                 5coin
               </button>
               <button
                 className={classes.btn}
-                onClick={handlebalanceUpdate(50)}
+                onClick={(e) => {handlebalanceUpdate(10)}}
               >
                 50coin
               </button>
               <button
                 className={classes.btn}
-                onClick={handlebalanceUpdate(100)}
+                onClick={(e) => {handlebalanceUpdate(100)}}
               >
                 100coin
               </button>
               <button
                 className={classes.btn}
-                onClick={handlebalanceUpdate(200)}
+                onClick={(e) => {handlebalanceUpdate(200)}}
               >
                 200coin
               </button>
@@ -76,7 +74,7 @@ const Exchange = () => {
             </div>
             <h3>나의 예상 수익</h3>
             <div className={classes.chargeCoin}>
-              <h1> +{myMoney} 원 </h1>
+              <h1> {myMoney} 원 </h1>
             </div>
             <div>* 코인 1개당 KRW 200으로 계산됩니다.</div>
             <div>* 수익 분배 비율은 사용자 8, 거기어때 2로 측정됩니다.</div>
