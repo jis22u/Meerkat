@@ -55,10 +55,6 @@ public class RoomService {
 		room.setIsValid(false);
 		roomRepository.save(room);
 
-		// 해당 방의 요청자 call 제한 풀어주기
-//		Long reqIdx = room.getRequestIdx();
-//		callCheckService.registCallCheck(reqIdx, false);
-
 		// 거래 서비스 연동 - 거래 끝
 		if(room.getResponseIdx() != null) {
 			Call call = callService.findCallByRoomName(roomName);

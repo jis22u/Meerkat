@@ -27,10 +27,9 @@ public class CallController {
 
     private static final String METHOD_NAME = CallController.class.getName();
 
-	private final CallService callService;
-	private final CallCheckService callCheckService;
-	private final RoomService roomService;
-	private final MemberService memberService;
+    private final CallService callService;
+    private final RoomService roomService;
+    private final MemberService memberService;
 
 
     @PostMapping("/regist")
@@ -39,46 +38,43 @@ public class CallController {
 
         Long memberIdx = principalDetails.getMember().getIdx();
 
-//		if(!callCheckService.isCallCheck(memberIdx)) {
-			// 요청 가능한 경우
-			// 1) 요청 등록하고
-//			callCheckService.registCallCheck(memberIdx, true);
-			String roomName = callService.registCall(memberIdx, call);
+        // 요청 가능한 경우
+        // 1) 요청 등록하고
+        String roomName = callService.registCall(memberIdx, call);
 
-			// 2) 방 테이블에 insert
-			Long roomIdx = roomService.registRoom(memberIdx, roomName);
+        // 2) 방 테이블에 insert
+        Long roomIdx = roomService.registRoom(memberIdx, roomName);
 
-			// 3) 근거리 미어캣들 fcm Token 뽑아내기
-			CallDistanceReqDTO callDistanceReqDTO = CallDistanceReqDTO.builder()
-																.lat(call.getLat())
-																.lng(call.getLng())
-																.build();
-			// member idx 받아오기
-			List<Long> markers = callService.findValidMarkers(callDistanceReqDTO, memberIdx);
-			// 반환된 member idx 로 해당 멤버의 fcm 토큰 찾기
-			List<String> fcmTokens = memberService.findFcm(markers);
+        // 3) 근거리 미어캣들 fcm Token 뽑아내기
+        CallDistanceReqDTO callDistanceReqDTO = CallDistanceReqDTO.builder()
+                .lat(call.getLat())
+                .lng(call.getLng())
+                .build();
+        // member idx 받아오기
+        List<Long> markers = callService.findValidMarkers(callDistanceReqDTO, memberIdx);
+        // 반환된 member idx 로 해당 멤버의 fcm 토큰 찾기
+        List<String> fcmTokens = memberService.findFcm(markers);
 
-			String name = principalDetails.getMember().getName();
-			String content = call.getContent();
+        String name = principalDetails.getMember().getName();
+        String content = call.getContent();
 
-			// 4) MemFcmReqDTO 에 방idx, 방이름, fcm Token들 보내기
-			MemFcmReqDTO res = MemFcmReqDTO.builder()
-					.idx(roomIdx)
-					.roomName(roomName)
-					.content(content)
-					.name(name)
-					.fcmTokenList(fcmTokens)
-					.build();
+        // 4) MemFcmReqDTO 에 방idx, 방이름, fcm Token들 보내기
+        MemFcmReqDTO res = MemFcmReqDTO.builder()
+                .idx(roomIdx)
+                .roomName(roomName)
+                .content(content)
+                .name(name)
+                .fcmTokenList(fcmTokens)
+                .build();
 
 
-			if(fcmTokens == null) {
-				// 요청 받을 사람이 없는 경우
-				return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER));
-			}
+        if (fcmTokens == null) {
+            // 요청 받을 사람이 없는 경우
+            return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_CALL_REGISTER));
+        }
 
-			// 요청 idx도 찾아서 보내주기
-			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, res));
-//		}
+        // 요청 idx도 찾아서 보내주기
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_CALL_REGISTER, res));
 
     }
 }
