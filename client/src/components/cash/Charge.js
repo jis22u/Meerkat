@@ -38,6 +38,11 @@ const Charge = () => {
     setMyCoin((prev) => prev + 50);
   };
 
+  const handleCashUpdate_0 = () => {
+    setCash(0)
+    setMyCoin(0)
+  }
+
   return (
     <div className="extendBox2">
       {coin !== null && (
@@ -62,6 +67,7 @@ const Charge = () => {
             </div>
             <div className={classes.chargeCoin}>
               <h1> +{mycoin} coin </h1>
+              <button onClick={handleCashUpdate_0} style={{marginLeft: '10px'}}>초기화</button>
             </div>
             <div>* KRW 200당 코인 1개로 계산됩니다.</div>
             <br />
@@ -72,7 +78,7 @@ const Charge = () => {
             <div>* 결제금액은 충전금액과 카드수수료가 포함됩니다.</div>
             <br />
             <div>
-              <Payment cash={cash} mycoin={mycoin} />
+              <Payment cash={cash} mycoin={mycoin} setCoin={setCoin}/>
             </div>
           </div>
         </div>
