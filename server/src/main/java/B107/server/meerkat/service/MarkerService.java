@@ -52,7 +52,10 @@ public class MarkerService {
 	public Long deleteMarker(Long memberIdx) {
 		Marker marker = markerRepository.findValidByMemberIdx(memberIdx);
 
+
+		log.info("[service delete - member idx]" + memberIdx);
 		if(marker.getMember().getIdx() == memberIdx) {
+			log.info("[service delete - if - member idx]" + marker.getMember().getIdx());
 			markerRepository.deleteById(marker.getIdx());
 			return marker.getIdx();
 		}
