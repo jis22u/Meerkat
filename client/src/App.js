@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Link } from "react-router-dom";
 import Register from "pages/Register";
 import 'App.css';
 import Layout from 'pages/Layout';
@@ -24,12 +24,12 @@ const VideoChat = lazy(() => import('pages/VideoChat'));
 function App() {
 
   const [show, setShow] = useState(false);
-  const [notification, setNotification] = useState({title: '', body: ''});
+  const [notification, setNotification] = useState({title: '', body: '', url: ''});
   const [isTokenFound, setTokenFound] = useState(false);
   // 
 
   onMessageListener().then(payload => {
-    setNotification({title: payload.notification.title, body: payload.notification.body})
+    setNotification({title: payload.notification.title, body: payload.notification.body.content, url: payload.data.url})
     setShow(true);
     console.log(payload);
   }).catch(err => console.log('failed: ', err));
@@ -53,18 +53,17 @@ function App() {
           <Route path="/register" element={<Register />} />
         </Route>
       </Routes>
-      <Toast onClose={() => setShow(false)} show={show} delay={10000} autohide animation style={{
+      <Toast onClose={() => setShow(false)} show={show} delay={400000} className="rounded me-2" autohide animation style={{
                 position: 'absolute',
-                top: '50%',
-                right: '50%',
-                minWidth: 200
+                top: '15%',
+                right: '20%',
+                minWidth: 200, 
               }}>
                 <Toast.Header>
                   <strong className="mr-auto">{notification.title}</strong>
-                  <small>just now</small>
-                  <button>가는 버튼</button>
                 </Toast.Header>
                 <Toast.Body>{notification.body}</Toast.Body>
+                <button><Link to={notification.url}>이동하기</Link></button>
       </Toast>
     </div>
   );

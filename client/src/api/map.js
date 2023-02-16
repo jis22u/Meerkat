@@ -50,17 +50,20 @@ export const deleteMeerkat = async () => {
   return res
 };
 
-export const sendFcm = ({token, url}) => {
-  console.log(token)
+export const sendFcm = ({idx, roomName, content, name, fcmTokenList}) => {
+  console.log(fcmTokenList, '에 알림을 보냈습니다.')
   const option = {
     method: 'POST',
     url: 'https://fcm.googleapis.com/fcm/send',
     data: {
-      'to': `${token}`,
-      'notification': {
-        'title': '알림이 왔어요',
-        'body': '클릭해 보세요!',
-        'click_action' : 'https://i8b107.p.ssafy.io'
+      to : `${fcmTokenList}`,
+      notification: {
+        title: `${name}으로부터 요청이 도착했습니다!`,
+        body: `요청 내용: ${content}`,
+        click_action: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`
+      },
+      data: {
+        url: `https://i8b107.p.ssafy.io/room/${roomName}/${idx}`
       }
     },
     headers: {
@@ -68,9 +71,7 @@ export const sendFcm = ({token, url}) => {
       'Authorization': 'key=AAAAo4aUHSc:APA91bFblK-xj0b-GUtgtFGaK2UvRKJvlglwQNFGBjvsxbIwUv5fQZ_uHlaNR-z-WrjEnyNBZ-GVQg8bELDNVv1xhR9qVphygcNj9yebM53QjtY1vZY57ESE6DisWOv3zGb-UoSzk4li' 
     }
   }
-  const res = axios(option)
-  console.log(res)
-  // request(option, (err, res, body) => {console.log(err,res,body)})
+  axios(option)
 };
 
 
