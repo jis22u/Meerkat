@@ -7,6 +7,7 @@ import MyPage from 'pages/MyPage'
 import Cash from 'pages/Cash'
 import Map from 'pages/Map'
 import Login from 'pages/Login';
+import VideoLayout from 'pages/VideoLayout';
 import ChangeAccount from 'pages/ChangeAccount';
 // import VideoChat from "pages/VideoChat";
 // import Home from 'pages/Home';
@@ -46,12 +47,14 @@ function App() {
           <Route path="/registration-detail" element={<RegistrationDetail />} />
           <Route path="/hangup" element={<HangUp />} />
           <Route path="/map" element={<Map />} />
-          <Route path="/room/:roomName/:idx" element={<Suspense fallback={<BigSpinner/>}><VideoChat /></Suspense>} />
         </Route>
         
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+        </Route>
+        <Route element={<VideoLayout />}>
+          <Route path="/room/:roomName/:idx" element={<Suspense fallback={<BigSpinner/>}><VideoChat /></Suspense>} />
         </Route>
       </Routes>
       <Toast onClose={() => setShow(false)} show={show} delay={400000} className="rounded me-2" autohide animation style={{

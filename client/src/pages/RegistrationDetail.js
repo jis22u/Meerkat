@@ -41,7 +41,7 @@ const RegistrationDetail = () => {
           moment(response.value.regDate).format("YYYY년 MM월 DD일  HH시 mm분")
         );
       });
-  }, []);
+  }, [detailContent]);
 
   const modifyButtonHandler = async () => {
     if (modify === true) {
@@ -121,7 +121,10 @@ const RegistrationDetail = () => {
 
           <div className={classes.buttons}>
             {modify && (
-              <button className={classes.button} onClick={() => setModify(false)}>
+              <button
+                className={classes.button}
+                onClick={() => setModify(false)}
+              >
                 취소
               </button>
             )}
