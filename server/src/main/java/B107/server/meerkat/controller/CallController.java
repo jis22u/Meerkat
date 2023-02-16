@@ -59,10 +59,15 @@ public class CallController {
 			// 반환된 member idx 로 해당 멤버의 fcm 토큰 찾기
 			List<String> fcmTokens = memberService.findFcm(markers);
 
+			String name = principalDetails.getMember().getName();
+			String content = call.getContent();
+
 			// 4) MemFcmReqDTO 에 방idx, 방이름, fcm Token들 보내기
 			MemFcmReqDTO res = MemFcmReqDTO.builder()
 					.idx(roomIdx)
 					.roomName(roomName)
+					.content(content)
+					.name(name)
 					.fcmTokenList(fcmTokens)
 					.build();
 
