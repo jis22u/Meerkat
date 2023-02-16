@@ -84,7 +84,6 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
-  const dispatch = useDispatch
 
   const two = useRef(120);
   const five = useRef(300);
@@ -234,6 +233,7 @@ const VideoChat = () => {
       }
       window.onbeforeunload = () => { 
         console.log('새로고침임')
+        if (!choice) roomClose({ roomName, idx })
         return
       }
       await getMedia();
@@ -317,7 +317,6 @@ const VideoChat = () => {
       if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
       if (!choice) {
         const data = roomClose({ roomName, idx })
-        setChoice(true)
         console.log('폐쇄합니다!')
         dispatch(setChoice(true))
       }
