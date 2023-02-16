@@ -54,7 +54,7 @@ public class CallService {
         Double lat = callDistanceReqDTO.getLat();
         Double lng = callDistanceReqDTO.getLng();
         Double range = 0.005; // 500m 거리, 예시입니다. 경도 기준으로 500m이 얼마나 되는지는 위도에 따라 다릅니다.
-        return markerRepository.findValidMarkers(lat, lng, range);
+        return markerRepository.findValidMarkers(lat, lng, range, idx);
     }
 
 
