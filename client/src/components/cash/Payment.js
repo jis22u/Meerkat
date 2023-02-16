@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import classes from "./Payment.module.css"
 
 // 결제 API
-const  Payment = ({cash, mycoin})=> {
+const  Payment = ({cash, mycoin, setCoin})=> {
   function guid() {
     const s4 = () => {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
@@ -68,7 +68,12 @@ const  Payment = ({cash, mycoin})=> {
           })
           console.log(cash)
           chargeCoin({ coin : mycoin })
-
+            .then(({data}) => {
+              if (data.status === 'OK'){
+                setCoin(prev => prev + cash / 220)
+              }
+            })
+          
 
         } else {
           Swal.fire({

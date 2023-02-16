@@ -17,6 +17,11 @@ import BigSpinner from 'components/layout/BigSpinner'
 import { onMessageListener } from './api/firebase';
 import { Toast } from 'react-bootstrap';
 import { useState } from 'react'
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> e5c3279f674882e70953f9d42a51816a4943c252
 
 const Home = lazy(() => import('pages/Home'));
 const VideoChat = lazy(() => import('pages/VideoChat'));
