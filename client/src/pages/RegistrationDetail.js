@@ -67,30 +67,29 @@ const RegistrationDetail = () => {
       };
       console.log(newDetailContext);
       // 미어캣 등록 axios 요청
-      await modifyMeerkat(newDetailContext).then((responce) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `${responce.data.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setDetailContent(newDetailContext);
-      });
-      setModify(false);
+      modifyMeerkat(newDetailContext)
+        .then((responce) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `${responce.data.message}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setDetailContent(newDetailContext);
+          setModify(false);
+        })
     } else {
       setModify(true);
     }
   };
 
   const deletButtonHandler = async () => {
-    const { data } = await deleteMeerkat()
+    const { data } = await deleteMeerkat();
     if (data.status === "OK") {
       setRegist(false);
-      setDetailContent(); 
+      setDetailContent();
     }
-
-    
   };
 
   return (
@@ -113,7 +112,7 @@ const RegistrationDetail = () => {
             {!modify && (
               <div>
                 <h3>종료시간</h3>
-                <p>{endTime}</p>
+                <p>{detailContent.expDate}</p>
               </div>
             )}
             {modify && <ExpiredDate hourSelect={hourSelect} />}
@@ -121,7 +120,10 @@ const RegistrationDetail = () => {
 
           <div className={classes.buttons}>
             {modify && (
-              <button className={classes.button} onClick={() => setModify(false)}>
+              <button
+                className={classes.button}
+                onClick={() => setModify(false)}
+              >
                 취소
               </button>
             )}

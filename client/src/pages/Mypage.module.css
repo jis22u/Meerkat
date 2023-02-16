@@ -19,14 +19,14 @@
 .linkBox {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
   width: 9rem;
 }
 
 .modifyInfo {
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 .coinBox {
@@ -52,7 +52,9 @@
   border-radius: 3rem;
   margin-top: 1rem;
   margin-bottom: 10px;
+  padding-bottom: 10px;
   height: fit-content;
+  min-height: 25rem;
   width: 100%;
   height: 100%;
   display: flex;

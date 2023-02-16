@@ -19,6 +19,7 @@
   .btn{
       width: fit-content;
       height: 2rem;
+      margin: 2px;
   }
 
   .exchangeBtn{
