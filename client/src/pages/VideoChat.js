@@ -68,11 +68,11 @@ const VideoChat = () => {
   const { roomName, idx } = useParams();
   const [text, setText] = useState("");
   const [messages, setMessages] = useState([]);
-  const { choice } = useSelector((state) => state.auth);
-  const [style, setStyle] = useState(choice);
-  const isJoin = useRef(choice);
-  const navigate = useNavigate();
-  const dispatch = useDispatch;
+  const { choice } = useSelector((state) => state.auth)
+  const [ style, setStyle ] = useState(choice)
+  const isJoin = useRef(choice)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const two = useRef(120);
   const five = useRef(300);
@@ -101,19 +101,21 @@ const VideoChat = () => {
     const currentCamera = myStream.current.getVideoTracks()[0];
     cameraOptions.current.forEach((camera) => {
       if (camera.label !== currentCamera.label) {
-        getMedia(camera.deviceId);
-        return false;
+        getMedia(camera.deviceId)
+          .then(res => {
+            if (peerRef.current) {
+              const videoTrack = myStream.current.getVideoTracks()[0];
+              const videoSender = peerRef.current
+                .getSenders()
+                .find((sender) => sender.track.kind === "video");
+              videoSender.replaceTrack(videoTrack);
+            }
+          })
+        return false
       }
-    });
+    })
+  }
 
-    if (peerRef.current) {
-      const videoTrack = myStream.current.getVideoTracks()[0];
-      const videoSender = peerRef.current
-        .getSenders()
-        .find((sender) => sender.track.kind === "video");
-      videoSender.replaceTrack(videoTrack);
-    }
-  };
 
   const getMedia = useCallback(async (deviceId) => {
     const initialConstrains = {
@@ -131,11 +133,7 @@ const VideoChat = () => {
         deviceId ? cameraConstraints : initialConstrains
       );
       localVideoRef.current.srcObject = myStream.current;
-      // myStream.current
-      // .getTracks()
-      // .forEach((track) => {
-      //   peerRef.current.addTrack(track, myStream.current)
-      // })
+
     } catch (e) {
       console.error("getMedia를 실행할 수 없습니다.");
       setCameraOn(false);
@@ -205,11 +203,15 @@ const VideoChat = () => {
 
     // 7006237/8
     const initCall = async () => {
-      const { data } = await verifyRoom({ roomName, idx });
-      console.log(data);
+      const { data } = await verifyRoom({roomName, idx})
       if (data.status !== "OK") {
-        navigate("/");
-        return;
+        navigate('/')
+        return
+      }
+      window.onbeforeunload = () => { 
+        console.log('새로고침임')
+        if (!choice) roomClose({ roomName, idx })
+        return
       }
       window.onbeforeunload = () => {
         console.log("새로고침임");
@@ -298,9 +300,9 @@ const VideoChat = () => {
       if (myStream.current)
         myStream.current.getTracks().forEach((track) => track.stop());
       if (!choice) {
-        const data = roomClose({ roomName, idx });
-        console.log("폐쇄합니다!");
-        dispatch(setChoice(true));
+        roomClose({ roomName, idx })
+        console.log('폐쇄합니다!')
+        dispatch(setChoice(true))
       }
       // 카메라 + 소켓 disconnect
     };
@@ -364,7 +366,6 @@ const VideoChat = () => {
           ref={remoteVideoRef}
           playsInline
           autoPlay
-          muted
         />
         <video
           className={styles.localVideo}

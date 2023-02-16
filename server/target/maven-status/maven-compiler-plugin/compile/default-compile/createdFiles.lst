@@ -29,7 +29,6 @@ B107\server\meerkat\dto\token\TokenResDTO$TokenResDTOBuilder.class
 B107\server\meerkat\exception\MemberNotFoundException.class
 B107\server\meerkat\repository\MarkerRepository.class
 B107\server\meerkat\entity\ExpiredMarker$ExpiredMarkerBuilder.class
-B107\server\meerkat\service\AdminService.class
 B107\server\meerkat\entity\QToken.class
 B107\server\meerkat\dto\token\CommonTokenDTO.class
 B107\server\meerkat\entity\Call.class
@@ -68,7 +67,6 @@ B107\server\meerkat\dto\marker\MarkerDTO.class
 B107\server\meerkat\controller\MarkerController.class
 B107\server\meerkat\entity\Marker$MarkerBuilder.class
 B107\server\meerkat\config\security\handler\UserLoginFailureHandler.class
-B107\server\meerkat\controller\AdminController.class
 B107\server\meerkat\entity\QMember.class
 B107\server\meerkat\entity\Token.class
 B107\server\meerkat\entity\Report.class
