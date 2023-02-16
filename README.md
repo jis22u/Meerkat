@@ -57,10 +57,8 @@ SSAFY 8기 2학기 공통프로젝트 - 거기어때
 
 - Visual Studio Code IDE
 - React 17.0.2
-- Redux
-- socket.io
-- Vuetify 2.4.0
-- Vuex 3.4.0
+- Redux 8.0.5
+- socket.io 2.1.1
 - Webstomp-Client 1.2.6
 - Sock.js-Client 1.5.2
 - Firebase 9.6.6
@@ -74,6 +72,12 @@ SSAFY 8기 2학기 공통프로젝트 - 거기어때
 - Jenkins
 - Nginx
 - Certbot
+
+### API
+
+- IAMPORT(아임포트) - 결제 모듈
+- Firebase Cloud Messeging - Push 알람
+- Kakao Map
 
 ## 프로젝트 파일 구조
 
