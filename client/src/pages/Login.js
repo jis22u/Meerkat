@@ -1,29 +1,28 @@
-import { useEffect } from 'react'
-import { useForm } from 'react-hook-form'
-import { useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
-import { userLogin } from 'api/auth'
+import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { userLogin } from "api/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-
+import classes from "./Login.module.css";
+import PersonIcon from "@mui/icons-material/Person";
+import HttpsIcon from "@mui/icons-material/Https";
+import Swal from "sweetalert2";
+import Spinner from "components/layout/Spinner";
+import { fetchToken } from "api/firebase";
+import { sendToken } from "api/user";
 // import Error from 'components/layout/Error'
 
 const schema = yup
   .object({
-    memberId: yup
-      .string()
-      .required("비밀번호를 입력해 주세요 😦"),
-      password: yup
-      .string()
-      .required("비밀번호를 입력해 주세요 😦")
+    memberId: yup.string().required("아이디를 입력해 주세요"),
+    password: yup.string().required("비밀번호를 입력해 주세요"),
   })
   .required();
 
 const LoginScreen = () => {
-  const { loading, userInfo } = useSelector((state) => state.auth)
-  // error 불러와서 쓰기
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const { loading } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -32,44 +31,59 @@ const LoginScreen = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  
 
-  useEffect(() => {
-    if (userInfo) {
-      navigate('/home')
+  const submitForm = async (data) => {
+    data.memberId = data.memberId.toLowerCase();
+    const { payload } = await dispatch(userLogin(data));
+    if (payload.status !== "OK") {
+      Swal.fire({
+        position: "center",
+        icon: "warning",
+        title: `${payload.message}`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    } else {
+      fetchToken().then((res) => {
+        const payload = { fcmToken: res.currentToken };
+        sendToken(payload);
+      });
     }
-  }, [navigate, userInfo])
-
-  const submitForm = (data) => {
-    dispatch(userLogin(data))
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      {/* {error && <Error>{error}</Error>} */}
-      <div className='form-group'>
-        <label htmlFor='memberId'>아이디</label>
-        <input
-          type='text'
-          className='form-input'
-          {...register('memberId')}
-        />
-        <p>{errors.memberId?.message}</p>
+    <div className={classes.box}>
+      <br />
+      <h1 className="title">로그인</h1>
+      <div className="customBox">
+        <form onSubmit={handleSubmit(submitForm)} className={classes.form}>
+          {/* {error && <Error>{error}</Error>} */}
+          <div className={classes.formGroup}>
+            <PersonIcon fontSize="large"></PersonIcon>
+            <input type="text" className={classes.input} placeholder="아이디" {...register("memberId")} />
+          </div>
+          <p>{errors.memberId?.message}</p>
+          <div className={classes.formGroup}>
+            <HttpsIcon fontSize="large"></HttpsIcon>
+            <input type="password" className={classes.input} placeholder="비밀번호" {...register("password")} />
+          </div>
+          <p>{errors.password?.message}</p>
+          <button
+            type="submit"
+            className={classes.loginBtn}
+            disabled={loading}
+            style={{ display: "flex", justifyContent: "center", alignItems: "center" }}
+          >
+            {loading ? <Spinner /> : "로그인"}
+            {/* <Spinner /> */}
+          </button>
+        </form>
       </div>
-      <div className='form-group'>
-        <label htmlFor='password'>비밀번호</label>
-        <input
-          type='password'
-          className='form-input'
-          {...register('password')}
-        />
+      <div className={classes.registerLink}>
+        <p>계정이 없으신가요?</p> &nbsp;
+        <Link to="/register">회원가입하기</Link>
       </div>
-      <p>{errors.password?.message}</p>
-      <button type='submit' className='button' disabled={loading}>
-        {loading ? '대기중' : 'Login'}
-        {/* <Spinner /> */}
-      </button>
-    </form>
-  )
-}
-export default LoginScreen
+    </div>
+  );
+};
+export default LoginScreen;

@@ -1,33 +1,16 @@
-
-
-// const Header = () => {
-//     return (
-//         <header>
-//             Header입니다.
-//         </header>
-//     );
-// };
-
-// export default Header
-
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-
-// 거기어때 글씨 중앙정렬
-
-export default function Header() {
+import classes from "./Header.module.css";
+import {Link} from "react-router-dom";
+ 
+const Header = () => {
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar variant="dense">
-          <Typography align="center" variant="h6" color="inherit" component="div">
-            거기어때
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </Box>
+    <header>
+      <div className={classes.brown}></div>
+      <Link to="/">
+      <img src= {process.env.PUBLIC_URL + "/img/logo.png"} alt="logo" className={classes.img}></img>
+      </Link>
+      <div className={classes.brown}></div>
+    </header>
   );
 }
+
+export default Header;

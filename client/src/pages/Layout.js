@@ -1,22 +1,25 @@
 import { Outlet } from 'react-router-dom';
 import Header from 'components/layout/Header'
 import Footer from 'components/layout/Footer'
+import { Navigate, useLocation } from "react-router-dom";
+import { useSelector } from 'react-redux';
 
 
 const Layout = () => {
-
-    // Login 여부에 따라 render 또는 Login page로 보내기 => Login 후 그 전 페이지로 돌려 보내기 (useEffect 사용)
+    const { isLogin } = useSelector((state) => state.auth)
+    const location = useLocation()
+    const pathname = location.pathname
 
     return (
-        <div>
+        <div className='body'>
             <Header />
-
-            <main>
-                <Outlet /> 
-            </main>
-
-            <Footer />
-            {/* 페이지에 따라서 Footer 적용여부 정하기 */}
+            
+                <main className=''>
+                    { !isLogin ? <Navigate to="/login" replace = { true } state = {{ path : pathname }} /> : < Outlet /> }
+                </main>
+            
+            { (pathname !== '/map' && pathname !== '/hangup' && !pathname.includes('/room'))
+            && <Footer /> }
         </div>
     );
 };

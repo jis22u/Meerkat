@@ -2,16 +2,14 @@ package B107.server.meerkat.entity;
 
 import B107.server.meerkat.config.utils.BaseAtTime;
 import B107.server.meerkat.config.utils.BooleanToYNConverter;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import B107.server.meerkat.dto.member.SignModReqDTO;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 
 @DynamicInsert
@@ -19,6 +17,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "member")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,24 +25,23 @@ public class Member extends BaseAtTime implements Serializable {
 
     // 사용자 Idx
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @NotNull
-    @Column(name = "member_id")
+    @NotBlank
+    @Column(name = "member_id", unique = true)
     private String memberId; // 사용자 ID
 
-    @NotNull
+    @NotBlank
     private String password; // 사용자 pwd
 
-    @NotNull
+    @NotBlank
     private String name; // 사용자 name
 
-    @NotNull
+    @NotBlank
     private String email; // 사용자 email
 
-    @NotNull
+    @NotBlank
     private String tel; // 사용자 전화번호
 
     @ColumnDefault("0")
@@ -58,6 +56,7 @@ public class Member extends BaseAtTime implements Serializable {
     @Column(name = "fcm_token")
     private String fcmToken; // fcm 알림을 받을 token
 
+
     @Override
     public void prePersist() {
         super.prePersist();
@@ -66,4 +65,15 @@ public class Member extends BaseAtTime implements Serializable {
         this.ban = false;
         this.fcmToken = "";
     }
+
+    public void update(SignModReqDTO signModReqDTO) {
+        this.name = signModReqDTO.getName();
+        this.email = signModReqDTO.getEmail();
+        this.tel = signModReqDTO.getTel();
+    }
+
+    public void update(String newPassword) {
+        this.password = newPassword;
+    }
+
 }

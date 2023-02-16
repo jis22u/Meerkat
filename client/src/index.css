@@ -1,13 +1,196 @@
-body {
+@font-face {
+  font-family: "ddangs";
+  src: url("../public/font/땅스부대찌개OTF_Bold.otf");
+}
+
+@font-face {
+  font-family: "hyemin";
+  src: url("../public/font/IM_Hyemin-Bold.otf");
+}
+
+html{
+  font-size: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(75, 31, 15)
+}
+
+html, body, .body, #root{
+  height: 100%;
+  width: 100%;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(255, 249, 228);
+  min-width: 200px;
+}
+
+.swal2-title {
+  font-size : 1rem !important;
+  color: rgb(75, 31, 15) !important;;
+}
+
+.swal2-modal {
+  background-color: rgb(255, 252, 243) !important;
+  width: 90% !important;
+  max-width: 400px !important;
+}
+
+header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background-color: rgb(250, 233, 200);
+}
+
+main{
+  position: absolute;
+  margin : 0;
+  top: 100px;
+  bottom: 80px;
+  left: 0px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 249, 228);
+}
+
+footer {
+  position: absolute;
+  height: 80px;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  overflow: hidden;
+  background-color: rgb(242, 230, 199);
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "ddangs";
+  color: rgb(75, 31, 15);
+}
+
+span,
+p,
+div {
+  font-family: "hyemin";
+  color: rgb(75, 31, 15);
+}
+
+hr {
+  background-color: rgb(75, 31, 15);
+  height: 0.2rem;
+}
+
+.customBox {
+  padding: 1.5rem;
+  text-align: center;
+  height: fit-content;
+  border-radius: 24px;
+  border: 0.6rem solid rgb(75, 31, 15);
+  text-align: center;
+  justify-content: center;
+}
+
+.title {
+  margin: 0 auto;
+  top: 2.0rem;
+  width: 13rem;
+  position: relative;
+  text-align: center;
+  padding: 0.2rem;
+  background-color: rgb(255, 249, 228);
+  color: rgb(75, 31, 15);
+}
+
+button {
+  background-color: rgb(75, 31, 15);
+  color: white;
+  border-radius: 16px;
+  font-family: "hyemin";
+  border: 0;
+}
+
+.box {
+  overflow: auto;
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: fit-content;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hBox{
+  width: 100%;
+display: flex;
+align-items: center;  
+justify-content: center;
+justify-content: space-evenly;
+}
+
+.btn{
+  width:5rem;
+  height:2.2rem;
+  border: 0;
+}
+
+.bigBtn{
+  width: 100%;
+  height: 3rem;
+  border: 0;
+  margin: 1px;
+}
+
+/* 100% 쫙쫙 늘려줌 */
+.extendBox{
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: fit-content;
+  max-width: 480px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* 90% 쫙쫙 늘려줌 */
+.extendBox2 {
+  left: 0px;
+  right: 0px;
+  width: 90%;
+  height: fit-content;
+  max-width: 480px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.videoBox{
+  width: 100%;
+  height: 100%;
 }

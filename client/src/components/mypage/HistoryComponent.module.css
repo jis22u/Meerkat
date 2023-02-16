@@ -1,0 +1,19 @@
+.item{
+    width: 80%;
+    justify-content: space-between;
+    display: flex;
+    align-items: center;
+    margin: 12px 10px 0px 10px;
+    text-align: center;
+    background-color: rgba(106, 64, 53, 0.446);
+    border-radius: 20rem;
+    padding: 10px 20px 10px 20px;
+}
+
+.img{
+    width: 4rem;
+}
+
+.location{
+    margin: 8px;
+}

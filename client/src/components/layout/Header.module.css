@@ -1,0 +1,11 @@
+.img {
+  width: 13rem;
+  margin: 0 auto;
+  display: block;
+}
+
+.brown {
+  height: 0.6rem;
+  margin: 0;
+  background-color: rgb(75, 31, 15);
+}

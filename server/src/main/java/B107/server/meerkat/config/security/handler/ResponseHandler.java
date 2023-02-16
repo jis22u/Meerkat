@@ -9,22 +9,39 @@ import java.io.IOException;
 
 @Slf4j
 public class ResponseHandler {
-	private static final String METHOD_NAME = ResponseHandler.class.getName();
-	private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String METHOD_NAME = ResponseHandler.class.getName();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
-	public String convertResult(HttpStatus httpStatus, String message) {
-		log.info(METHOD_NAME + "- convertResult() ...");
-		String result = "메시지 변환 에러";
-		try {
-			result = objectMapper.writeValueAsString(ResponseDTO.builder()
-					.status(httpStatus)
-					.message(message)
-					.build());
-		} catch (IOException ie) {
-			log.error("입력 값을 읽어오지 못했습니다. " + METHOD_NAME, ie);
-		} catch (Exception e) {
-			log.error("SERVER ERROR " + METHOD_NAME, e);
-		}
-		return result;
-	}
+    public String convertResult(HttpStatus httpStatus, String message) {
+        log.info(METHOD_NAME + "- convertResult() ...");
+        String result = "메시지 변환 에러";
+        try {
+            result = objectMapper.writeValueAsString(ResponseDTO.builder()
+                    .status(httpStatus)
+                    .message(message)
+                    .build());
+        } catch (IOException ie) {
+            log.error("입력 값을 읽어오지 못했습니다. " + METHOD_NAME, ie);
+        } catch (Exception e) {
+            log.error("SERVER ERROR " + METHOD_NAME, e);
+        }
+        return result;
+    }
+
+    public String convertResult(HttpStatus httpStatus, String message, Object value) {
+        log.info(METHOD_NAME + "- convertResult() ...");
+        String result = "메시지 변환 에러";
+        try {
+            result = objectMapper.writeValueAsString(ResponseDTO.builder()
+                    .status(httpStatus)
+                    .message(message)
+                    .value(value)
+                    .build());
+        } catch (IOException ie) {
+            log.error("입력 값을 읽어오지 못했습니다. " + METHOD_NAME, ie);
+        } catch (Exception e) {
+            log.error("SERVER ERROR " + METHOD_NAME, e);
+        }
+        return result;
+    }
 }

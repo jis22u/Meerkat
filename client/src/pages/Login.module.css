@@ -1,0 +1,49 @@
+.form {
+  padding: 15px;
+  margin-top: 10px;
+  margin-right: 4px;
+  display: flex;
+  flex-flow: column;
+  justify-items: center;
+  align-items: center;
+}
+
+.input {
+  width: 90%;
+  margin-left: 0.5rem;
+  height: 2.5rem;
+  border: 3px solid rgb(75, 31, 15);
+  border-radius: 10px;
+  padding-left: 10px;
+}
+
+.formGroup {
+  width: 120%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.loginBtn {
+  width: 120%;
+  height: 3rem;
+}
+
+.registerLink {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.box {
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: fit-content;
+  max-width: 600px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}

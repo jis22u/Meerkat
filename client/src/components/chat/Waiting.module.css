@@ -1,0 +1,18 @@
+.picture {
+  width: 80%;
+}
+
+.container {
+  position: fixed;
+  text-align: center;
+  color: blue;
+}
+
+.centered {
+  position: fixed;
+  top: 62%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10rem;
+}
+

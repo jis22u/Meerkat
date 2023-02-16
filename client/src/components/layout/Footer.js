@@ -1,28 +1,18 @@
-import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction } from '@mui/material';
-import { useState } from 'react';
-import HomeIcon from '@mui/icons-material/Home';
-import ContactPageIcon from '@mui/icons-material/ContactPage';
-import LocalAtmIcon from '@mui/icons-material/LocalAtm';
+import { Link } from "react-router-dom";
+import classes from "./Footer.module.css";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
-    const [selected , setSelected] = useState(0);
-    // 새로고침 할 때 Home으로 돌아가지는 것을 막아야함 (로컬 스토리지 이용하면 해결될 듯?)
-    return (
-        <footer>
-            <BottomNavigation
-              showLabels
-              value={selected}
-              onChange={(event, newValue) => {
-                setSelected(newValue);
-              }}
-            >
-              <BottomNavigationAction label="Home" icon={<HomeIcon />} component={Link} to="/" />
-              <BottomNavigationAction label="My Page" icon={<ContactPageIcon />} component={Link} to="/mypage" />
-              <BottomNavigationAction label="Cash" icon={<LocalAtmIcon />} component={Link} to="/cash"/>
-            </BottomNavigation>
-        </footer>
-    );
+  const navigate = useNavigate();
+  
+  return (
+    <footer className="hBox">
+      <Link to="/"><img className={classes.img} src="img/home_icon.png"/></Link>
+      <Link to="/mypage"><img className={classes.img} src="img/mypage_icon.png"/></Link>
+      <Link to="/registration-detail"><img className={classes.img} src="img/book_icon.png"/></Link>
+      <img onClick={() => navigate("/cash", {state:{check:true}})} className={classes.img} src="img/coin_icon.png"/>
+    </footer>
+  );
 };
 
 export default Footer;

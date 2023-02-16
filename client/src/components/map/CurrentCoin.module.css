@@ -1,0 +1,8 @@
+.coinBox {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  right: 0;
+  bottom: 130px;
+  background-color: rgba(242, 230, 199, 0.700);
+}

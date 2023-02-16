@@ -1,0 +1,27 @@
+.box {
+  left: 0px;
+  right: 0px;
+  width: 100%;
+  height: fit-content;
+  max-width: 600px;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+}
+
+.input {
+  width: 60%;
+  height: 1.5rem;
+  border: 3px solid rgb(75, 31, 15);
+  border-radius: 5px;
+  margin-left: 5px;
+  padding-left: 10px;
+}
+
+.formGroup{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

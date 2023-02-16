@@ -1,0 +1,25 @@
+.profile {
+  width: 30%;
+  margin: 8%;
+  max-width: 200px;
+}
+
+.choiceBtn {
+  display: block;
+  width: 50%;
+  margin: 10px auto;
+  max-width: 600px;
+  border-style: outset;
+  border-width: 20px 20px 20px 20px;
+  border-radius: 30px;
+  border-color: rgb(75, 31, 15);
+  background-color: rgb(105, 73, 61);
+}
+
+.explain {
+  width: 80%;
+  max-width: 600px;
+  display: block;
+  margin: auto;
+  margin-top: 2%;
+}

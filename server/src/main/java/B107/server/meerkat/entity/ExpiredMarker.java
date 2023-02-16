@@ -27,13 +27,18 @@ public class ExpiredMarker extends BaseAtTime implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    // 등록자 ID
+
+    // 마커 테이블에서 넘어온 idx
+    @Column(name = "marker_idx")
+    private Long markerIdx;
+
+    // 등록자 IDX
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "member_idx")
     private Member member;
 
-    private Float lat; // 위도
-    private Float lng; // 경도
+    private Double lat; // 위도
+    private Double lng; // 경도
     private String location; // 위치 정보
 
     @Column(name = "reg_date")
@@ -41,4 +46,5 @@ public class ExpiredMarker extends BaseAtTime implements Serializable {
 
     @Column(name = "exp_date")
     private LocalDateTime expDate; // 종료 시간
+
 }
