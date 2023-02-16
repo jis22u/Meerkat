@@ -68,7 +68,7 @@ const RegistModal = (props) => {
       navigate("/registration-detail");
       //요청일 때
     } else {
-      if (props.coin - coin <= 0) {
+      if (props.coin - coin < 0) {
          Swal.fire({
            position: "center",
            icon: "warning",
@@ -124,7 +124,7 @@ const RegistModal = (props) => {
 
     const distance = haversine(start, end);
 
-    if (distance < 50900090909090) {
+    if (distance < 1000) {
       certification = true;
       Swal.fire({
         position: "center",
@@ -134,7 +134,7 @@ const RegistModal = (props) => {
         timer: 1500,
       });
       certification = true;
-    } else if (distance >= 50900090909090)
+    } else if (distance >= 1000)
       Swal.fire({
         position: "center",
         icon: "warning",

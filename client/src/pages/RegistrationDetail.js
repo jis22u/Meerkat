@@ -112,7 +112,11 @@ const RegistrationDetail = () => {
             {!modify && (
               <div>
                 <h3>종료시간</h3>
-                <p>{detailContent.expDate}</p>
+                <p>
+                  {moment(detailContent.expDate).format(
+                    "YYYY년 MM월 DD일  HH시 mm분"
+                  )}
+                </p>
               </div>
             )}
             {modify && <ExpiredDate hourSelect={hourSelect} />}

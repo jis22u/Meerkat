@@ -8,7 +8,6 @@ import styles from "./VideoChat.module.css";
 import { verifyRoom, roomClose } from "api/user";
 import Swal from "sweetalert2";
 import { setChoice } from "store/modules/authSlice";
-import Header from "components/layout/Header";
 
 const Messages = styled.div`
   width: 90%;
@@ -225,7 +224,7 @@ const VideoChat = () => {
         (device) => device.kind === "videoinput"
       );
 
-      socketRef.current = io("https://i8b107.p.ssafy.io", {
+      socketRef.current = io("'https://i8b107.p.ssafy.io", {
         query: `roomName=${roomName}`,
       });
 
