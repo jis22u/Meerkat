@@ -84,6 +84,7 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const two = useRef(120);
   const five = useRef(300);
@@ -222,7 +223,6 @@ const VideoChat = () => {
     // 7006237/8
     const initCall = async () => {
       const { data } = await verifyRoom({roomName, idx})
-      console.log(data)
       if (data.status !== "OK") {
         navigate('/')
         return
@@ -312,7 +312,7 @@ const VideoChat = () => {
       if (socketRef.current) socketRef.current.disconnect()
       if (myStream.current) myStream.current.getTracks().forEach(track => track.stop())
       if (!choice) {
-        const data = roomClose({ roomName, idx })
+        roomClose({ roomName, idx })
         console.log('폐쇄합니다!')
         dispatch(setChoice(true))
       }
@@ -379,6 +379,7 @@ const VideoChat = () => {
           ref={localVideoRef}
           playsInline
           autoPlay
+          muted
         />
         <div>
         <button onClick={handleCameraOff}>{cameraOn ? <VideocamIcon/> : <VideocamOffIcon/>}</button>

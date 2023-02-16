@@ -78,7 +78,7 @@ const Charge = () => {
             <div>* 결제금액은 충전금액과 카드수수료가 포함됩니다.</div>
             <br />
             <div>
-              <Payment cash={cash} mycoin={mycoin} setCoin={setCoin}/>
+              <Payment cash={cash} mycoin={mycoin}/>
             </div>
           </div>
         </div>
