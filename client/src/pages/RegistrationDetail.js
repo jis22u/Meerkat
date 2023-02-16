@@ -93,7 +93,7 @@ const RegistrationDetail = () => {
   };
 
   return (
-    <div className="box">
+    <div className="extendBox2">
       {detailContent && (
         <div className={classes.box}>
           <h1 className="title">등록내역</h1>

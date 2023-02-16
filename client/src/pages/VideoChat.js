@@ -213,7 +213,6 @@ const VideoChat = () => {
         return
       }
       window.onbeforeunload = () => {
-        console.log("새로고침임");
         if (!choice) roomClose({ roomName, idx });
         return;
       };

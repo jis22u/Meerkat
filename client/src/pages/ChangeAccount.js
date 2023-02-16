@@ -149,7 +149,7 @@ const ChangeAccount = () => {
           />
         </div>
         <p>{errors.tel?.message}</p>
-        <div className="">
+        <div className="hBox">
           <button type="submit" className="bigBtn" disabled={loading}>
             {loading ? "대기중" : "수정"}
             {/* <Spinner /> */}

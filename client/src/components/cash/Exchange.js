@@ -50,30 +50,38 @@ const Exchange = () => {
         <div className={classes.box}>
           <h1 className="title"> 코인 환전 </h1>
           <div className="customBox">
-            <span> 보유 코인 {coin}</span>
+            <span className={classes.currentCoinTitle}> 보유 코인 {coin}</span>
             <h3> 환전코인 선택 </h3>
             <div className="hBox">
               <button
                 className={classes.btn}
-                onClick={(e) => {handlebalanceUpdate(5)}}
+                onClick={(e) => {
+                  handlebalanceUpdate(5);
+                }}
               >
                 5coin
               </button>
               <button
                 className={classes.btn}
-                onClick={(e) => {handlebalanceUpdate(10)}}
+                onClick={(e) => {
+                  handlebalanceUpdate(10);
+                }}
               >
                 50coin
               </button>
               <button
                 className={classes.btn}
-                onClick={(e) => {handlebalanceUpdate(100)}}
+                onClick={(e) => {
+                  handlebalanceUpdate(100);
+                }}
               >
                 100coin
               </button>
               <button
                 className={classes.btn}
-                onClick={(e) => {handlebalanceUpdate(200)}}
+                onClick={(e) => {
+                  handlebalanceUpdate(200);
+                }}
               >
                 200coin
               </button>
@@ -90,7 +98,12 @@ const Exchange = () => {
             <div>* 수익 분배 비율은 사용자 8, 거기어때 2로 측정됩니다.</div>
             <br />
             <div>
-                <button className={classes.exchangeBtn} onClick={exchangeButtonHandler} >환전하기</button>
+              <button
+                className={classes.exchangeBtn}
+                onClick={exchangeButtonHandler}
+              >
+                환전하기
+              </button>
             </div>
           </div>
           <br></br>

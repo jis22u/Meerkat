@@ -49,7 +49,7 @@ const Charge = () => {
         <div className={classes.box}>
           <h1 className="title"> 코인 충전 </h1>
           <div className="customBox">
-            <h3> 보유 코인 {coin}</h3>
+            <span className={classes.currentCoinTitle}> 보유 코인 {coin}</span>
             <h2> 충전금액 선택 </h2>
             <div className="hBox">
               <button className={classes.btn} onClick={handleCashUpdate_1000}>
@@ -67,7 +67,12 @@ const Charge = () => {
             </div>
             <div className={classes.chargeCoin}>
               <h1> +{mycoin} coin </h1>
-              <button onClick={handleCashUpdate_0} style={{marginLeft: '10px'}}>초기화</button>
+              <button
+                onClick={handleCashUpdate_0}
+                style={{ marginLeft: "10px" }}
+              >
+                초기화
+              </button>
             </div>
             <div>* KRW 200당 코인 1개로 계산됩니다.</div>
             <br />
@@ -78,7 +83,7 @@ const Charge = () => {
             <div>* 결제금액은 충전금액과 카드수수료가 포함됩니다.</div>
             <br />
             <div>
-              <Payment cash={cash} mycoin={mycoin}/>
+              <Payment cash={cash} mycoin={mycoin} />
             </div>
           </div>
         </div>
