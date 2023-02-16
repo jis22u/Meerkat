@@ -12,7 +12,7 @@ import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
 import Swal from "sweetalert2";
-import {sendFcm} from 'api/map'
+import { sendFcm } from "api/map";
 
 const RegistModal = (props) => {
   const dispatch = useDispatch();
@@ -68,6 +68,17 @@ const RegistModal = (props) => {
       navigate("/registration-detail");
       //요청일 때
     } else {
+      if (props.coin - coin <= 0) {
+         Swal.fire({
+           position: "center",
+           icon: "warning",
+           title: "코인이 부족합니다.",
+           showConfirmButton: false,
+           timer: 1500,
+         });
+        return;
+      }
+
       const requestContent = {
         coin: coin,
         content: content.current.value,
@@ -77,13 +88,13 @@ const RegistModal = (props) => {
       };
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
-        const roomName = data.value.roomName
+        const roomName = data.value.roomName;
         dispatch(setChoice(props.check));
         data.value.fcmTokenList.forEach((token) => {
-          sendFcm({token, roomName})
-        })
+          sendFcm({ token, roomName });
+        });
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
-        console.log(`/room/${data.value.roomName}/${data.value.idx}`)
+        console.log(`/room/${data.value.roomName}/${data.value.idx}`);
       } else {
         Swal.fire({
           position: "center",
@@ -127,7 +138,7 @@ const RegistModal = (props) => {
     } else if (distance >= 50900090909090)
       Swal.fire({
         position: "center",
-        icon: "error",
+        icon: "warning",
         title: "등록 위치에서 멀리 떨어져 있습니다.",
         showConfirmButton: false,
         timer: 1500,
@@ -135,7 +146,7 @@ const RegistModal = (props) => {
     else {
       Swal.fire({
         position: "center",
-        icon: "error",
+        icon: "warning",
         title: "위치 인증에 실패했습니다.",
         showConfirmButton: false,
         timer: 1500,
@@ -196,8 +207,12 @@ const RegistModal = (props) => {
         )}
         <br></br>
         <div className="hBox">
-          <button className={classes.btn} onClick={props.modalHandler}>취소</button>
-          <button className={classes.btn} onClick={registButtonHandler}>등록</button>
+          <button className={classes.btn} onClick={props.modalHandler}>
+            취소
+          </button>
+          <button className={classes.btn} onClick={registButtonHandler}>
+            등록
+          </button>
         </div>
       </div>
     </div>

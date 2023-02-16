@@ -14,6 +14,7 @@ export const setMeerkat = async (meerkatContent) => {
     url: "marker/regist",
     data: meerkatContent,
   });
+  console.log(res.data.message);
   console.log('미어캣 등록: ', res);
   Swal.fire({
     position: 'center',

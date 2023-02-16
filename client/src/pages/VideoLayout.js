@@ -1,5 +1,4 @@
 import { Outlet } from 'react-router-dom';
-import Header from 'components/layout/Header'
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from 'react-redux';
 

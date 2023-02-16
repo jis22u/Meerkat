@@ -188,6 +188,7 @@ const Map = () => {
           lng={lng}
           modalHandler={modalHandler}
           check={check}
+          coin={coin}
         />
       )}
     </div>
