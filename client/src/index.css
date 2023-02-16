@@ -8,6 +8,10 @@
   src: url("../public/font/IM_Hyemin-Bold.otf");
 }
 
+html{
+  font-size: 100%;
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -170,7 +174,7 @@ justify-content: space-evenly;
   display: flex;
   flex-direction: column;
   align-items: center;
-  align-content: center;
+  text-align: center;
 }
 
 /* 90% 쫙쫙 늘려줌 */
@@ -185,4 +189,9 @@ justify-content: space-evenly;
   flex-direction: column;
   align-items: center;
   align-content: center;
+}
+
+.videoBox{
+  width: 100%;
+  height: 100%;
 }
