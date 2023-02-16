@@ -1,6 +1,5 @@
-import { createSlice } from '@reduxjs/toolkit'
-import { registerUser, userLogin } from 'api/auth'
-
+import { createSlice } from "@reduxjs/toolkit";
+import { registerUser, userLogin } from "api/auth";
 
 const initialState = {
   loading: false,
@@ -8,38 +7,38 @@ const initialState = {
   isLogin: false,
   choice: true,
   selected: 0,
-}
+};
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
-        localStorage.removeItem('userToken')
-        state.isLogin = false
+      localStorage.removeItem("userToken");
+      state.isLogin = false;
     },
-    setChoice: (state, {payload}) => {
-      state.choice = payload
+    setChoice: (state, { payload }) => {
+      state.choice = payload;
     },
-    setSelected: (state, {payload}) => {
-      state.selected = payload
-    }
+    setSelected: (state, { payload }) => {
+      state.selected = payload;
+    },
   },
   extraReducers: {
     [userLogin.pending]: (state) => {
       state.loading = true;
     },
-    [userLogin.fulfilled]: (state, { payload : { status }}) => {
-      if (status === 'OK') {
+    [userLogin.fulfilled]: (state, { payload: { status } }) => {
+      if (status === "OK") {
         state.isLogin = true;
       }
       state.loading = false;
     },
     [userLogin.rejected]: (state, { payload }) => {
       state.loading = false;
-      state.error = payload
+      state.error = payload;
     },
-    
+
     [registerUser.pending]: (state) => {
       state.loading = true;
     },
@@ -48,11 +47,10 @@ const authSlice = createSlice({
     },
     [registerUser.rejected]: (state, { payload }) => {
       state.loading = false;
-      state.error = payload
+      state.error = payload;
     },
   },
+});
 
-})
-
-export const { logout, setChoice, setSelected } = authSlice.actions
-export default authSlice.reducer
+export const { logout, setChoice, setSelected } = authSlice.actions;
+export default authSlice.reducer;
