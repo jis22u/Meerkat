@@ -42,7 +42,10 @@ pipeline {
 		stage('Deploy') {
             steps{
                 sh "pwd"
-
+                sh "docker stop common-b107-meerkat-develop-client-1"
+                sh "docker rm common-b107-meerkat-develop-client-1"
+                sh "docker stop common-b107-meerkat-develop-api-1"
+                sh "docker rm common-b107-meerkat-develop-api-1"
                 sh "docker-compose up -d --build"
                 sh "docker-compose ps"
             }
