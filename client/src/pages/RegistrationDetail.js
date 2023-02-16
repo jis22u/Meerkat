@@ -41,7 +41,7 @@ const RegistrationDetail = () => {
           moment(response.value.regDate).format("YYYY년 MM월 DD일  HH시 mm분")
         );
       });
-  }, [detailContent]);
+  }, []);
 
   const modifyButtonHandler = async () => {
     if (modify === true) {
@@ -67,30 +67,29 @@ const RegistrationDetail = () => {
       };
       console.log(newDetailContext);
       // 미어캣 등록 axios 요청
-      await modifyMeerkat(newDetailContext).then((responce) => {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `${responce.data.message}`,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        setDetailContent(newDetailContext);
-      });
-      setModify(false);
+      modifyMeerkat(newDetailContext)
+        .then((responce) => {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: `${responce.data.message}`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setDetailContent(newDetailContext);
+          setModify(false);
+        })
     } else {
       setModify(true);
     }
   };
 
   const deletButtonHandler = async () => {
-    const { data } = await deleteMeerkat()
+    const { data } = await deleteMeerkat();
     if (data.status === "OK") {
       setRegist(false);
-      setDetailContent(); 
+      setDetailContent();
     }
-
-    
   };
 
   return (
@@ -113,7 +112,7 @@ const RegistrationDetail = () => {
             {!modify && (
               <div>
                 <h3>종료시간</h3>
-                <p>{endTime}</p>
+                <p>{detailContent.expDate}</p>
               </div>
             )}
             {modify && <ExpiredDate hourSelect={hourSelect} />}
