@@ -84,6 +84,7 @@ const VideoChat = () => {
   const [ style, setStyle ] = useState(choice)
   const isJoin = useRef(choice)
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const two = useRef(120);
   const five = useRef(300);
@@ -114,17 +115,18 @@ const VideoChat = () => {
     cameraOptions.current.forEach((camera) => {
       if (camera.label !== currentCamera.label) {
         getMedia(camera.deviceId)
+          .then(res => {
+            if (peerRef.current) {
+              const videoTrack = myStream.current.getVideoTracks()[0];
+              const videoSender = peerRef.current
+                .getSenders()
+                .find((sender) => sender.track.kind === "video");
+              videoSender.replaceTrack(videoTrack);
+            }
+          })
         return false
       }
     })
-    
-    if (peerRef.current) {
-      const videoTrack = myStream.current.getVideoTracks()[0];
-      const videoSender = peerRef.current
-        .getSenders()
-        .find((sender) => sender.track.kind === "video");
-      videoSender.replaceTrack(videoTrack);
-    }
   }
 
 
