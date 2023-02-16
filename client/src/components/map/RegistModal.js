@@ -68,7 +68,6 @@ const RegistModal = (props) => {
       navigate("/registration-detail");
       //요청일 때
     } else {
-      dispatch(setChoice(props.check));
       const requestContent = {
         coin: coin,
         content: content.current.value,
@@ -79,6 +78,7 @@ const RegistModal = (props) => {
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
         const roomName = data.value.roomName
+        dispatch(setChoice(props.check));
         data.value.fcmTokenList.forEach((token) => {
           sendFcm({token, roomName})
         })
