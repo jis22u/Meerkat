@@ -30,6 +30,7 @@ public class MarkerController {
 													@RequestBody Marker marker) {
 
 		Long memberIdx = principalDetails.getMember().getIdx();
+		log.info("regist - memberIdx : " + memberIdx);
 
 		// 첫 가입하고 나서 markerCheck의 member_idx 초기화 어케 해주지???
 		if(!markerCheckService.isMarkerCheck(memberIdx)) {
@@ -87,8 +88,11 @@ public class MarkerController {
 	 */
 	@DeleteMapping("/delete")
 	public ResponseEntity<ResponseDTO> deleteMarker(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+
 		Long memberIdx = principalDetails.getMember().getIdx();
 		Long result = markerService.deleteMarker(memberIdx);
+		log.info("delete - memberIdx : " + memberIdx);
+
 		if(result == -1L) {
 			return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.BAD_REQUEST, Msg.FAIL_MARKER_DELETE));
 		}

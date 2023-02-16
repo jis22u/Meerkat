@@ -33,9 +33,13 @@ const RegistrationDetail = () => {
         return response;
       })
       .then((response) => {
-        if(response === undefined ) return;
-        setEndTime(moment(response.value.expDate).format('YYYY년 MM월 DD일  HH시 mm분'));
-        setStartTime(moment(response.value.regDate).format('YYYY년 MM월 DD일  HH시 mm분'));
+        if (response === undefined) return;
+        setEndTime(
+          moment(response.value.expDate).format("YYYY년 MM월 DD일  HH시 mm분")
+        );
+        setStartTime(
+          moment(response.value.regDate).format("YYYY년 MM월 DD일  HH시 mm분")
+        );
       });
   }, []);
 
@@ -47,7 +51,6 @@ const RegistrationDetail = () => {
 
       if (hourSelect === 24) hour = "00";
 
-      console.log("미어캣 수정 axios");
       let expDate = moment().format(`YYYY-MM-DD ${hour}:00:00`);
       if (
         date.getHours() >= hourSelect.current.value ||
@@ -67,11 +70,12 @@ const RegistrationDetail = () => {
       await modifyMeerkat(newDetailContext).then((responce) => {
         Swal.fire({
           position: "center",
-          icon: "error",
+          icon: "success",
           title: `${responce.data.message}`,
           showConfirmButton: false,
           timer: 1500,
         });
+        setDetailContent(newDetailContext);
       });
       setModify(false);
     } else {
@@ -100,7 +104,7 @@ const RegistrationDetail = () => {
               alt="meerkat"
               className={classes.img}
             />
-            <h3>닉네임</h3>
+            <h2>닉네임</h2>
             <hr />
             <h3>선택위치</h3>
             <p>{detailContent.location}</p>
@@ -112,11 +116,15 @@ const RegistrationDetail = () => {
                 <p>{endTime}</p>
               </div>
             )}
-            {modify && (
-              <div>{modify && <ExpiredDate hourSelect={hourSelect} />}</div>
-            )}
+            {modify && <ExpiredDate hourSelect={hourSelect} />}
           </div>
+
           <div className={classes.buttons}>
+            {modify && (
+              <button className={classes.button} onClick={() => setModify(false)}>
+                취소
+              </button>
+            )}
             <button className={classes.button} onClick={modifyButtonHandler}>
               수정
             </button>
