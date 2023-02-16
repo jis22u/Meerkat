@@ -115,17 +115,18 @@ const VideoChat = () => {
     cameraOptions.current.forEach((camera) => {
       if (camera.label !== currentCamera.label) {
         getMedia(camera.deviceId)
+          .then(res => {
+            if (peerRef.current) {
+              const videoTrack = myStream.current.getVideoTracks()[0];
+              const videoSender = peerRef.current
+                .getSenders()
+                .find((sender) => sender.track.kind === "video");
+              videoSender.replaceTrack(videoTrack);
+            }
+          })
         return false
       }
     })
-    
-    if (peerRef.current) {
-      const videoTrack = myStream.current.getVideoTracks()[0];
-      const videoSender = peerRef.current
-        .getSenders()
-        .find((sender) => sender.track.kind === "video");
-      videoSender.replaceTrack(videoTrack);
-    }
   }
 
 
@@ -145,11 +146,7 @@ const VideoChat = () => {
         deviceId ? cameraConstraints : initialConstrains
       )
       localVideoRef.current.srcObject = myStream.current;
-      // myStream.current
-      // .getTracks()
-      // .forEach((track) => {
-      //   peerRef.current.addTrack(track, myStream.current)
-      // })
+
     } catch (e) {
       console.error("getMedia를 실행할 수 없습니다.");
       setCameraOn(false)
@@ -377,14 +374,12 @@ const VideoChat = () => {
           ref={remoteVideoRef}
           playsInline
           autoPlay
-          muted
         />
         <video
           className={styles.localVideo}
           ref={localVideoRef}
           playsInline
           autoPlay
-          muted
         />
         <div>
         <button onClick={handleCameraOff}>{cameraOn ? <VideocamIcon/> : <VideocamOffIcon/>}</button>
