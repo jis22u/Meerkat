@@ -1,13 +1,11 @@
 package B107.server.meerkat.controller;
 
 import B107.server.meerkat.config.security.auth.PrincipalDetails;
-import B107.server.meerkat.config.security.handler.DecodeEncodeHandler;
 import B107.server.meerkat.config.utils.Msg;
 import B107.server.meerkat.config.utils.ResponseDTO;
 import B107.server.meerkat.dto.member.SignModReqDTO;
 import B107.server.meerkat.dto.member.mod;
 import B107.server.meerkat.dto.member.modPw;
-import B107.server.meerkat.repository.MemberRepository;
 import B107.server.meerkat.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -26,6 +26,21 @@ public class MemberController {
     private static final String METHOD_NAME = MemberController.class.getName();
 
     private final MemberService memberService;
+
+
+    /**
+     * fcm token 등록 및 수정
+     */
+    @PutMapping("/fcm")
+    public ResponseEntity<ResponseDTO> updateFcm(@AuthenticationPrincipal PrincipalDetails principalDetails, @RequestBody Map<String, String> requestBody) {
+        Long memberIdx = principalDetails.getMember().getIdx();
+        String fcmToken = requestBody.get("fcmToken");
+        System.out.println(">>>>>>>>>>>>>>    "+fcmToken);
+        memberService.updateFcm(memberIdx, fcmToken);
+        return ResponseEntity.ok().body(ResponseDTO.of(HttpStatus.OK, Msg.SUCCESS_ACCESS));
+    }
+
+
 
     /**
      * 회원 정보 수정

@@ -6,8 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.Optional;
-import java.util.zip.ZipFile;
+import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberId(String memberId);
@@ -20,4 +19,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("select m.idx from Member m where m.memberId like :memberId")
     Long findIdxByMemberId(String memberId);
+
+
+    @Query("SELECT m.fcmToken " +
+            "FROM Member m " +
+            "WHERE m.idx in :markers ")
+    List<String> findFcm(List<Long> markers);
 }

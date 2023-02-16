@@ -1,6 +1,5 @@
 package B107.server.meerkat.dto.member;
 
-import B107.server.meerkat.entity.Call;
 import B107.server.meerkat.entity.Coin;
 import lombok.Builder;
 import lombok.Getter;

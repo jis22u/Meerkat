@@ -1,9 +1,7 @@
 package B107.server.meerkat.service;
 
 import B107.server.meerkat.entity.MarkerCheck;
-import B107.server.meerkat.entity.Member;
 import B107.server.meerkat.repository.MarkerCheckRepository;
-import B107.server.meerkat.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

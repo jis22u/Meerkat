@@ -12,6 +12,7 @@ import { useNavigate } from "react-router";
 import ExpiredDate from "./ExpiredDate";
 import SelectCoin from "./SelectCoin";
 import Swal from "sweetalert2";
+import {sendFcm} from 'api/map'
 
 const RegistModal = (props) => {
   const dispatch = useDispatch();
@@ -67,7 +68,6 @@ const RegistModal = (props) => {
       navigate("/registration-detail");
       //요청일 때
     } else {
-      dispatch(setChoice(props.check));
       const requestContent = {
         coin: coin,
         content: content.current.value,
@@ -77,6 +77,11 @@ const RegistModal = (props) => {
       };
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
+        const roomName = data.value.roomName
+        dispatch(setChoice(props.check));
+        data.value.fcmTokenList.forEach((token) => {
+          sendFcm({token, roomName})
+        })
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
         console.log(`/room/${data.value.roomName}/${data.value.idx}`)
       } else {

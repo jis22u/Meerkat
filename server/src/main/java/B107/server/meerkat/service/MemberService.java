@@ -42,6 +42,27 @@ public class MemberService {
     private final CoinRepository coinRepository;
 
     /**
+     * fcm 토큰 등록 및 수정
+     */
+    @Transactional
+    public void updateFcm(long idx, String fcm) throws RuntimeException {
+
+        Member member = memberRepository.findById(idx).orElseThrow(() -> new MemberNotFoundException(ErrorCode.MEMBER_NOT_FOUND));
+        member.setFcmToken(fcm);
+        memberRepository.save(member);
+        return;
+    }
+
+    /**
+     * 해당 member fcm 조회
+     */
+    @Transactional
+    public List<String> findFcm(List<Long> markers) throws RuntimeException {
+        return memberRepository.findFcm(markers);
+    }
+
+
+    /**
      * 회원 정보 수정
      */
     @Transactional

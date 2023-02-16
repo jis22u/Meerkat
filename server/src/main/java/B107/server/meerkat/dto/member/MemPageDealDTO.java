@@ -1,6 +1,5 @@
 package B107.server.meerkat.dto.member;
 
-import B107.server.meerkat.entity.Call;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,5 +1,4 @@
 socket-server:
-  host: i8b107.p.ssafy.io
   port: 8085
 
 server:
