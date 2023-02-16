@@ -47,12 +47,6 @@ public class AuthService {
                 .build();
         markerCheckRepository.save(markerCheck);
 
-//        CallCheck callCheck = CallCheck.builder()
-//                .memberIdx(memberIdx)
-//                .ccCheck(false)
-//                .build();
-//        callCheckRepository.save(callCheck);
-
         Coin coin = Coin.builder()
                 .memberIdx(memberIdx)
                 .build();

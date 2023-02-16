@@ -75,7 +75,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//		System.out.println("여기 왔니");
 		log.info(METHOD_NAME + "- preHandle() ...");
 		boolean result = false;
 		try {
@@ -84,16 +83,13 @@ public class RoleInterceptor implements HandlerInterceptor {
 			Outer:
 			{
 				if (jwtTokenProvider.validateToken(token)) {
-//					System.out.println("여기 왔니");   OOO
 					log.info("Token validate - success");
 					String memberId = jwtTokenProvider.getUserPk(token);
 
 					if (decodeEncodeHandler.memberIdValid(memberId)) {
 						log.info("Member validate - Success");
 						String role = decodeEncodeHandler.roleValid(memberId);
-//						System.out.println("여기 왔니"); OOO
 						if (request.getRequestURI().startsWith(adminURL)) {
-//							System.out.println("여기 왔니");    XXXX
 							log.info("ADMIN role validate ...");
 							if (role != null && role.equals(adminRole)) {
 								log.info("ADMIN role validate - Success");
@@ -106,7 +102,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(memberURL)) {
-//							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole))) {
 								log.info("MEMBER role validate - Success");
@@ -119,7 +114,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(markerURL)) {
-//							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole))) {
 								log.info("MEMBER role validate - Success");
@@ -132,7 +126,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(callURL)) {
-//							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole) || role.equals(callRole))) {
 								log.info("MEMBER role validate - Success");
@@ -145,7 +138,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(roomURL)) {
-//							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole) || role.equals(callRole) || role.equals(roomRole))) {
 								log.info("MEMBER role validate - Success");
@@ -158,7 +150,6 @@ public class RoleInterceptor implements HandlerInterceptor {
 							break Outer;
 						}
 						if (request.getRequestURI().startsWith(coinURL)) {
-//							System.out.println("여기 왔니");  XXXX
 							log.info("MEMBER role validate ...");
 							if (role != null && (role.equals(memberRole) || role.equals(adminRole) || role.equals(markerRole) || role.equals(callRole) || role.equals(roomRole)  || role.equals(coinRole))) {
 								log.info("MEMBER role validate - Success");
@@ -170,18 +161,15 @@ public class RoleInterceptor implements HandlerInterceptor {
 							}
 							break Outer;
 						}
-						System.out.println("여기 왔니");
 						log.warn("Unverified role ACCESS ... ");
 						response.setContentType("text/html; charset=UTF-8");
 						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_UNVERIFIED_SERVER_ADDRESS));
 					} else {
-//						System.out.println("여기 왔니");  XXX
 						log.warn("Request User is not exist " + METHOD_NAME);
 						response.setContentType("text/html; charset=UTF-8");
 						response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_MEMBER_ROLE));
 					}
 				} else {
-//					System.out.println("여기 왔니");   당연 XXX
 					log.warn("Token validate - Fail");
 					response.setContentType("text/html; charset=UTF-8");
 					response.getWriter().write(new ResponseHandler().convertResult(HttpStatus.BAD_REQUEST, FAIL_TOKEN_VALIDATE));
