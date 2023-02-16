@@ -14,7 +14,7 @@ export const setMeerkat = async (meerkatContent) => {
     url: "marker/regist",
     data: meerkatContent,
   });
-  console.log(res);
+  console.log('미어캣 등록: ', res);
   Swal.fire({
     position: 'center',
     icon: 'success',
@@ -47,7 +47,7 @@ export const modifyMeerkat = async (meerkatContent) => {
 
 export const deleteMeerkat = async () => {
   const res = await api({ method: "delete", url: "/marker/delete" });
-  console.log(res);
+  return res
 };
 
 export const sendFcm = ({token, url}) => {

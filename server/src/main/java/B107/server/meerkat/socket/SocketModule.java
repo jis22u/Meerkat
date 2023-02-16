@@ -21,7 +21,6 @@ public class SocketModule {
 	private final SocketService socketService;
 
 	public SocketModule(SocketIOServer server, SocketService socketService, RoomRepository roomRepository) {
-		System.out.println("3 SocketModule. (1)");
 
 		this.socketService = socketService;
 

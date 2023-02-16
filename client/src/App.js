@@ -17,8 +17,6 @@ import BigSpinner from 'components/layout/BigSpinner'
 import { onMessageListener } from './api/firebase';
 import { Toast } from 'react-bootstrap';
 import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 
 const Home = lazy(() => import('pages/Home'));
 const VideoChat = lazy(() => import('pages/VideoChat'));
@@ -33,7 +31,6 @@ function App() {
   onMessageListener().then(payload => {
     setNotification({title: payload.notification.title, body: payload.notification.body})
     setShow(true);
-    console.log(show, 'show끝은없는고야')
     console.log(payload);
   }).catch(err => console.log('failed: ', err));
 
