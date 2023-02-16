@@ -17,7 +17,6 @@ import BigSpinner from 'components/layout/BigSpinner'
 import { onMessageListener } from './api/firebase';
 import { Toast } from 'react-bootstrap';
 import { useState } from 'react'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const Home = lazy(() => import('pages/Home'));
