@@ -4,15 +4,14 @@ importScripts('https://www.gstatic.com/firebasejs/9.17.1/firebase-messaging-comp
 
 // Initialize the Firebase app in the service worker by passing the generated config
 const firebaseConfig = {
-  apiKey: "AIzaSyC7kIss1ZK8vT2kyG5hB-DBgGfNdiqEjNk",
-  authDomain: "ssafy-chat-97b5d.firebaseapp.com",
-  databaseURL: "https://ssafy-chat-97b5d-default-rtdb.firebaseio.com",
-  projectId: "ssafy-chat-97b5d",
-  storageBucket: "ssafy-chat-97b5d.appspot.com",
-  messagingSenderId: "168935071254",
-  appId: "1:168935071254:web:c80eedbc158da3492c5f37"
-};
-
+    apiKey: "AIzaSyA12FoQ6AFA8jRk-1PrG9Vn7DnWHI44lmY",
+    authDomain: "howruthere-27527.firebaseapp.com",
+    projectId: "howruthere-27527",
+    storageBucket: "howruthere-27527.appspot.com",
+    messagingSenderId: "702337522983",
+    appId: "1:702337522983:web:86a16dfa4bed1721cadd02",
+    measurementId: "G-7NS44FG21B"
+  };
 
   firebase.initializeApp(firebaseConfig);
   

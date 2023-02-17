@@ -3,14 +3,14 @@ import { initializeApp } from "firebase/app";
 import { getMessaging , getToken , onMessage } from "firebase/messaging" ; 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC7kIss1ZK8vT2kyG5hB-DBgGfNdiqEjNk",
-  authDomain: "ssafy-chat-97b5d.firebaseapp.com",
-  databaseURL: "https://ssafy-chat-97b5d-default-rtdb.firebaseio.com",
-  projectId: "ssafy-chat-97b5d",
-  storageBucket: "ssafy-chat-97b5d.appspot.com",
-  messagingSenderId: "168935071254",
-  appId: "1:168935071254:web:c80eedbc158da3492c5f37"
-};
+    apiKey: "AIzaSyA12FoQ6AFA8jRk-1PrG9Vn7DnWHI44lmY",
+    authDomain: "howruthere-27527.firebaseapp.com",
+    projectId: "howruthere-27527",
+    storageBucket: "howruthere-27527.appspot.com",
+    messagingSenderId: "702337522983",
+    appId: "1:702337522983:web:86a16dfa4bed1721cadd02",
+    measurementId: "G-7NS44FG21B"
+  };
 
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -19,7 +19,7 @@ export { firebaseApp };
 
 export const fetchToken = async () => {
   let tokenObj = {};
-  await getToken(messaging, {vapidKey: 'BEf1kJoCSU3jr11pXBUnqyzFr6osycs0PSAiE8n9rRHFXF6qrms2i7ML_17xpWKtF4wHnXph9qApKLInVSrW3IU'}).then((currentToken) => {
+  await getToken(messaging, {vapidKey: 'BOsBHugfTQm8zXmpBSr2F_2foe5YXBQmEXAeutBOr6oPnDFzGK1yGKtjnKkAJR9n-Ke7lFJTxA1TIZ611JiMtFA'}).then((currentToken) => {
     if (currentToken) {
       tokenObj = {currentToken}
     } 

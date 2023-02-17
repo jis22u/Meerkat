@@ -89,6 +89,7 @@ const RegistModal = (props) => {
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
         dispatch(setChoice(props.check));
+        console.log(data.value)
         data.value.fcmTokenList.forEach((each) => {
           sendFcm(data.value)
         })
