@@ -49,7 +49,6 @@ export const deleteMeerkat = async () => {
 };
 
 export const sendFcm = ({idx, roomName, content, name, each}) => {
-  console.log(each, '보냈습니다.')
   const option = {
     method: "POST",
     url: "https://fcm.googleapis.com/fcm/send",
