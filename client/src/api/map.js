@@ -66,7 +66,7 @@ export const sendFcm = ({idx, roomName, content, name, fcmTokenList}) => {
     headers: {
       "Content-Type": "application/json",
       Authorization:
-        "key=AAAAo4aUHSc:APA91bFblK-xj0b-GUtgtFGaK2UvRKJvlglwQNFGBjvsxbIwUv5fQZ_uHlaNR-z-WrjEnyNBZ-GVQg8bELDNVv1xhR9qVphygcNj9yebM53QjtY1vZY57ESE6DisWOv3zGb-UoSzk4li",
+        "key=AAAAJ1VQnhY:APA91bF9nLoXhFwTfpirfeP4zUHYFGnCvfOmSJJlDTCsN6jOA7PSsC6OJz-kFRBrMKpWbppLcqV5_-ruxoMtryqyZ49PtFM72dYdjUchrlLwAVQnTYwA2voi_e1cCR0nHKLqsImA7PEH",
     },
   };
   axios(option)
