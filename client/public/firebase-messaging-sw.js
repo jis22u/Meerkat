@@ -28,8 +28,4 @@ const firebaseConfig = {
     };
   
     self.registration.showNotification(notificationTitle, notificationOptions);
-    self.addEventListener('notificationclick', event => {
-      event.notification.close();
-      event.waitUntil(self.clients.openWindow('https://www.naver.com'))
-    })
   });
