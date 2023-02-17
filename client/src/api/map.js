@@ -48,12 +48,12 @@ export const deleteMeerkat = async () => {
   return res
 };
 
-export const sendFcm = ({idx, roomName, content, name, fcmTokenList}) => {
+export const sendFcm = ({idx, roomName, content, name, each}) => {
   const option = {
     method: "POST",
     url: "https://fcm.googleapis.com/fcm/send",
     data: {
-      to: `${fcmTokenList}`,
+      to: `${each}`,
       notification: {
         title: `${name}으로부터 요청이 도착했습니다!`,
         body: content,

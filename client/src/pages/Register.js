@@ -14,7 +14,10 @@ const schema = yup
       .string()
       .min(6, "최소 6자 이상 작성해야 합니다.")
       .max(12, "최대 12자까지 작성 가능합니다.")
-      .matches(/^[A-Za-z][A-Za-z0-9_]{5,11}$/, "아이디는 숫자, 영문으로 작성 가능합니다.")
+      .matches(
+        /^[A-Za-z][A-Za-z0-9_]{5,11}$/,
+        "아이디는 숫자, 영문으로 작성 가능합니다."
+      )
       .required("비밀번호를 입력해 주세요!"),
 
     password: yup
@@ -36,7 +39,10 @@ const schema = yup
       .string()
       .min(2, "최소 2자 이상 작성해야 합니다.")
       .max(12, "최대 12자까지 작성 가능합니다.")
-      .matches(/^[A-Za-z0-9가-힣]{1,11}$/, "닉네임은 영어, 한글, 숫자만 가능합니다.")
+      .matches(
+        /^[A-Za-z0-9가-힣]{1,11}$/,
+        "닉네임은 영어, 한글, 숫자만 가능합니다."
+      )
       .required(),
 
     email: yup
@@ -47,7 +53,12 @@ const schema = yup
       )
       .required("이메일을 입력해 주세요."),
 
-    tel: yup.string().matches(/^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/, "번호를 정확히 입력해 주세요."),
+    tel: yup
+      .string()
+      .matches(
+        /^(01[016789]{1})-?[0-9]{3,4}-?[0-9]{4}$/,
+        "번호를 정확히 입력해 주세요."
+      ),
   })
   .required();
 
@@ -96,12 +107,20 @@ const Register = () => {
           <p>{errors.memberId?.message}</p>
           <div className={classes.formGroup}>
             <label htmlFor="password">비밀번호</label>
-            <input className={classes.input} type="password" {...register("password")} />
+            <input
+              className={classes.input}
+              type="password"
+              {...register("password")}
+            />
           </div>
           <p>{errors.password?.message}</p>
           <div className={classes.formGroup}>
             <label htmlFor="checkPassword">비밀번호 확인</label>
-            <input className={classes.input} type="password" {...register("checkPassword")} />
+            <input
+              className={classes.input}
+              type="password"
+              {...register("checkPassword")}
+            />
           </div>
           <p>{errors.checkPassword?.message}</p>
           <div className={classes.formGroup}>
