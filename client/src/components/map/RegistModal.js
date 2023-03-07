@@ -89,8 +89,9 @@ const RegistModal = (props) => {
       const { data } = await sendRequest(requestContent);
       if (data.status === "OK") {
         dispatch(setChoice(props.check));
-        data.value.fcmTokenList.forEach((each) => {
-          sendFcm(data.value)
+        const {idx, roomName, content, name, fcmTokenList} = data.value
+        fcmTokenList.forEach((each) => {
+          sendFcm({idx, roomName, content, name, each})
         })
         navigate(`/room/${data.value.roomName}/${data.value.idx}`);
       } else {

@@ -23,6 +23,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     @Query("SELECT m.fcmToken " +
             "FROM Member m " +
-            "WHERE m.idx in :markers ")
+            "WHERE m.idx IN :markers " +
+            "AND m.fcmToken IS NOT NULL")
     List<String> findFcm(List<Long> markers);
 }

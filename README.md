@@ -1,6 +1,7 @@
 ## 거기어때-위치 정보 공유 플랫폼
 
 ### 거기어때 링크 : [https://i8b107.p.ssafy.io]
+
 <hr>
 
 ### 프로젝트 진행 기간
@@ -11,40 +12,70 @@
 <hr>
 
 ### 거기어때 - 배경
+
 - 여행? 맛집? 로드뷰의 오래된 정보 탓에 헛걸음하신 적이 있지 않으신가요?
 - 검색으로도 해결되지 않는, 지금 당장의 현장 정보가 필요하시지 않으신가요?
 - '거기어때'를 통해 생생한 실시간 정보를 받아보세요!
 
 ### 거기어때 - 개요
+
 - 실시간 현장 정보와 정당한 재화의 트레이드
 - 거기어때 서비스는 현장 정보를 필요로 하는 요청자와, 그 정보를 제공해주는 미어캣(제공자)와의 손을 이어주는 서비스입니다.
 - 요청자가 지정한 위치의 인근 1km 이내 정보 제공자들과 재화를 Trade하는 시스템입니다.
 - 누구나 미어캣(정보제공자)이 될 수 있으며, 요청자 또한 될 수 있습니다.
 
 ## 주요 기능
+
 ### 미어캣 등록
+
 - 현재 내가 있는 위치 근처의 정보를 제공할 수 있음을 알립니다.
 - 위치인증을 거친 후 미어캣으로 등록하게 되면, 맵에 마커가 생성됩니다.
 - 마커의 유효시간을 설정하여 등록할 수 있으며 언제든지 수정 및 삭제가 가능합니다.
 
-### 요청 등록 
+  [미어캣 마커 등록, 수정, 삭제, 조회]
+
+  ![마커등록성공](https://user-images.githubusercontent.com/110139421/222969495-44d04d07-4275-4cc2-879a-5464a7cb6aa9.gif)
+
+  [미어캣 마커 등록 실패_위치인증 실패]
+
+  ![마커등록실패](https://user-images.githubusercontent.com/110139421/222969506-447f059b-e658-42b2-adf1-122e6000fab7.gif)
+
+### 요청 등록
+
 - 실시간 정보를 얻고 싶은 좌표에서 요청 메세지와 거래할 코인의 양을 정한 후 요청 버튼만 눌러보세요!
 - 그러면 배달부 미어캣이 여러분의 주문을 물고 열심히 등록 미어캣에게 뛰어가 전할 것입니다.
 
+  ![요청수락실패](https://user-images.githubusercontent.com/110139421/222969697-c5e06134-3454-4cec-a98e-90b8bc848be7.gif)
+
 ### Push 알람
+
 - 미어캣은 화면을 켜놓은 채 기다릴 필요가 없습니다! 배달부 미어캣이 알림을 물고 와 알려주니까요!
 - 브라우저를 내려놓더라도, 화면을 꺼놓더라도 Push 알람으로 요청 수신을 알려드립니다.
 - 원터치! Push 메시지를 클릭하면, 요청자와 한번에 곧바로 연결해드립니다!
--	마음 놓고 다른 일을 하며, 알람 한번, 터치 한번으로 코인을 벌어보세요!
+- 마음 놓고 다른 일을 하며, 알람 한번, 터치 한번으로 코인을 벌어보세요!
+
+  [사이트 비활성화시]
+
+  ![요청](https://user-images.githubusercontent.com/110139421/222969572-e7510201-ac0d-49b7-876d-27850f292ddd.gif)
+
+  [사이트 활성화시]
+
+  ![요청2](https://user-images.githubusercontent.com/110139421/222969602-bfaedfbb-9050-4bd4-bbd3-e5252424a23b.gif)
 
 ### 코인 충전
+
 - 거기어때의 서비스는 사용자 간의 Win-Win을 기반으로 수립되었습니다.
 - 서비스 사용을 위해서 결제를 통해 코인을 충전해 주세요! 거래에 소비된 코인은 미어캣에게 전달됩니다.
 - 신용카드 결제 및 네이버페이, 카카오페이 등 모두 가능합니다!
 
+  ![결제](https://user-images.githubusercontent.com/110139421/222969433-9a3d21a7-42b9-4068-a048-2bcbe1a989ab.gif)
+
 ### 마이페이지
+
 - 현재 보유 중인 코인을 볼 수 있으며 충전, 환전 버튼을 클릭하여 해당 탭으로 이동할 수 있습니다.
 - 히스토리 조회를 제공합니다! 미어캣으로서의 이력과 요청자로서의 이력을 각각 조회할 수 있습니다.
+
+  ![마이페이지](https://user-images.githubusercontent.com/110139421/222969464-192c6f12-8713-41e8-ae68-120163d582b9.gif)
 
 ## 주요 기술
 
@@ -61,7 +92,6 @@
 - QueryDSL
 - Socket.io
 - MySQL
-
 
 ### Frontend
 
@@ -165,17 +195,17 @@ meerkat
 <br>
 
 ## docs
-기획 및 설계 산출물    
 
+기획 및 설계 산출물
 
-- 와이어프레임   
-https://www.figma.com/file/ywgTAkO13oveEFtmKCT3Og/furniture-web-desjgn-(Community)
+- 와이어프레임  
+  https://www.figma.com/file/ywgTAkO13oveEFtmKCT3Og/furniture-web-desjgn-(Community)
 
-- 요구사항 명세서   
-https://www.notion.so/936183033cf8421ebf567aa7d7204932
+- 요구사항 명세서  
+  https://www.notion.so/936183033cf8421ebf567aa7d7204932
 
 - ERD
-https://www.erdcloud.com/d/6gxtiDEe2cFbRvJ6s
+  https://www.erdcloud.com/d/6gxtiDEe2cFbRvJ6s
 
-- API Docs   
-https://docs.google.com/spreadsheets/d/1I7x4EtIxWb3OCiZ9__v7AsuZyFIJsxSLwFYI-BXjVZE/edit#gid=0meerkat
+- API Docs  
+  https://docs.google.com/spreadsheets/d/1I7x4EtIxWb3OCiZ9__v7AsuZyFIJsxSLwFYI-BXjVZE/edit#gid=0meerkat
