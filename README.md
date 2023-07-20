@@ -4,7 +4,7 @@ SSAFY 8기 2학기 공통 프로젝트
 
 <br>
 
-## 프로젝트 기획 배경
+## 👩‍👧‍👦 프로젝트 기획 배경
 
 - 여행? 맛집? 로드뷰의 오래된 정보 탓에 헛걸음하신 적이 있지 않으신가요?
 - 검색으로도 해결되지 않는, 지금 당장의 현장 정보가 필요하시지 않으신가요?
@@ -12,7 +12,7 @@ SSAFY 8기 2학기 공통 프로젝트
 
 <br>
 
-## 주요기능
+## 📌 주요기능
 
 - 일대일 화상채팅 기능을 통해 실시간 장소 정보를 제공하거나 받을 수 있습니다.
 - 지도 위의 마커를 움직여 원하는 장소에 제공자 마커를 등록합니다. (제공자)
@@ -21,14 +21,14 @@ SSAFY 8기 2학기 공통 프로젝트
 - 사용자가 결제한 코인으로 실시간 정보 제공에 대한 거래가 이루어집니다.
 
   ```
-  👉 우리 서비스는 특별히 정보 제공자에게 미어캣🐹이라는 별명을 붙여주었습니다.
-      미어캣처럼 현장을 살펴보고 요청에 빠르게 응답하기 때문입니다!
-      서비스 화면 속 미어캣 이미지도 주목해주세요.
+  저희 서비스는 특별히 정보 제공자에게 미어캣🐹이라는 별명을 지어주었습니다.
+  미어캣처럼 현장을 살펴보고 요청에 빠르게 응답하기 때문입니다!
+  서비스 화면 속 미어캣 이미지도 주목해주세요.
   ```
 
 <br>
 
-## 거기어때 서비스 화면
+## 🎍 거기어때 서비스 화면
 
 ### 제공자
 
@@ -93,11 +93,11 @@ SSAFY 8기 2학기 공통 프로젝트
 
 <br>
 
-## 주요 기술
+## ⚒️ 주요 기술
 
 ### Backend
 
-- Spring
+- Spring Boot
 - IntelliJ IDE
 - Springboot 2.7.8
 - Maven 3.6.3
@@ -137,7 +137,7 @@ SSAFY 8기 2학기 공통 프로젝트
 
 <br>
 
-## 프로젝트 파일 구조
+## 📁 프로젝트 파일 구조
 
 ### client
 
@@ -212,14 +212,12 @@ meerkat
 
 <br>
 
-## docs
-
-기획 및 설계 산출물
+## 📚 기획 및 설계 산출물
 
 - [와이어프레임](https://www.figma.com/file/ywgTAkO13oveEFtmKCT3Og/furniture-web-desjgn-(Community))
 
 - [요구사항 명세서](https://www.notion.so/936183033cf8421ebf567aa7d7204932)
 
-- [ERD](https://www.erdcloud.com/d/6gxtiDEe2cFbRvJ6s)
+- ERD   
+  <img src="https://github.com/jis22u/Meerkat/assets/110139421/44d6872d-8703-4562-beb5-d01e93026111" width="800" height="450"/>
 
-- [API Docs](https://docs.google.com/spreadsheets/d/1I7x4EtIxWb3OCiZ9__v7AsuZyFIJsxSLwFYI-BXjVZE/edit#gid=0meerkat)
